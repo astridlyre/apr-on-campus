@@ -96,20 +96,23 @@ export default function Report() {
           />
         </div>
 
-        <TextInput
-          label="Place of Incident"
-          type="text"
-          name="incidentLocation"
-          placeholder="e.g. campus, workplace, public space"
-          required
-        />
+        <div className="flex gap-4">
+          <TextInput
+            label="Place of Incident"
+            type="text"
+            name="incidentLocation"
+            placeholder="e.g. campus, workplace, public space"
+            required
+            size={36}
+          />
 
-        <Select
-          name="incidentType"
-          label="Type of Incident"
-          options={incidentTypes}
-          required
-        />
+          <Select
+            name="incidentType"
+            label="Type of Incident"
+            options={incidentTypes}
+            required
+          />
+        </div>
 
         <TextArea
           rows={6}
