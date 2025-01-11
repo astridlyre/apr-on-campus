@@ -8,6 +8,9 @@ import type { Route } from "./+types/report";
 import Section from "~/components/Section";
 import DateInput from "~/components/DateInput";
 import Select from "~/components/Select";
+import { redirect, type ActionFunction } from "react-router";
+import { Form } from "react-router";
+import { getFormDataValue } from "~/utils";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -17,17 +20,54 @@ export function meta({}: Route.MetaArgs) {
 }
 
 const provinces = [
+  { label: "— Select Province or Territory —", value: "" },
   { label: "Alberta", value: "AB" },
   { label: "British Columbia", value: "BC" },
   { label: "Manitoba", value: "MB" },
   { label: "New Brunswick", value: "NB" },
   { label: "Newfoundland and Labrador", value: "NL" },
+  { label: "Northwest Territories", value: "NT" },
   { label: "Nova Scotia", value: "NS" },
+  { label: "Nunavut", value: "NU" },
   { label: "Ontario", value: "ON" },
   { label: "Prince Edward Island", value: "PE" },
   { label: "Quebec", value: "QC" },
   { label: "Saskatchewan", value: "SK" },
+  { label: "Yukon", value: "YT" },
 ];
+
+const incidentTypes = [
+  { label: "— Select Type —", value: "" },
+  { label: "Discrimination", value: "discrimination" },
+  { label: "Harassment", value: "harassment" },
+  { label: "Online", value: "online" },
+  { label: "Vandalism", value: "vandalism" },
+  { label: "Violence", value: "violence" },
+];
+
+export const action: ActionFunction = async ({ request }) => {
+  const form = await request.formData();
+
+  const incident = {
+    incidentDate: getFormDataValue(form, "incidentDate"),
+    incidentProvince: getFormDataValue(form, "incidentProvince"),
+    incidentLocation: getFormDataValue(form, "incidentLocation"),
+    incidentDescription: getFormDataValue(form, "incidentDescription"),
+    incidentType: getFormDataValue(form, "incidentType"),
+    firstName: getFormDataValue(form, "firstName"),
+    lastName: getFormDataValue(form, "lastName"),
+    email: getFormDataValue(form, "email"),
+    phoneNumber: getFormDataValue(form, "phoneNumber"),
+    city: getFormDataValue(form, "city"),
+    province: getFormDataValue(form, "province"),
+    wasReported: form.has("wasReported"),
+    wantsForwarded: form.has("wantsForwarded"),
+  };
+
+  console.log(incident);
+
+  return redirect("/report");
+};
 
 export default function Report() {
   return (
@@ -40,7 +80,7 @@ export default function Report() {
         advocate for systemic change.
       </Paragraph>
 
-      <form className="max-w-prose space-y-6">
+      <Form action="/report" method="POST" className="max-w-prose space-y-6">
         <Heading className="mt-12" level={4}>
           About the Incident
         </Heading>
@@ -61,6 +101,13 @@ export default function Report() {
           type="text"
           name="incidentLocation"
           placeholder="e.g. campus, workplace, public space"
+          required
+        />
+
+        <Select
+          name="incidentType"
+          label="Type of Incident"
+          options={incidentTypes}
           required
         />
 
@@ -147,7 +194,7 @@ export default function Report() {
         <Button className="min-w-48" variant="primary" type="submit">
           Submit Report
         </Button>
-      </form>
+      </Form>
     </Section>
   );
 }

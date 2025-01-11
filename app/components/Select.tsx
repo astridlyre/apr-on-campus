@@ -13,7 +13,10 @@ export default function Select(
     props;
   return (
     <label className={clsx("block", className)}>
-      <span className={clsx("text-slate-800", spanClassName)}>{label}</span>
+      <span className={clsx("text-slate-800", spanClassName)}>
+        {label}
+        {props.required ? "*" : "( optional)"}
+      </span>
       <select
         className={clsx(
           "mt-1 block w-full rounded-md border-slate-200 bg-slate-100 focus:border-slate-400 focus:bg-white focus:ring-0",

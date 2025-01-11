@@ -31,7 +31,7 @@ export default function Learn() {
                 Anti-Palestinian Racism: Naming, Framing and Manifestations.
                 Community Consultations and Reflections.
               </em>{" "}
-              Arab Canadian Lawyers Association."
+              Arab Canadian Lawyers Association.
             </span>
           }
           quote="Anti-Palestinian racism is a form of anti-Arab racism that silences, excludes, erases, stereotypes, defames or dehumanizes Palestinians or their narratives. Anti-Palestinian racism takes various forms including: denying the Nakba and justifying violence against Palestinians; failing to acknowledge Palestinians as an Indigenous people with a collective identity, belonging and rights in relation to occupied and historic Palestine; erasing the human rights and equal dignity and worth of Palestinians; excluding or pressuring others to exclude Palestinian perspectives, Palestinians and their allies; defaming Palestinians and their allies with slander such as being inherently antisemitic, a terrorist threat/sympathizer or opposed to democratic values."
