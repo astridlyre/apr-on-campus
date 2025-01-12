@@ -13,7 +13,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     throw new Response("Not Found", { status: 404 });
   }
 
-  const file = await getFile({ fileName: slug, bucketName: "static" });
+  const file = await getFile({ fileName: slug, bucketName: "reports" });
 
   const readableStream = new ReadableStream({
     start(controller) {

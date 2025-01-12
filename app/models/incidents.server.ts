@@ -1,3 +1,4 @@
+import { D } from "@mobily/ts-belt";
 import type { Incident } from "@prisma/client";
 
 import { prisma } from "~/db.server";
@@ -13,7 +14,7 @@ export function getIncidents() {
 	return prisma.incident.findMany({ where: { isActive: true } });
 }
 
-export function createIncident(
+export async function createIncident(
 	init: Pick<
 		Incident,
 		| "date"
@@ -31,9 +32,20 @@ export function createIncident(
 		| "wantsForwarded"
 	> & { files: { href: string; contentType: string }[] },
 ) {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { files, ...rest } = init;
-	return prisma.incident.create({ data: rest });
+	const incident = await prisma.incident.create({ data: rest });
+
+	if (files.length) {
+		await prisma.incidentFile.createMany({
+			data: files.map((file) => ({
+				incidentId: incident.id,
+				href: file.href,
+				contentType: file.contentType,
+			})),
+		});
+	}
+
+	return D.merge(incident, { files });
 }
 
 export function deleteIncident({ id }: Pick<Incident, "id">) {

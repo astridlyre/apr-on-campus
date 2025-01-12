@@ -20,6 +20,7 @@ import Checkbox from "~/components/Checkbox";
 import DateInput from "~/components/DateInput";
 import FileUpload from "~/components/FileUpload";
 import Heading from "~/components/Heading";
+import Inputs from "~/components/Inputs";
 import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
 import Select from "~/components/Select";
@@ -151,7 +152,7 @@ export const action: ActionFunction = async ({ request }) => {
 
       try {
         const uploadedFile = await uploadFile({
-          bucketName: "stories",
+          bucketName: "reports",
           fileName: filename as string,
           data,
         });
@@ -262,7 +263,9 @@ export default function Report() {
       const slicedFiles = sizedFiles.slice(0, maxFiles - files.length);
 
       if (sizedFiles.length > slicedFiles.length) {
-        setFileError("Some files were too large and were not attached.");
+        setFileError(
+          "Some files were too large (i.e. greater than 250MB) and were not attached.",
+        );
       }
 
       if (slicedFiles.length) {
@@ -277,7 +280,7 @@ export default function Report() {
 
   return (
     <Layout>
-      <Section className="mt-8">
+      <Section className="mt-4 sm:mt-8 md:mt-12">
         <Heading level={1}>Report an Incident</Heading>
         <Paragraph>
           If you have experienced or witnessed an incident of Anti-Palestinian
@@ -286,15 +289,15 @@ export default function Report() {
           advocate for systemic change.
         </Paragraph>
 
-        <Form onSubmit={onSubmit} className="max-w-prose space-y-6">
+        <Form onSubmit={onSubmit} className="max-w-prose">
           <AuthenticityTokenInput />
           <HoneypotInputs />
 
-          <Heading className="mt-12" level={4}>
+          <Heading className="mb-6 mt-12" level={4}>
             About the Incident
           </Heading>
 
-          <div className="flex gap-4">
+          <Inputs.Pair>
             <DateInput label="Date of Incident" required name="incidentDate" />
 
             <Select
@@ -303,9 +306,9 @@ export default function Report() {
               name="incidentProvince"
               required
             />
-          </div>
+          </Inputs.Pair>
 
-          <div className="flex gap-4">
+          <Inputs.Pair>
             <TextInput
               label="Place of Incident"
               type="text"
@@ -322,35 +325,42 @@ export default function Report() {
               options={incidentTypes}
               required
             />
-          </div>
+          </Inputs.Pair>
 
-          <TextArea
-            rows={6}
-            label="Description of Incident"
-            name="incidentDescription"
-            required
-            maxLength={5000}
-          />
+          <Inputs.Single>
+            <TextArea
+              className="mt-6"
+              rows={6}
+              label="Description of Incident"
+              name="incidentDescription"
+              required
+              maxLength={5000}
+            />
+          </Inputs.Single>
 
-          <Checkbox
-            label="Incident was Reported to Police"
-            name="wasReported"
-          />
+          <Inputs.Single>
+            <Checkbox
+              label="Incident was Reported to Police"
+              name="wasReported"
+            />
+          </Inputs.Single>
 
-          <FileUpload
-            files={files}
-            setFiles={setFiles}
-            fileInputRef={fileInputRef}
-            handleFileChange={handleFileChange}
-            fileError={fileError}
-            isSubmitting={isSubmitting}
-          />
+          <Inputs.Single>
+            <FileUpload
+              files={files}
+              setFiles={setFiles}
+              fileInputRef={fileInputRef}
+              handleFileChange={handleFileChange}
+              fileError={fileError}
+              isSubmitting={isSubmitting}
+            />
+          </Inputs.Single>
 
           <Heading className="mt-12" level={4}>
             Contact Information
           </Heading>
 
-          <div className="flex gap-4">
+          <Inputs.Pair>
             <TextInput
               label="First Name"
               name="firstName"
@@ -370,9 +380,9 @@ export default function Report() {
               size={24}
               maxLength={100}
             />
-          </div>
+          </Inputs.Pair>
 
-          <div className="flex gap-4">
+          <Inputs.Pair>
             <TextInput
               label="Email"
               name="email"
@@ -392,9 +402,9 @@ export default function Report() {
               size={24}
               maxLength={20}
             />
-          </div>
+          </Inputs.Pair>
 
-          <div className="flex gap-4">
+          <Inputs.Pair>
             <TextInput
               label="City"
               name="city"
@@ -409,27 +419,33 @@ export default function Report() {
               options={provinces}
               autoComplete="address-level1"
             />
-          </div>
+          </Inputs.Pair>
 
-          <Checkbox
-            label="I want my report forwarded to a legal organization."
-            name="wantsForwarded"
-          />
+          <Inputs.Single>
+            <Checkbox
+              label="I want my report forwarded to a legal organization."
+              name="wantsForwarded"
+            />
+          </Inputs.Single>
 
-          <Paragraph variant="small-secondary">
+          <Paragraph className="my-6 sm:mb-8" variant="small-secondary">
             We keep your personal information private and secure. All incident
             reports to APR on Campus’s anti-hate online incident form are kept
             strictly confidential unless otherwise specified.
           </Paragraph>
 
-          <Button
-            disabled={isSubmitting}
-            className="min-w-48"
-            variant="primary"
-            type="submit"
-          >
-            Submit Report
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button
+              disabled={isSubmitting}
+              className="min-w-48"
+              variant="primary"
+              type="submit"
+            >
+              Submit Report
+            </Button>
+
+            {isSubmitting ? <div className="loader" /> : null}
+          </div>
         </Form>
       </Section>
     </Layout>

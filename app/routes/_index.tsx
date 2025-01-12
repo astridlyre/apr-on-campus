@@ -14,7 +14,7 @@ export const meta: MetaFunction = () => [
 export default function Home() {
   return (
     <Layout>
-      <Section className="mt-8">
+      <Section className="mt-4 sm:mt-8 md:mt-12">
         <Heading level={1}>APR on Campus</Heading>
 
         <Paragraph className="text-lg">
@@ -26,7 +26,7 @@ export default function Home() {
           change.
         </Paragraph>
 
-        <div className="mt-16 flex flex-col gap-4 sm:flex-row sm:gap-8">
+        <div className="mt-16 flex flex-col gap-8 sm:flex-row sm:gap-8">
           <LinkButton variant="primary" to="/learn">
             Learn More About APR
           </LinkButton>

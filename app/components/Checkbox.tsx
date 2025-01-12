@@ -12,7 +12,7 @@ const Checkbox = forwardRef(function Checkbox(
 ) {
   const { label, className, spanClassName, inputClassName, ...rest } = props;
   return (
-    <label className={clsx("block items-center", className)}>
+    <label className={clsx("flex items-center", className)}>
       <input
         ref={ref}
         {...rest}

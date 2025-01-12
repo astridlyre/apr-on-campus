@@ -8,6 +8,6 @@ primary_region = 'sea'
   memory = 512
 
 [mounts]
-source = "aprminiodata2"
+source = "aprminiodata"
 destination = "/data"
 

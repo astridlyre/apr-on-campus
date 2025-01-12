@@ -8,10 +8,8 @@ import Layout from "~/layout";
 export default function PrivacyPolicy() {
   return (
     <Layout>
-      <Section title="Privacy Policy" className="mt-8">
-        <Heading className="mt-12" level={4}>
-          Information We Collect
-        </Heading>
+      <Section title="Privacy Policy" className="mt-4 sm:mt-8 md:mt-12">
+        <Heading level={4}>Information We Collect</Heading>
 
         <Paragraph>
           We collect information you provide when you use our website. This

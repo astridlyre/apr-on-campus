@@ -14,7 +14,7 @@ export const meta: MetaFunction = () => [
 export default function About() {
   return (
     <Layout>
-      <Section className="mt-8">
+      <Section className="mt-4 sm:mt-8 md:mt-12">
         <Heading level={1}>About Us</Heading>
 
         <Paragraph>

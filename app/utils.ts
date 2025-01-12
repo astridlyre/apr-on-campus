@@ -132,7 +132,7 @@ export function isParsedFile(
 }
 
 export function isTooBig(file: File) {
-	return file.size > 10 * 1024 * 1024; // 10 MB
+	return file.size > 250 * 1024 * 1024; // 250 MB
 }
 
 export const maxFiles = 10;
@@ -195,4 +195,8 @@ export function formatPhoneNumber(normalizedPhoneNumber: string) {
 	const lineNumber = normalizedPhoneNumber.slice(6);
 
 	return `(${areaCode}) ${centralOfficeCode}-${lineNumber}`;
+}
+
+export function isImage(contentType: string) {
+	return contentType?.startsWith("image/");
 }

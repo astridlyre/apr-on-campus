@@ -64,8 +64,10 @@ export default function FileUpload({
         <small className="mb-4 text-xs text-red-600">{fileError}</small>
 
         <small className="text-xs text-fg2">
-          Up to 10 files. Supported formats include jpg, jpeg, png, gif, webp,
-          mp4, mov, and avi.
+          Up to 10 files. &lt; 250MB each. Supported formats include jpg, jpeg,
+          png, gif, webp, mp4, mov, and avi. If you need to attach a larger
+          video, please consider using a file sharing service and provide the
+          link in your description above.
         </small>
       </div>
     </div>

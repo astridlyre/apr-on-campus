@@ -20,6 +20,7 @@ import {
   formatDateWithoutTime,
   formatPhoneNumber,
   getFormDataValue,
+  isImage,
 } from "~/utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
@@ -55,8 +56,8 @@ function ListItem({ children }: React.PropsWithChildren) {
 
   return (
     <li className="grid grid-cols-12 gap-2">
-      <div className="col-span-2">{first}</div>
-      <div className="col-span-10">{second}</div>
+      <div className="col-span-3 sm:col-span-2">{first}</div>
+      <div className="col-span-9 sm:col-span-10">{second}</div>
     </li>
   );
 }
@@ -99,14 +100,14 @@ export default function IncidentPage() {
   };
 
   return (
-    <Section>
-      <div className="space-y-8 rounded-lg border border-slate-200 bg-white p-6">
-        <header className="flex items-start justify-between border-b pb-4">
+    <Section className="py-4 sm:py-6 md:py-12">
+      <div className="space-y-8 md:rounded-lg md:border md:border-slate-200 md:bg-white md:p-6">
+        <header className="flex flex-col items-start justify-between gap-2 border-b pb-4 md:flex-row">
           <h2 className="text-3xl font-bold text-slate-900">
             Incident Details
           </h2>
 
-          <div className="flex items-center gap-8">
+          <div className="flex w-full items-center justify-between gap-8 md:w-auto md:justify-end">
             <TextLink href={`mailto:${incident.userEmail}`} external>
               Email User
             </TextLink>
@@ -208,10 +209,21 @@ export default function IncidentPage() {
           <h3 className="mb-4 text-lg font-bold text-slate-900">Files</h3>
           <UnorderedList>
             {incident.files.map((file) => (
-              <li key={file.id}>
+              <li key={file.id} className="group relative">
                 <TextLink href={file.href} external>
                   {file.href.split("/").pop()} ({file.contentType})
                 </TextLink>
+                {isImage(file.contentType) ? (
+                  <img
+                    src={file.href}
+                    alt="File preview"
+                    className="absolute bottom-full left-0 z-50 mb-2 hidden w-40 rounded border border-gray-200 bg-white shadow-lg group-hover:block"
+                  />
+                ) : (
+                  <div className="absolute bottom-full left-0 z-50 mb-2 hidden w-48 rounded border border-gray-200 bg-white p-2 text-center text-red-600 shadow-lg group-hover:block">
+                    No Preview Available
+                  </div>
+                )}
               </li>
             ))}
           </UnorderedList>
