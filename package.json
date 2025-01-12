@@ -11,13 +11,10 @@
 		"format": "prettier --write .",
 		"format:schema": "prisma format",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
-		"setup": "prisma generate && prisma migrate deploy && prisma db seed"
+		"setup": "prisma generate && prisma migrate deploy && prisma db seed",
+		"test": "vitest"
 	},
-	"eslintIgnore": [
-		"/node_modules",
-		"/build",
-		"/public/build"
-	],
+	"eslintIgnore": ["/node_modules", "/build", "/public/build"],
 	"dependencies": {
 		"@date-fns/tz": "^1.2.0",
 		"@date-fns/utc": "^2.1.0",
