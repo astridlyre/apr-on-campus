@@ -1,9 +1,4 @@
-# fly.toml app configuration file generated for ubcdivest-minio on 2024-12-19T18:38:11-08:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = 'ubcdivest-minio'
+app = 'apr-on-campus-minio'
 primary_region = 'sea'
 
 [build]
@@ -13,5 +8,6 @@ primary_region = 'sea'
   memory = 512
 
 [mounts]
-source = "miniodata"
+source = "aprminiodata2"
 destination = "/data"
+

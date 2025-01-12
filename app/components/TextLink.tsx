@@ -4,10 +4,11 @@ import clsx from "clsx";
 export default function TextLink(
   props: React.HTMLProps<HTMLAnchorElement> & { external?: boolean },
 ) {
-  const { external, children, className, href, ...rest } = props;
+  // eslint-disable-next-line prefer-const
+  let { external, children, className, href, ...rest } = props;
 
   if (!href) {
-    throw new Error("TextLink requires an href prop");
+    href = "#";
   }
 
   return (

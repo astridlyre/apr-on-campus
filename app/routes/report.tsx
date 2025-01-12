@@ -27,6 +27,7 @@ import TextArea from "~/components/TextArea";
 import TextInput from "~/components/TextInput";
 import { csrf } from "~/csrf.server";
 import { honeypot } from "~/honeypot.server";
+import Layout from "~/layout";
 import { createIncident } from "~/models/incidents.server";
 import { uploadFile } from "~/services/minio.server";
 import {
@@ -35,6 +36,7 @@ import {
   isParsedFile,
   isTooBig,
   maxFiles,
+  normalizePhoneNumber,
   validateEmail,
 } from "~/utils";
 
@@ -188,7 +190,9 @@ export const action: ActionFunction = async ({ request }) => {
       userFirstName: getFormDataValue(form, "firstName"),
       userLastName: getFormDataValue(form, "lastName"),
       userEmail: getFormDataValue(form, "email"),
-      userPhoneNumber: getFormDataValue(form, "phoneNumber"),
+      userPhoneNumber: normalizePhoneNumber(
+        getFormDataValue(form, "phoneNumber"),
+      ),
       userCity: getFormDataValue(form, "city"),
       userProvince: getFormDataValue(form, "province"),
       wasReported: form.has("wasReported"),
@@ -272,150 +276,162 @@ export default function Report() {
   const isSubmitting = navigation.formAction === "/report";
 
   return (
-    <Section>
-      <Heading level={1}>Report an Incident</Heading>
-      <Paragraph>
-        If you have experienced or witnessed an incident of Anti-Palestinian
-        Racism (APR) in Canada, we encourage you to report it using the form
-        below. Your report will help us document the prevalence of APR and
-        advocate for systemic change.
-      </Paragraph>
-
-      <Form onSubmit={onSubmit} className="max-w-prose space-y-6">
-        <AuthenticityTokenInput />
-        <HoneypotInputs />
-
-        <Heading className="mt-12" level={4}>
-          About the Incident
-        </Heading>
-
-        <div className="flex gap-4">
-          <DateInput label="Date of Incident" required name="incidentDate" />
-
-          <Select
-            label="Province of Incident"
-            options={provinces}
-            name="incidentProvince"
-            required
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <TextInput
-            label="Place of Incident"
-            type="text"
-            name="incidentLocation"
-            placeholder="e.g. campus, workplace, public space"
-            required
-            size={36}
-          />
-
-          <Select
-            name="incidentType"
-            label="Type of Incident"
-            options={incidentTypes}
-            required
-          />
-        </div>
-
-        <TextArea
-          rows={6}
-          label="Description of Incident"
-          name="incidentDescription"
-          required
-        />
-
-        <Checkbox label="Incident was Reported to Police" name="wasReported" />
-
-        <FileUpload
-          files={files}
-          setFiles={setFiles}
-          fileInputRef={fileInputRef}
-          handleFileChange={handleFileChange}
-          fileError={fileError}
-          isSubmitting={isSubmitting}
-        />
-
-        <Heading className="mt-12" level={4}>
-          Contact Information
-        </Heading>
-
-        <div className="flex gap-4">
-          <TextInput
-            label="First Name"
-            name="firstName"
-            type="text"
-            required
-            autoComplete="given-name"
-            size={24}
-          />
-
-          <TextInput
-            label="Last Name"
-            name="lastName"
-            type="text"
-            required
-            autoComplete="family-name"
-            size={24}
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <TextInput
-            label="Email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            size={24}
-          />
-
-          <TextInput
-            label="Phone Number"
-            name="phoneNumber"
-            type="text"
-            autoComplete="tel"
-            inputMode="numeric"
-            size={24}
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <TextInput
-            label="City"
-            name="city"
-            type="text"
-            autoComplete="address-level2"
-          />
-
-          <Select
-            label="Province"
-            name="province"
-            options={provinces}
-            autoComplete="address-level1"
-          />
-        </div>
-
-        <Checkbox
-          label="I want my report forwarded to a legal organization."
-          name="wantsForwarded"
-        />
-
-        <Paragraph variant="small-secondary">
-          We keep your personal information private and secure. All incident
-          reports to APR on Campus’s anti-hate online incident form are kept
-          strictly confidential unless otherwise specified.
+    <Layout>
+      <Section className="mt-8">
+        <Heading level={1}>Report an Incident</Heading>
+        <Paragraph>
+          If you have experienced or witnessed an incident of Anti-Palestinian
+          Racism (APR) in Canada, we encourage you to report it using the form
+          below. Your report will help us document the prevalence of APR and
+          advocate for systemic change.
         </Paragraph>
 
-        <Button
-          disabled={isSubmitting}
-          className="min-w-48"
-          variant="primary"
-          type="submit"
-        >
-          Submit Report
-        </Button>
-      </Form>
-    </Section>
+        <Form onSubmit={onSubmit} className="max-w-prose space-y-6">
+          <AuthenticityTokenInput />
+          <HoneypotInputs />
+
+          <Heading className="mt-12" level={4}>
+            About the Incident
+          </Heading>
+
+          <div className="flex gap-4">
+            <DateInput label="Date of Incident" required name="incidentDate" />
+
+            <Select
+              label="Province of Incident"
+              options={provinces}
+              name="incidentProvince"
+              required
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <TextInput
+              label="Place of Incident"
+              type="text"
+              name="incidentLocation"
+              placeholder="e.g. campus, workplace, public space"
+              required
+              size={36}
+              maxLength={500}
+            />
+
+            <Select
+              name="incidentType"
+              label="Type of Incident"
+              options={incidentTypes}
+              required
+            />
+          </div>
+
+          <TextArea
+            rows={6}
+            label="Description of Incident"
+            name="incidentDescription"
+            required
+            maxLength={5000}
+          />
+
+          <Checkbox
+            label="Incident was Reported to Police"
+            name="wasReported"
+          />
+
+          <FileUpload
+            files={files}
+            setFiles={setFiles}
+            fileInputRef={fileInputRef}
+            handleFileChange={handleFileChange}
+            fileError={fileError}
+            isSubmitting={isSubmitting}
+          />
+
+          <Heading className="mt-12" level={4}>
+            Contact Information
+          </Heading>
+
+          <div className="flex gap-4">
+            <TextInput
+              label="First Name"
+              name="firstName"
+              type="text"
+              required
+              autoComplete="given-name"
+              size={24}
+              maxLength={100}
+            />
+
+            <TextInput
+              label="Last Name"
+              name="lastName"
+              type="text"
+              required
+              autoComplete="family-name"
+              size={24}
+              maxLength={100}
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <TextInput
+              label="Email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              size={24}
+              maxLength={300}
+            />
+
+            <TextInput
+              label="Phone Number"
+              name="phoneNumber"
+              type="text"
+              autoComplete="tel"
+              inputMode="numeric"
+              size={24}
+              maxLength={20}
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <TextInput
+              label="City"
+              name="city"
+              type="text"
+              autoComplete="address-level2"
+              maxLength={200}
+            />
+
+            <Select
+              label="Province"
+              name="province"
+              options={provinces}
+              autoComplete="address-level1"
+            />
+          </div>
+
+          <Checkbox
+            label="I want my report forwarded to a legal organization."
+            name="wantsForwarded"
+          />
+
+          <Paragraph variant="small-secondary">
+            We keep your personal information private and secure. All incident
+            reports to APR on Campus’s anti-hate online incident form are kept
+            strictly confidential unless otherwise specified.
+          </Paragraph>
+
+          <Button
+            disabled={isSubmitting}
+            className="min-w-48"
+            variant="primary"
+            type="submit"
+          >
+            Submit Report
+          </Button>
+        </Form>
+      </Section>
+    </Layout>
   );
 }

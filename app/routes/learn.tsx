@@ -8,6 +8,7 @@ import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
 import TextLink from "~/components/TextLink";
 import UnorderedList from "~/components/UnorderedList";
+import Layout from "~/layout";
 
 export const meta: MetaFunction = () => [
   { title: "Learn | APR on Campus" },
@@ -18,8 +19,8 @@ export default function Learn() {
   const [bigImageSrc, setBigImageSrc] = useState("");
 
   return (
-    <>
-      <Section>
+    <Layout>
+      <Section className="mt-8">
         <Heading level={1}>What is Anti-Palestinian Racism?</Heading>
 
         <Blockquote
@@ -210,6 +211,6 @@ export default function Learn() {
           </li>
         </UnorderedList>
       </Section>
-    </>
+    </Layout>
   );
 }

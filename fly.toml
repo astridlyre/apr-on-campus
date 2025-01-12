@@ -12,7 +12,7 @@ cmd = "start.sh"
 entrypoint = "sh"
 
 [mounts]
-source = "data"
+source = "aprdata"
 destination = "/data"
 
 [[services]]

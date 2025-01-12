@@ -1,10 +1,16 @@
 import { D } from "@mobily/ts-belt";
+import { User } from "@prisma/client";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  Outlet,
+  useLoaderData,
+  useOutletContext,
+} from "@remix-run/react";
 
-import Heading from "~/components/Heading";
-import Incident from "~/components/Incident";
-import Section from "~/components/Section";
+import Button from "~/components/Button";
+import IncidentPreview from "~/components/Incident";
+import Layout from "~/layout";
 import { getIncidents } from "~/models/incidents.server";
 import { requireUserId } from "~/session.server";
 
@@ -22,20 +28,41 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Dashboard() {
+  const user = useOutletContext<User>();
   const data = useLoaderData<typeof loader>();
 
   return (
-    <Section>
-      <Heading level={1}>Incident Dashboard</Heading>
-      {data.incidents.map((incident) => (
-        <Incident
-          key={incident.id}
-          incident={D.merge(incident, {
-            createdAt: new Date(incident.createdAt),
-            updatedAt: new Date(incident.updatedAt),
-          })}
-        />
-      ))}
-    </Section>
+    <Layout noFooter>
+      <div className="grid flex-grow grid-cols-12 border-t-4 border-t-slate-700">
+        <div className="col-span-3 flex flex-col gap-[1px] border-r-2">
+          <div className="col-span-3 flex flex-grow flex-col gap-[1px] overflow-y-auto">
+            {data.incidents.map((incident) => (
+              <IncidentPreview
+                key={incident.id}
+                incident={D.merge(incident, {
+                  createdAt: new Date(incident.createdAt),
+                  updatedAt: new Date(incident.updatedAt),
+                })}
+              />
+            ))}
+          </div>
+
+          <Form
+            action="/logout"
+            method="POST"
+            className="flex justify-between gap-2 p-4"
+          >
+            <span className="text-fg2">{user.email}</span>
+            <Button variant="text" type="submit">
+              Logout
+            </Button>
+          </Form>
+        </div>
+
+        <div className="col-span-9">
+          <Outlet />
+        </div>
+      </div>
+    </Layout>
   );
 }

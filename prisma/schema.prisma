@@ -61,8 +61,8 @@ model Incident {
   wantsForwarded Boolean @default(false)
   isActive       Boolean @default(true)
 
-  version      Int            @default(1)
-  IncidentFile IncidentFile[]
+  version Int            @default(1)
+  files   IncidentFile[]
 }
 
 model IncidentFile {

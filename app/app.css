@@ -7,8 +7,12 @@ body {
 	@apply text-fg bg-bg overflow-x-hidden;
 }
 
-.active {
+.link.active {
 	@apply font-bold;
+}
+
+.incident.active {
+	@apply bg-slate-200;
 }
 
 html {

@@ -3,12 +3,24 @@ import { forwardRef } from "react";
 
 const Button = forwardRef(function Button(
   props: React.HTMLProps<HTMLButtonElement> & {
-    variant?: "default" | "primary" | "secondary";
+    variant?: "default" | "primary" | "secondary" | "text";
     type: "button" | "submit" | "reset";
   },
   ref: React.Ref<HTMLButtonElement>,
 ) {
   const { children, className, variant, ...rest } = props;
+
+  if (variant === "text") {
+    return (
+      <button
+        ref={ref}
+        className={clsx("text-secondary hover:text-secondaryDark", className)}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  }
 
   const color =
     variant === "primary"

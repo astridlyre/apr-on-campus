@@ -158,3 +158,41 @@ export function humanReadableSize(file: File) {
 
 	return `${size} PB`;
 }
+
+export function capitalize(str: string) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Normalizes a phone number to its raw digits.
+ * Ensures the phone number is valid for US/Canada.
+ */
+export function normalizePhoneNumber(phoneNumber: string) {
+	const digits = phoneNumber.replace(/\D/g, "");
+
+	if (/^1?([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})$/.test(digits)) {
+		// Remove leading '1' if present (for country code)
+		const normalized = digits.length === 11 ? digits.slice(1) : digits;
+		return normalized;
+	}
+
+	// If the phone number is not valid, return the original string
+	return phoneNumber;
+}
+
+/**
+ * Formats a normalized phone number into a human-readable string.
+ */
+export function formatPhoneNumber(normalizedPhoneNumber: string) {
+	if (
+		!/^([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})$/.test(normalizedPhoneNumber)
+	) {
+		return normalizedPhoneNumber;
+	}
+
+	const areaCode = normalizedPhoneNumber.slice(0, 3);
+	const centralOfficeCode = normalizedPhoneNumber.slice(3, 6);
+	const lineNumber = normalizedPhoneNumber.slice(6);
+
+	return `(${areaCode}) ${centralOfficeCode}-${lineNumber}`;
+}

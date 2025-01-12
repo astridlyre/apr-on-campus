@@ -1,13 +1,13 @@
-import type { User } from "@prisma/client";
-import { Link, NavLink } from "@remix-run/react";
+import { Link, NavLink, useOutletContext } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
 
-export default function Navigation({ user }: { user?: User }) {
+export default function Navigation() {
+  const user = useOutletContext();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="z-10 mb-8 bg-bg2">
+    <nav className="z-10 bg-bg2">
       <div className="flex w-full justify-between">
         <Link
           to="/"
@@ -65,19 +65,19 @@ export default function Navigation({ user }: { user?: User }) {
         >
           <NavLink
             to="/about"
-            className="flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44"
+            className="link flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44"
           >
             About
           </NavLink>
           <NavLink
             to="/learn"
-            className="flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44"
+            className="link flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44"
           >
             What is APR?
           </NavLink>
           <NavLink
             to="/report"
-            className="flex items-center justify-center bg-secondary px-8 py-6 text-lg text-white hover:bg-secondaryLight md:min-w-56"
+            className="link flex items-center justify-center bg-secondary px-8 py-6 text-lg text-white hover:bg-secondaryLight md:min-w-56"
           >
             <span className="hidden md:inline">Report an Incident</span>
             <span className="md:hidden">Report</span>
@@ -86,7 +86,7 @@ export default function Navigation({ user }: { user?: User }) {
           {user ? (
             <NavLink
               to="/dashboard"
-              className="flex items-center justify-center bg-primary px-8 py-6 text-lg hover:bg-primaryLight md:min-w-44"
+              className="link flex items-center justify-center bg-primary px-8 py-6 text-lg hover:bg-primaryLight md:min-w-44"
             >
               Dashboard
             </NavLink>

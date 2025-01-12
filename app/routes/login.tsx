@@ -18,6 +18,7 @@ import { SpamError } from "remix-utils/honeypot/server";
 
 import Button from "~/components/Button";
 import Checkbox from "~/components/Checkbox";
+import Heading from "~/components/Heading";
 import Section from "~/components/Section";
 import TextInput from "~/components/TextInput";
 import { csrf } from "~/csrf.server";
@@ -28,7 +29,7 @@ import { safeRedirect, validateEmail } from "~/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserId(request);
-  if (userId) return redirect("/edit");
+  if (userId) return redirect("/dashboard");
   return {};
 };
 
@@ -97,7 +98,7 @@ export const meta: MetaFunction = () => [{ title: "Login" }];
 export default function LoginPage() {
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/edit";
+  const redirectTo = searchParams.get("redirectTo") || "/dashboard";
   const actionData = useActionData<typeof action>();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -113,66 +114,70 @@ export default function LoginPage() {
   const isSubmitting = navigation.formAction === "/login";
 
   return (
-    <Section title="Login">
-      <Form method="post" action="/login" className="max-w-64 space-y-6">
-        <AuthenticityTokenInput />
-        <HoneypotInputs />
+    <div className="flex justify-center">
+      <div className="min-w-screen-sm mt-16 rounded border border-slate-200 bg-white p-8 shadow">
+        <Heading level={1}>Login</Heading>
 
-        <TextInput
-          size={16}
-          aria-describedby="email-error"
-          aria-invalid={actionData?.errors?.email ? true : undefined}
-          autoComplete="email"
-          // eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus={true}
-          id="email"
-          label="Email"
-          name="email"
-          ref={emailRef}
-          required
-          type="email"
-        />
-        {actionData?.errors?.email ? (
-          <div className="" id="email-error">
-            {actionData.errors.email}
+        <Form method="post" action="/login" className="mt-12 space-y-6">
+          <AuthenticityTokenInput />
+          <HoneypotInputs />
+
+          <TextInput
+            size={32}
+            aria-describedby="email-error"
+            aria-invalid={actionData?.errors?.email ? true : undefined}
+            autoComplete="email"
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus={true}
+            id="email"
+            label="Email"
+            name="email"
+            ref={emailRef}
+            required
+            type="email"
+          />
+          {actionData?.errors?.email ? (
+            <div className="" id="email-error">
+              {actionData.errors.email}
+            </div>
+          ) : null}
+
+          <TextInput
+            size={32}
+            id="password"
+            ref={passwordRef}
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            aria-invalid={actionData?.errors?.password ? true : undefined}
+            aria-describedby="password-error"
+            label="Password"
+            required
+          />
+          {actionData?.errors?.password ? (
+            <div className="" id="password-error">
+              {actionData.errors.password}
+            </div>
+          ) : null}
+
+          <input type="hidden" name="redirectTo" value={redirectTo} />
+
+          <Checkbox id="remember" name="remember" label="Remember Me" />
+
+          <div>
+            <Button
+              className="min-w-44"
+              variant="primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Log in
+            </Button>
+
+            {isSubmitting ? <div className="loader" /> : null}
           </div>
-        ) : null}
-
-        <TextInput
-          size={16}
-          id="password"
-          ref={passwordRef}
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          aria-invalid={actionData?.errors?.password ? true : undefined}
-          aria-describedby="password-error"
-          label="Password"
-          required
-        />
-        {actionData?.errors?.password ? (
-          <div className="" id="password-error">
-            {actionData.errors.password}
-          </div>
-        ) : null}
-
-        <input type="hidden" name="redirectTo" value={redirectTo} />
-
-        <div>
-          <Button
-            className="min-w-32"
-            variant="primary"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            Log in
-          </Button>
-
-          {isSubmitting ? <div className="loader" /> : null}
-        </div>
-
-        <Checkbox id="remember" name="remember" label="Remember Me" />
-      </Form>
-    </Section>
+        </Form>
+      </div>
+    </div>
   );
 }
