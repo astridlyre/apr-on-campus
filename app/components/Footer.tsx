@@ -22,6 +22,7 @@ export default function Footer() {
 
           <small>
             <Link
+              prefetch="intent"
               className="text-slate-600 hover:text-slate-800"
               to="/privacy-policy"
             >

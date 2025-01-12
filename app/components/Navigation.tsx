@@ -10,6 +10,7 @@ export default function Navigation() {
     <nav className="z-10 h-16 bg-bg2 md:h-auto">
       <div className="grid h-full w-full grid-cols-2 justify-between md:flex md:grid-cols-none">
         <Link
+          prefetch="intent"
           to="/"
           className="flex items-center bg-primary px-8 py-4 text-center text-lg font-bold text-fg hover:bg-primaryLight md:py-6"
         >

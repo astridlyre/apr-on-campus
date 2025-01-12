@@ -13,6 +13,7 @@ export default function TextLink(
 
   return (
     <Link
+      prefetch="intent"
       to={href}
       className={clsx("text-secondary hover:underline", className)}
       target={external ? "_blank" : undefined}

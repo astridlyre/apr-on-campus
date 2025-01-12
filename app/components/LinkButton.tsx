@@ -19,6 +19,7 @@ const LinkButton = forwardRef(function LinkButton(
 
   return (
     <Link
+      prefetch="intent"
       ref={ref}
       className={clsx(
         color,
