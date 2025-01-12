@@ -1,9 +1,9 @@
+import type { User } from "@prisma/client";
+import { Link, NavLink } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
-import { NavLink } from "react-router";
-import { Link } from "react-router";
 
-export default function Navigation() {
+export default function Navigation({ user }: { user?: User }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,6 +18,7 @@ export default function Navigation() {
 
         {isOpen ? (
           <div
+            aria-hidden="true"
             className="absolute inset-0 md:hidden"
             onClick={() => setIsOpen(false)}
           ></div>
@@ -48,10 +49,19 @@ export default function Navigation() {
         </button>
 
         <div
+          tabIndex={0}
+          role="button"
+          onKeyDown={(evt) => {
+            if (evt.key === "Escape") {
+              setIsOpen(false);
+            }
+          }}
           onClick={() => setIsOpen(false)}
-          className={`${
-            isOpen ? "block" : "hidden"
-          } absolute left-0 right-0 top-0 mt-16 w-full flex-col bg-slate-200 md:static md:mt-0 md:grid md:w-auto md:grid-cols-3 md:bg-bg`}
+          className={clsx(
+            isOpen ? "block" : "hidden",
+            "absolute left-0 right-0 top-0 mt-16 w-full flex-col bg-slate-200 md:static md:mt-0 md:grid md:w-auto md:bg-bg",
+            user ? "md:grid-cols-4" : "md:grid-cols-3",
+          )}
         >
           <NavLink
             to="/about"
@@ -72,6 +82,15 @@ export default function Navigation() {
             <span className="hidden md:inline">Report an Incident</span>
             <span className="md:hidden">Report</span>
           </NavLink>
+
+          {user ? (
+            <NavLink
+              to="/dashboard"
+              className="flex items-center justify-center bg-primary px-8 py-6 text-lg hover:bg-primaryLight md:min-w-44"
+            >
+              Dashboard
+            </NavLink>
+          ) : null}
         </div>
       </div>
     </nav>

@@ -1,3 +1,5 @@
+import { Link } from "@remix-run/react";
+
 export default function Footer() {
   return (
     <div>
@@ -12,12 +14,20 @@ export default function Footer() {
           d="M0,256L288,288L576,224L864,320L1152,224L1440,128L1440,320L1152,320L864,320L576,320L288,320L0,320Z"
         ></path>
       </svg>
-      <footer className="bg-bg2 p-8 text-fg2">
+      <footer className="bg-bg2 p-12">
         <div className="container mx-auto text-center">
-          <p>
-            &copy; {new Date().getFullYear()} APR on Campus. All Rights
-            Reserved.
-          </p>
+          <small className="text-slate-400">
+            &copy; {new Date().getFullYear()} APR on Campus |{" "}
+          </small>
+
+          <small>
+            <Link
+              className="text-slate-600 hover:text-slate-800"
+              to="/privacy-policy"
+            >
+              Privacy Policy
+            </Link>
+          </small>
         </div>
       </footer>
     </div>

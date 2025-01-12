@@ -1,22 +1,21 @@
+import type { MetaFunction } from "@remix-run/node";
+
 import Heading from "~/components/Heading";
 import LinkButton from "~/components/LinkButton";
 import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
-import type { Route } from "./+types/_index";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "APR on Campus" },
-    { name: "description", content: "APR on Campus" },
-  ];
-}
+export const meta: MetaFunction = () => [
+  { title: "APR on Campus" },
+  { name: "description", content: "APR on Campus" },
+];
 
 export default function Home() {
   return (
     <Section>
       <Heading level={1}>APR on Campus</Heading>
 
-      <Paragraph className="mb-6 mt-6 text-lg">
+      <Paragraph className="text-lg">
         APR on Campus is a reporting platform that collects and documents
         instances of <em>Anti-Palestinian Racism (APR)</em> in Canadian
         educational institutions. Our goal is to provide a safe and confidential

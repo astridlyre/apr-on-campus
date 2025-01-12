@@ -1,17 +1,20 @@
 import clsx from "clsx";
+import { forwardRef } from "react";
 
-export default function Checkbox(
+const Checkbox = forwardRef(function Checkbox(
   props: React.InputHTMLAttributes<HTMLInputElement> & {
     label: string;
     labelClassName?: string;
     spanClassName?: string;
     inputClassName?: string;
   },
+  ref: React.Ref<HTMLInputElement>,
 ) {
   const { label, className, spanClassName, inputClassName, ...rest } = props;
   return (
     <label className={clsx("block items-center", className)}>
       <input
+        ref={ref}
         {...rest}
         type="checkbox"
         className={clsx(
@@ -25,4 +28,6 @@ export default function Checkbox(
       </span>
     </label>
   );
-}
+});
+
+export default Checkbox;

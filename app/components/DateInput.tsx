@@ -1,12 +1,14 @@
 import clsx from "clsx";
+import { forwardRef } from "react";
 
-export default function DateInput(
+const DateInput = forwardRef(function DateInput(
   props: React.InputHTMLAttributes<HTMLInputElement> & {
     label: string;
     labelClassName?: string;
     spanClassName?: string;
     inputClassName?: string;
   },
+  ref: React.ForwardedRef<HTMLInputElement>,
 ) {
   const { label, className, spanClassName, inputClassName, ...rest } = props;
   return (
@@ -16,6 +18,7 @@ export default function DateInput(
         {props.required ? "*" : null}
       </span>
       <input
+        ref={ref}
         {...rest}
         type="date"
         className={clsx(
@@ -25,4 +28,6 @@ export default function DateInput(
       />
     </label>
   );
-}
+});
+
+export default DateInput;

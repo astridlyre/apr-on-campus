@@ -1,18 +1,30 @@
+import { User } from "@prisma/client";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
+  data,
   isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "react-router";
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
+import { AuthenticityTokenProvider } from "remix-utils/csrf/react";
+import { HoneypotProvider } from "remix-utils/honeypot/react";
 
-import type { Route } from "./+types/root";
-import stylesheet from "./app.css?url";
-import Footer from "./components/Footer";
-import Navigation from "./components/Navigation";
+import stylesheet from "~/app.css?url";
+import Footer from "~/components/Footer";
+import Navigation from "~/components/Navigation";
+import Paragraph from "~/components/Paragraph";
+import Section from "~/components/Section";
+import TextLink from "~/components/TextLink";
+import { csrf } from "~/csrf.server";
+import { honeypot } from "~/honeypot.server";
+import { getUser } from "~/session.server";
 
-export const links: Route.LinksFunction = () => [
+export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -26,6 +38,14 @@ export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
+  const [token, cookieHeader] = await csrf.commitToken();
+  const headers = cookieHeader ? { "set-cookie": cookieHeader } : undefined;
+  const honeypotInputProps = honeypot.getInputProps();
+  return data({ user, token, honeypotInputProps }, { headers });
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -36,9 +56,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Navigation />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -47,10 +65,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const data = useLoaderData<typeof loader>();
+  const { token, honeypotInputProps, user } = data as unknown as {
+    token: string;
+    honeypotInputProps: Record<string, string>;
+    user: User;
+  };
+
+  return (
+    <AuthenticityTokenProvider token={token}>
+      <HoneypotProvider {...honeypotInputProps}>
+        <Navigation user={user} />
+        <main className="flex-1">
+          <Outlet context={user} />
+        </main>
+        <Footer />
+      </HoneypotProvider>
+    </AuthenticityTokenProvider>
+  );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary() {
+  const error = useRouteError();
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
@@ -67,14 +103,21 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="container mx-auto p-4 pt-16">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full overflow-x-auto p-4">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <>
+      <Navigation />
+      <main className="flex-1">
+        <Section title={message}>
+          <Paragraph>{details}</Paragraph>
+          {stack ? (
+            <pre className="w-full overflow-x-auto p-4">
+              <code>{stack}</code>
+            </pre>
+          ) : null}
+
+          <TextLink href="/">Why not go back home?</TextLink>
+        </Section>
+      </main>
+      <Footer />
+    </>
   );
 }

@@ -1,10 +1,12 @@
+import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import { Link } from "react-router";
+import { forwardRef } from "react";
 
-export default function LinkButton(
+const LinkButton = forwardRef(function LinkButton(
   props: React.ComponentProps<typeof Link> & {
     variant?: "default" | "primary" | "secondary";
   },
+  ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
   const { children, className, variant, ...rest } = props;
 
@@ -17,6 +19,7 @@ export default function LinkButton(
 
   return (
     <Link
+      ref={ref}
       className={clsx(
         color,
         "px-6 py-3 text-lg shadow-sm sm:px-8 sm:py-4",
@@ -27,4 +30,6 @@ export default function LinkButton(
       {children}
     </Link>
   );
-}
+});
+
+export default LinkButton;

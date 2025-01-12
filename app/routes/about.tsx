@@ -1,23 +1,21 @@
+import type { MetaFunction } from "@remix-run/node";
+
 import Heading from "~/components/Heading";
+import LinkButton from "~/components/LinkButton";
 import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
-import type { Route } from "./+types/about";
-import LinkButton from "~/components/LinkButton";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "About | APR on Campus" },
-    { name: "description", content: "About APR on Campus" },
-  ];
-}
+export const meta: MetaFunction = () => [
+  { title: "About | APR on Campus" },
+  { name: "description", content: "About APR on Campus" },
+];
 
 export default function About() {
   return (
     <Section>
-      <Heading className="mb-2" level={1}>
-        About Us
-      </Heading>
-      <Paragraph className="my-8">
+      <Heading level={1}>About Us</Heading>
+
+      <Paragraph>
         We have set up this reporting website out of concern for the rising
         levels of APR and the lack of accessible platforms for individuals to
         safely share their experiences. This initiative seeks to document
@@ -26,7 +24,8 @@ export default function About() {
         to a collective effort to expose the issue and advocate for systemic
         change.
       </Paragraph>
-      <Paragraph className="my-8">
+
+      <Paragraph>
         Your voice matters. Whether you have faced APR directly, witnessed an
         incident, or want to support someone else in sharing their story, this
         platform is here to amplify your experience and demand accountability.

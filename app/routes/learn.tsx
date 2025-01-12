@@ -1,4 +1,6 @@
+import type { MetaFunction } from "@remix-run/node";
 import { useState } from "react";
+
 import Blockquote from "~/components/Blockquote";
 import Heading from "~/components/Heading";
 import LinkButton from "~/components/LinkButton";
@@ -6,14 +8,11 @@ import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
 import TextLink from "~/components/TextLink";
 import UnorderedList from "~/components/UnorderedList";
-import type { Route } from "./+types/learn";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Learn | APR on Campus" },
-    { name: "description", content: "Learn about APR on Campus" },
-  ];
-}
+export const meta: MetaFunction = () => [
+  { title: "Learn | APR on Campus" },
+  { name: "description", content: "Learn about APR on Campus" },
+];
 
 export default function Learn() {
   const [bigImageSrc, setBigImageSrc] = useState("");
@@ -37,7 +36,7 @@ export default function Learn() {
           quote="Anti-Palestinian racism is a form of anti-Arab racism that silences, excludes, erases, stereotypes, defames or dehumanizes Palestinians or their narratives. Anti-Palestinian racism takes various forms including: denying the Nakba and justifying violence against Palestinians; failing to acknowledge Palestinians as an Indigenous people with a collective identity, belonging and rights in relation to occupied and historic Palestine; erasing the human rights and equal dignity and worth of Palestinians; excluding or pressuring others to exclude Palestinian perspectives, Palestinians and their allies; defaming Palestinians and their allies with slander such as being inherently antisemitic, a terrorist threat/sympathizer or opposed to democratic values."
         />
 
-        <Paragraph className="my-6">
+        <Paragraph>
           <em>Anti-Palestinian Racism (APR)</em> is a dangerous and pervasive
           form of discrimination that targets individuals and communities for
           their Palestinian identity, heritage, or support for Palestinian
@@ -51,7 +50,7 @@ export default function Learn() {
           advocating for human rights.
         </Paragraph>
 
-        <Paragraph className="my-6">
+        <Paragraph>
           If you’ve experienced APR—whether on the UBC campus, in your
           workplace, or anywhere else in Canada—you are not alone. Many people
           have encountered incidents ranging from overt harassment to more
@@ -71,6 +70,14 @@ export default function Learn() {
       <Section>
         <div className="flex w-full gap-8 overflow-x-auto">
           <figure
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+            role="button"
+            tabIndex={0}
+            onKeyDown={(evt) => {
+              if (evt.key === "Enter") {
+                setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+              }
+            }}
             onClick={() => {
               setBigImageSrc("/assets/images/anti-palestinian-racism.png");
             }}
@@ -84,6 +91,14 @@ export default function Learn() {
             />
           </figure>
           <figure
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+            role="button"
+            tabIndex={0}
+            onKeyDown={(evt) => {
+              if (evt.key === "Enter") {
+                setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+              }
+            }}
             onClick={() => {
               setBigImageSrc(
                 "/assets/images/anti-palestinian-racism-at-school.png",
@@ -103,6 +118,7 @@ export default function Learn() {
         {bigImageSrc ? (
           <div className="fixed inset-0 z-20 flex items-center justify-center p-8">
             <div
+              aria-hidden="true"
               onClick={() => {
                 setBigImageSrc("");
               }}
@@ -167,7 +183,7 @@ export default function Learn() {
           <li>Someone is systematically harassing me, online or otherwise</li>
         </UnorderedList>
 
-        <Paragraph className="mt-6">
+        <Paragraph>
           If one or more of the above scenarios apply to you, please consider
           seeking help from the{" "}
           <TextLink

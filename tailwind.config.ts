@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss";
-import typography from "@tailwindcss/typography";
 import forms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
+import type { Config } from "tailwindcss";
 
 export default {
 	content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
@@ -21,9 +21,9 @@ export default {
 				fg2: "#64748b",
 				bg: "#f8fafc",
 				bg2: "#e2e8f0",
-				disabled: "#94a3b8",
-				divider: "#94a3b8",
-				border: "#94a3b8",
+				disabled: "#e2e8f0",
+				divider: "#cbd5e1",
+				border: "#cbd5e1",
 			},
 			fontFamily: {
 				sans: [

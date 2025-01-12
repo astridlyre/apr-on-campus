@@ -1,14 +1,21 @@
+import { Link } from "@remix-run/react";
 import clsx from "clsx";
 
 export default function TextLink(
   props: React.HTMLProps<HTMLAnchorElement> & { external?: boolean },
 ) {
-  const { external, children, className, ...rest } = props;
+  const { external, children, className, href, ...rest } = props;
+
+  if (!href) {
+    throw new Error("TextLink requires an href prop");
+  }
 
   return (
-    <a
+    <Link
+      to={href}
       className={clsx("text-secondary hover:underline", className)}
       target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       {...rest}
     >
       {children}&nbsp;
@@ -30,6 +37,6 @@ export default function TextLink(
           <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
       ) : null}
-    </a>
+    </Link>
   );
 }
