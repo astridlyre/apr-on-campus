@@ -8,9 +8,9 @@ import {
   useLocation,
   useOutletContext,
 } from "@remix-run/react";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 
-import clsx from "clsx";
 import Button from "~/components/Button";
 import IncidentPreview from "~/components/Incident";
 import Layout from "~/layout";
