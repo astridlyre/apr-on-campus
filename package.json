@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "cross-env NODE_ENV=production remix vite:build",
 		"dev": "cross-env NODE_ENV=development remix vite:dev",
-		"start": "cross-env NODE_ENV=production remix-serve ./build/server/index.js",
+		"start": "remix-serve ./build/server/index.js",
 		"typecheck": "tsc",
 		"format": "prettier --write .",
 		"format:schema": "prisma format",
