@@ -5,5 +5,5 @@
 /.react-router/
 /build/
 /prisma/data.db
-
+dump.sql
 .env
