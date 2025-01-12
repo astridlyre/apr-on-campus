@@ -40,7 +40,7 @@ RUN npm run build
 # Finally, build the production image with minimal footprint
 FROM base
 
-ENV DATABASE_URL=file:/aprdata/sqlite.db
+ENV DATABASE_URL=file:/data/sqlite.db
 ENV PORT="8080"
 ENV HOST="0.0.0.0"
 ENV NODE_ENV="production"

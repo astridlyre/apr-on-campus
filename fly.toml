@@ -13,7 +13,7 @@ entrypoint = "sh"
 
 [mounts]
 source = "aprdata"
-destination = "/aprdata"
+destination = "/data"
 
 [[services]]
 internal_port = 8_080
