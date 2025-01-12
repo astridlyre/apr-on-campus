@@ -19,7 +19,6 @@ import { SpamError } from "remix-utils/honeypot/server";
 import Button from "~/components/Button";
 import Checkbox from "~/components/Checkbox";
 import Heading from "~/components/Heading";
-import Section from "~/components/Section";
 import TextInput from "~/components/TextInput";
 import { csrf } from "~/csrf.server";
 import { honeypot } from "~/honeypot.server";
