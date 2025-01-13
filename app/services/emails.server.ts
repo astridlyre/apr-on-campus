@@ -23,26 +23,36 @@ const transporter = nodemailer.createTransport({
 transporter.verify((err) => {
 	if (err) {
 		console.error("Error verifying email transporter", err);
+	} else {
+		console.log("Email transporter verified");
 	}
 });
 
 export interface Message {
-	from: string;
+	from?: string;
 	to: string;
 	subject: string;
 	text: string;
 	html: string;
 }
 
-export default function sendEmail(message: Message) {
-	return new Promise((resolve, reject) => {
-		transporter.sendMail(message, (err, info) => {
-			if (err) {
-				reject(err);
-				return;
-			}
+export default async function sendEmail(message: Message) {
+	if (!message.from) {
+		message.from = "noreply@apr-on-campus.org";
+	}
 
-			resolve(info);
+	try {
+		await new Promise((resolve, reject) => {
+			transporter.sendMail(message, (err, info) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+
+				resolve(info);
+			});
 		});
-	});
+	} catch (err) {
+		console.error("Error sending email", err);
+	}
 }

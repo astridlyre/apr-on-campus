@@ -11,7 +11,10 @@ export function getIncident({ id }: Pick<Incident, "id">) {
 }
 
 export function getIncidents() {
-	return prisma.incident.findMany({ where: { isActive: true } });
+	return prisma.incident.findMany({
+		where: { isActive: true },
+		orderBy: { createdAt: "desc" },
+	});
 }
 
 export async function createIncident(

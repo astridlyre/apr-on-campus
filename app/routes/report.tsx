@@ -30,6 +30,8 @@ import { csrf } from "~/csrf.server";
 import { honeypot } from "~/honeypot.server";
 import Layout from "~/layout";
 import { createIncident } from "~/models/incidents.server";
+import confirmedTemplate from "~/services/emails/confirmed.template";
+import sendEmail from "~/services/emails.server";
 import { uploadFile } from "~/services/minio.server";
 import {
   getFormDataValue,
@@ -207,7 +209,29 @@ export const action: ActionFunction = async ({ request }) => {
       return data({ errors }, 422);
     }
 
-    await createIncident(incident);
+    const createdIncident = await createIncident(incident);
+
+    const emailUser = {
+      firstName: incident.userFirstName,
+      email: incident.userEmail,
+    };
+
+    const subject = "Thank you for your report - APR on Campus";
+
+    sendEmail({
+      to: incident.userEmail,
+      subject,
+      text: confirmedTemplate.text({
+        subject,
+        user: emailUser,
+        reportId: createdIncident.id,
+      }),
+      html: confirmedTemplate.html({
+        subject,
+        user: emailUser,
+        reportId: createdIncident.id,
+      }),
+    });
 
     return redirect("/confirmed");
   } catch (err) {

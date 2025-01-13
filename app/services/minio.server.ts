@@ -19,8 +19,6 @@ const minioClient = new Minio.Client({
 	secretKey: process.env.MINIO_ROOT_PASSWORD,
 });
 
-minioClient.listBuckets().then(console.log).catch(console.error);
-
 export async function uploadFile({
 	bucketName,
 	fileName,
