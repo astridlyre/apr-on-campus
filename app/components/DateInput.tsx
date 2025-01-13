@@ -13,10 +13,11 @@ const DateInput = forwardRef(function DateInput(
   },
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {
-  const { label, className, spanClassName, inputClassName, ...rest } = props;
+  const { noFuture, label, className, spanClassName, inputClassName, ...rest } =
+    props;
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    if (!props.noFuture) {
+    if (!noFuture) {
       return;
     }
 

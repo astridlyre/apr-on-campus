@@ -72,6 +72,7 @@ const incidentTypes = [
   { label: "Online", value: "online" },
   { label: "Vandalism", value: "vandalism" },
   { label: "Violence", value: "violence" },
+  { label: "Other", value: "other" },
 ];
 
 interface Errors {
@@ -224,12 +225,12 @@ export const action: ActionFunction = async ({ request }) => {
       text: confirmedTemplate.text({
         subject,
         user: emailUser,
-        reportId: createdIncident.id,
+        incident: createdIncident,
       }),
       html: confirmedTemplate.html({
         subject,
         user: emailUser,
-        reportId: createdIncident.id,
+        incident: createdIncident,
       }),
     });
 
