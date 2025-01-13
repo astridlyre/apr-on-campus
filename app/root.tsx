@@ -16,15 +16,13 @@ import { AuthenticityTokenProvider } from "remix-utils/csrf/react";
 import { HoneypotProvider } from "remix-utils/honeypot/react";
 
 import stylesheet from "~/app.css?url";
-import Footer from "~/components/Footer";
-import Navigation from "~/components/Navigation";
 import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
 import TextLink from "~/components/TextLink";
 import { csrf } from "~/csrf.server";
 import { honeypot } from "~/honeypot.server";
+import Layout from "~/layout";
 import { getUser } from "~/session.server";
-import Layout from "./layout";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },

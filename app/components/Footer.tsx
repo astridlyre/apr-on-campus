@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import TextLink from "./TextLink";
 
 export default function Footer() {
