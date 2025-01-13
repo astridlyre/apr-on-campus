@@ -60,3 +60,41 @@ html {
 		background-position: 100% 0, 0 100%, 50% 100%;
 	}
 }
+
+:root {
+	--nav-height: 3rem;
+}
+
+.nav-height {
+	height: var(--nav-height);
+}
+
+@media (min-width: 768px) {
+	:root {
+		--nav-height: 4rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	:root {
+		--nav-height: 5rem;
+	}
+}
+
+.pt-nav-height {
+	padding-top: var(--nav-height);
+}
+
+.page-height {
+	height: calc(100vh - var(--nav-height));
+}
+
+.md-page-height {
+	height: auto;
+}
+
+@media (min-width: 768px) {
+	.md-page-height {
+		height: calc(100vh - var(--nav-height));
+	}
+}

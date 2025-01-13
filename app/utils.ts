@@ -200,3 +200,18 @@ export function formatPhoneNumber(normalizedPhoneNumber: string) {
 export function isImage(contentType: string) {
 	return contentType?.startsWith("image/");
 }
+
+export function plural(
+	items: unknown[] | { length: number },
+	word: string,
+	pluralForm?: string,
+) {
+	if (!Array.isArray(items)) {
+		throw new TypeError("Expected an array");
+	}
+	if (typeof word !== "string") {
+		throw new TypeError("Expected a string");
+	}
+	const pluralWord = pluralForm || `${word}s`;
+	return items.length === 1 ? word : pluralWord;
+}

@@ -16,6 +16,7 @@ import IncidentPreview from "~/components/Incident";
 import Layout from "~/layout";
 import { getIncidents } from "~/models/incidents.server";
 import { requireUserId } from "~/session.server";
+import { plural } from "~/utils";
 
 export const meta: MetaFunction = () => [
   { title: "Dashboard | APR on Campus" },
@@ -46,15 +47,15 @@ export default function Dashboard() {
   }, [location.pathname]);
 
   return (
-    <Layout noFooter>
-      <div className="grid flex-grow grid-cols-12 border-t-4 border-t-slate-700">
+    <Layout noFooter className="md:h-screen md:overflow-y-hidden">
+      <div className="grid flex-grow grid-cols-12 border-t-4 border-t-slate-700 md:h-screen">
         <div
           className={clsx(
-            "col-span-12 flex-col gap-[1px] border-r-2 md:col-span-3 md:flex",
+            "md-page-height col-span-12 flex-col gap-[1px] border-r-2 bg-slate-100 md:col-span-3 md:flex",
             showIncidentList ? "flex" : "hidden",
           )}
         >
-          <div className="flex flex-grow flex-col gap-[1px] overflow-y-auto">
+          <div className="md-page-height overflow-y-scroll">
             {data.incidents.map((incident) => (
               <IncidentPreview
                 key={incident.id}
@@ -66,21 +67,26 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <Form
-            action="/logout"
-            method="POST"
-            className="flex justify-between gap-2 p-4"
-          >
-            <span className="text-fg2">{user.email}</span>
-            <Button variant="text" type="submit">
-              Logout
-            </Button>
-          </Form>
+          <div className="border-t-2 bg-bg p-4">
+            <p className="text-sm">
+              {data.incidents.length} {plural(data.incidents, "incident")}
+            </p>
+            <Form
+              action="/logout"
+              method="POST"
+              className="flex justify-between gap-2"
+            >
+              <span className="text-fg2">{user.email}</span>
+              <Button variant="text" type="submit">
+                Logout
+              </Button>
+            </Form>
+          </div>
         </div>
 
         <div
           className={clsx(
-            "col-span-12 md:col-span-9 md:block",
+            "col-span-12 pb-16 md:col-span-9 md:block md:overflow-y-scroll",
             showIncidentList ? "hidden" : "block",
           )}
         >
