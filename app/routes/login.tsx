@@ -114,7 +114,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center">
-      <div className="min-w-screen-sm mt-16 rounded border border-slate-200 bg-white p-8 shadow">
+      <div className="min-w-screen-sm mt-16 rounded border border-border bg-bg2 p-8 shadow">
         <Heading level={1}>Login</Heading>
 
         <Form method="post" action="/login" className="mt-12 space-y-6">

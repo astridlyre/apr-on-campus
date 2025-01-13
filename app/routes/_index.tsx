@@ -27,11 +27,11 @@ export default function Home() {
         </Paragraph>
 
         <div className="mt-16 flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-8">
-          <LinkButton className="text-center" variant="primary" to="/learn">
+          <LinkButton className="text-center" variant="secondary" to="/learn">
             Learn More About APR
           </LinkButton>
 
-          <LinkButton className="text-center" variant="secondary" to="/report">
+          <LinkButton className="text-center" variant="primary" to="/report">
             Report an Instance of APR
           </LinkButton>
         </div>

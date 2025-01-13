@@ -101,11 +101,9 @@ export default function IncidentPage() {
 
   return (
     <Section className="py-4 sm:py-6 md:py-12">
-      <div className="space-y-8 md:rounded-lg md:border md:border-slate-200 md:bg-white md:p-6">
+      <div className="md:bg-bg0 space-y-8 md:rounded-lg md:border md:border-divider md:p-6">
         <header className="flex flex-col items-start justify-between gap-2 border-b pb-4 md:flex-row">
-          <h2 className="text-3xl font-bold text-slate-900">
-            Incident Details
-          </h2>
+          <h2 className="text-3xl font-bold text-fg">Incident Details</h2>
 
           <div className="flex w-full items-center justify-between gap-8 md:w-auto md:justify-end">
             <TextLink href={`mailto:${incident.userEmail}`} external>
@@ -117,7 +115,7 @@ export default function IncidentPage() {
               <HoneypotInputs />
 
               <button
-                className="border border-slate-300 bg-slate-200 px-2 py-1 text-sm hover:bg-slate-300 hover:shadow"
+                className="rounded border border-border bg-bg2 px-2 py-1 text-sm hover:bg-bg3 hover:shadow"
                 type="submit"
                 name="action"
                 value="delete"
@@ -129,7 +127,7 @@ export default function IncidentPage() {
         </header>
 
         <section>
-          <h3 className="mb-4 text-xl font-bold text-slate-900">
+          <h3 className="mb-4 text-xl font-bold text-fg">
             Incident Information
           </h3>
           <ul className="space-y-2">
@@ -153,7 +151,7 @@ export default function IncidentPage() {
         </section>
 
         <section>
-          <h3 className="mb-4 text-xl font-bold text-slate-900">Description</h3>
+          <h3 className="mb-4 text-xl font-bold text-fg">Description</h3>
           <div className="prose text-fg2">
             {incident.description.split("\n").map((line, index) => (
               <p key={index}>{line.trim()}</p>
@@ -162,9 +160,7 @@ export default function IncidentPage() {
         </section>
 
         <section>
-          <h3 className="mb-4 text-xl font-bold text-slate-900">
-            User Information
-          </h3>
+          <h3 className="mb-4 text-xl font-bold text-fg">User Information</h3>
           <ul className="space-y-2">
             <ListItem>
               <span className="font-medium">Name:</span>
@@ -192,7 +188,7 @@ export default function IncidentPage() {
         </section>
 
         <section>
-          <h3 className="text-xl font-bold text-slate-900">Status</h3>
+          <h3 className="text-xl font-bold text-fg">Status</h3>
           <ul className="space-y-2">
             <li>
               <span className="font-medium">Reported to police?</span>{" "}
@@ -206,7 +202,7 @@ export default function IncidentPage() {
         </section>
 
         <section>
-          <h3 className="mb-4 text-lg font-bold text-slate-900">Files</h3>
+          <h3 className="mb-4 text-lg font-bold text-fg">Files</h3>
           <UnorderedList>
             {incident.files.map((file) => (
               <li key={file.id} className="group relative">

@@ -18,7 +18,7 @@ const Checkbox = forwardRef(function Checkbox(
         {...rest}
         type="checkbox"
         className={clsx(
-          "mr-1 rounded border-transparent bg-slate-200 text-slate-700 focus:border-transparent focus:bg-slate-200 focus:ring-1 focus:ring-slate-500 focus:ring-offset-2",
+          "bg-bg0 mr-1 rounded border-border text-fg focus:border-transparent focus:bg-white focus:ring-1 focus:ring-border focus:ring-offset-2",
           inputClassName,
         )}
       />

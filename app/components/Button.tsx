@@ -14,7 +14,7 @@ const Button = forwardRef(function Button(
     return (
       <button
         ref={ref}
-        className={clsx("text-secondary hover:text-secondaryDark", className)}
+        className={clsx("text-secondary hover:underline", className)}
         {...rest}
       >
         {children}
@@ -24,17 +24,17 @@ const Button = forwardRef(function Button(
 
   const color =
     variant === "primary"
-      ? "bg-primary text-slate-900 hover:bg-primaryLight disabled:hover:bg-primary"
+      ? "bg-primary text-white hover:bg-primaryDark disabled:hover:bg-disabled"
       : variant === "secondary"
-        ? "bg-secondary text-slate-900 hover:bg-secondaryLight disabled:hover:bg-secondary"
-        : "bg-slate-300 text-slate-900 hover:bg-slate-200 disabled:hover:bg-slate-300";
+        ? "bg-secondary text-white hover:bg-secondaryDark disabled:hover:bg-disabled"
+        : "bg-neutral text-white hover:bg-neutralDark disabled:hover:bg-disabled";
 
   return (
     <button
       ref={ref}
       className={clsx(
         color,
-        "px-6 py-3 text-lg shadow-sm disabled:opacity-50 disabled:shadow-none sm:px-8 sm:py-4",
+        "rounded px-6 py-3 text-lg shadow-sm disabled:opacity-50 disabled:shadow-none sm:px-8 sm:py-4",
         className,
       )}
       {...rest}

@@ -12,7 +12,7 @@ export default function Navigation() {
         <Link
           prefetch="intent"
           to="/"
-          className="z-10 flex items-center bg-primary px-8 text-center text-lg font-bold text-fg hover:bg-primaryLight"
+          className="z-10 flex items-center bg-secondary px-8 text-center text-lg font-bold text-white hover:bg-secondaryDark"
         >
           APR on Campus
         </Link>
@@ -21,7 +21,7 @@ export default function Navigation() {
           {isOpen ? (
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-slate-200 opacity-70 md:hidden"
+              className="absolute inset-0 bg-bg2 opacity-70 md:hidden"
               onClick={() => setIsOpen(false)}
             ></div>
           ) : null}
@@ -29,7 +29,7 @@ export default function Navigation() {
           <button
             className={clsx(
               "z-10 block px-4 py-2 text-fg md:hidden",
-              isOpen && "bg-slate-200",
+              isOpen && "bg-bg2",
             )}
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -67,22 +67,21 @@ export default function Navigation() {
           >
             <NavLink
               to="/learn"
-              className="link flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44 md:py-0"
+              className="link flex items-center justify-center bg-bg2 px-8 py-6 text-lg text-fg hover:bg-bg3 md:min-w-44 md:py-0"
             >
               What is APR?
             </NavLink>
             <NavLink
               to="/report"
-              className="link flex items-center justify-center bg-secondary px-8 py-6 text-lg text-white hover:bg-secondaryLight md:min-w-56 md:py-0"
+              className="link flex items-center justify-center bg-primary px-8 py-6 text-lg text-white hover:bg-primaryDark md:min-w-60 md:py-0"
             >
-              <span className="hidden md:inline">Report an Incident</span>
-              <span className="md:hidden">Report</span>
+              Report an Incident
             </NavLink>
 
             {user ? (
               <NavLink
                 to="/dashboard"
-                className="link flex items-center justify-center bg-primary px-8 py-6 text-lg hover:bg-primaryLight md:min-w-44 md:py-0"
+                className="link flex items-center justify-center bg-secondary px-8 py-6 text-lg text-white hover:bg-secondaryDark md:min-w-48 md:py-0"
               >
                 Dashboard
               </NavLink>

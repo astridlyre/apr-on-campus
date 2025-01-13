@@ -7,7 +7,7 @@ export default function Blockquote(props: {
 }) {
   return (
     <div className={clsx("max-w-prose", props.className)}>
-      <blockquote className="my-4 border-l-4 border-slate-300 py-2 pl-4 text-lg italic text-fg2">
+      <blockquote className="my-4 border-l-4 border-divider py-2 pl-4 text-lg italic text-fg2">
         “{props.quote}”
       </blockquote>
       {props.source ? (

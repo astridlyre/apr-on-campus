@@ -62,7 +62,7 @@ export default function Learn() {
         </Paragraph>
 
         <div className="mt-16">
-          <LinkButton to="/report" variant="secondary">
+          <LinkButton to="/report" variant="primary">
             Report an Incident of APR
           </LinkButton>
         </div>
@@ -191,9 +191,8 @@ export default function Learn() {
             href="https://docs.google.com/forms/d/e/1FAIpQLSdE8OmtyTgZJHvCqjQnN1JQSZ7PXX6NmMHtGlYaBahNsxKokg/viewform"
             external
           >
-            Legal Centre for Palestine
+            Legal Centre for Palestine.
           </TextLink>
-          .
         </Paragraph>
       </Section>
 

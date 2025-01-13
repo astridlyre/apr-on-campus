@@ -18,7 +18,7 @@ export default function FileUpload({
   isSubmitting: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded border border-divider bg-slate-100 p-4">
+    <div className="bg-bg0 flex flex-col gap-4 rounded border border-divider p-4">
       <label>
         <span
           role="button"
@@ -28,7 +28,7 @@ export default function FileUpload({
             }
           }}
           tabIndex={0}
-          className="inline-block cursor-pointer rounded-md bg-slate-300 px-4 py-2 text-slate-800 shadow-sm hover:bg-slate-200"
+          className="inline-block cursor-pointer rounded-md bg-bg2 px-4 py-2 text-fg shadow-sm hover:bg-bg3"
         >
           Attach photos (optional)
         </span>

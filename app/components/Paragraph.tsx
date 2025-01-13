@@ -10,7 +10,7 @@ export default function Paragraph(
   if (variant === "secondary") {
     return (
       <p
-        className={clsx("mb-4 mt-6 max-w-prose text-slate-400", className)}
+        className={clsx("mb-4 mt-6 max-w-prose text-fg2", className)}
         {...rest}
       >
         {children}
@@ -21,10 +21,7 @@ export default function Paragraph(
   if (variant === "small") {
     return (
       <p
-        className={clsx(
-          "mb-4 mt-6 max-w-prose text-sm text-slate-700",
-          className,
-        )}
+        className={clsx("mb-4 mt-6 max-w-prose text-sm text-fg2", className)}
         {...rest}
       >
         {children}
@@ -35,10 +32,7 @@ export default function Paragraph(
   if (variant === "small-secondary") {
     return (
       <p
-        className={clsx(
-          "mb-4 mt-6 max-w-prose text-sm text-slate-400",
-          className,
-        )}
+        className={clsx("text-fg-3 mb-4 mt-6 max-w-prose text-sm", className)}
         {...rest}
       >
         {children}
@@ -47,10 +41,7 @@ export default function Paragraph(
   }
 
   return (
-    <p
-      className={clsx("mb-4 mt-6 max-w-prose text-slate-700", className)}
-      {...rest}
-    >
+    <p className={clsx("mb-4 mt-6 max-w-prose text-fg", className)} {...rest}>
       {children}
     </p>
   );

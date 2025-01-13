@@ -12,10 +12,10 @@ const LinkButton = forwardRef(function LinkButton(
 
   const color =
     variant === "primary"
-      ? "bg-primary text-slate-900 hover:bg-primaryLight"
+      ? "bg-primary text-white hover:bg-primaryDark"
       : variant === "secondary"
-        ? "bg-secondary text-white hover:bg-secondaryLight"
-        : "bg-slate-300 text-slate-900 hover:bg-slate-200";
+        ? "bg-secondary text-white hover:bg-secondaryDark"
+        : "bg-neutral text-white hover:bg-neutralDark";
 
   return (
     <Link
@@ -23,7 +23,7 @@ const LinkButton = forwardRef(function LinkButton(
       ref={ref}
       className={clsx(
         color,
-        "px-6 py-3 text-lg shadow-sm sm:px-8 sm:py-4",
+        "rounded px-6 py-3 text-lg shadow-sm sm:px-8 sm:py-4",
         className,
       )}
       {...rest}

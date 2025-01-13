@@ -17,7 +17,7 @@ export default function Confirmed() {
         </Paragraph>
 
         <div className="mt-12 flex items-center gap-8">
-          <LinkButton variant="secondary" to="/report">
+          <LinkButton variant="primary" to="/report">
             Report another Incident
           </LinkButton>
 

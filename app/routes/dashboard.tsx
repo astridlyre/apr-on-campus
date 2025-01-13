@@ -48,10 +48,10 @@ export default function Dashboard() {
 
   return (
     <Layout noFooter className="md:h-screen md:overflow-y-hidden">
-      <div className="grid flex-grow grid-cols-12 border-t-4 border-t-slate-700 md:h-screen">
+      <div className="grid flex-grow grid-cols-12 border-t-4 border-t-fg md:h-screen">
         <div
           className={clsx(
-            "md-page-height col-span-12 flex-col gap-[1px] border-r-2 bg-slate-100 md:col-span-3 md:flex",
+            "md-page-height col-span-12 flex-col gap-[1px] border-r-2 border-r-border bg-bg md:col-span-3 md:flex",
             showIncidentList ? "flex" : "hidden",
           )}
         >
@@ -67,7 +67,7 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="border-t-2 bg-bg p-4">
+          <div className="border-t-2 border-t-border p-4">
             <p className="text-sm">
               {data.incidents.length} {plural(data.incidents, "incident")}
             </p>

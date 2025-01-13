@@ -4,9 +4,10 @@
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
-		"build": "cross-env NODE_ENV=production remix vite:build",
+		"build": "npm run partytown && cross-env NODE_ENV=production PORT=8080 HOST=0.0.0.0 remix vite:build",
 		"dev": "cross-env NODE_ENV=development remix vite:dev",
 		"start": "remix-serve ./build/server/index.js",
+		"partytown": "partytown copylib public/~partytown",
 		"typecheck": "tsc",
 		"format": "prettier --write .",
 		"format:schema": "prisma format",
@@ -14,16 +15,13 @@
 		"setup": "prisma generate && prisma migrate deploy && prisma db seed",
 		"test": "vitest"
 	},
-	"eslintIgnore": [
-		"/node_modules",
-		"/build",
-		"/public/build"
-	],
+	"eslintIgnore": ["/node_modules", "/build", "/public/build"],
 	"dependencies": {
 		"@date-fns/tz": "^1.2.0",
 		"@date-fns/utc": "^2.1.0",
 		"@mobily/ts-belt": "4.0.0-rc.5",
 		"@prisma/client": "^6.2.1",
+		"@qwik.dev/partytown": "^0.11.0",
 		"@remix-run/node": "^2.15.2",
 		"@remix-run/react": "^2.15.2",
 		"@remix-run/serve": "^2.15.2",

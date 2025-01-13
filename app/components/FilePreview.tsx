@@ -16,7 +16,7 @@ export default function FilePreview({
         <button
           disabled={isSubmitting}
           type="button"
-          className="absolute right-0 top-0 flex h-6 w-6 items-center justify-center rounded-bl rounded-tr bg-slate-300 hover:bg-slate-200"
+          className="bg-neutral hover:bg-neutralDark absolute right-0 top-0 flex h-6 w-6 items-center justify-center rounded-bl rounded-tr text-white"
           onClick={onDelete}
         >
           &times;
@@ -42,7 +42,7 @@ export default function FilePreview({
       <button
         disabled={isSubmitting}
         type="button"
-        className="absolute right-0 top-0 flex h-6 w-6 items-center justify-center rounded-bl rounded-tr bg-slate-300 hover:bg-slate-200"
+        className="bg-neutral hover:bg-neutralDark absolute right-0 top-0 flex h-6 w-6 items-center justify-center rounded-bl rounded-tr text-white"
         onClick={onDelete}
       >
         &times;

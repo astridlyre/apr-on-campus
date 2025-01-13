@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { Partytown } from "@qwik.dev/partytown/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   data,
@@ -23,19 +24,30 @@ import TextLink from "~/components/TextLink";
 import { csrf } from "~/csrf.server";
 import { honeypot } from "~/honeypot.server";
 import { getUser } from "~/session.server";
+import Layout from "./layout";
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap",
-  },
   { rel: "stylesheet", href: stylesheet },
+  {
+    rel: "icon",
+    type: "image/png",
+    href: "/favicon-96x96.png",
+    sizes: "96x96",
+  },
+  {
+    rel: "icon",
+    type: "image/svg+xml",
+    href: "/favicon.svg",
+  },
+  {
+    rel: "shortcut icon",
+    href: "/favicon.ico",
+  },
+  {
+    rel: "apple-touch-icon",
+    sizes: "180x180",
+    href: "/apple-touch-icon.png",
+  },
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -59,8 +71,44 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
+        <meta
+          name="description"
+          content="APR on Campus is a reporting platform that collects and documents instances of Anti-Palestinian Racism (APR) in Canadian educational institutions."
+        />
+        <meta name="author" content="APR on Campus" />
+        <meta property="og:title" content="APR on Campus" />
+        <meta
+          property="og:description"
+          content="APR on Campus is a reporting platform that collects and documents instances of Anti-Palestinian Racism (APR) in Canadian educational institutions."
+        />
+        <meta property="og:url" content="https://apr-on-campus.org/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://apr-on-campus.org/" />
+        <meta name="twitter:title" content="APR on Campus" />
+        <meta
+          name="twitter:description"
+          content="APR on Campus is a reporting platform that collects and documents instances of Anti-Palestinian Racism (APR) in Canadian educational institutions."
+        />
+        <meta name="apple-mobile-web-app-title" content="APR on Campus" />
+        <Partytown forward={["dataLayer.push"]} />
+        <script
+          type="text/partytown"
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-L0CZ4FVN1Y"
+        />
+        <script
+          type="text/partytown"
+          dangerouslySetInnerHTML={{
+            __html: `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L0CZ4FVN1Y');
+      `,
+          }}
+        />
         <Links />
+        <Meta />
       </head>
       <body>
         <AuthenticityTokenProvider token={token}>
@@ -93,21 +141,65 @@ export function ErrorBoundary() {
   }
 
   return (
-    <>
-      <Navigation />
-      <main className="flex-1">
-        <Section title={message}>
-          <Paragraph>{details}</Paragraph>
-          {stack ? (
-            <pre className="w-full overflow-x-auto p-4">
-              <code>{stack}</code>
-            </pre>
-          ) : null}
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="APR on Campus is a reporting platform that collects and documents instances of Anti-Palestinian Racism (APR) in Canadian educational institutions."
+        />
+        <meta name="author" content="APR on Campus" />
+        <meta property="og:title" content="APR on Campus" />
+        <meta
+          property="og:description"
+          content="APR on Campus is a reporting platform that collects and documents instances of Anti-Palestinian Racism (APR) in Canadian educational institutions."
+        />
+        <meta property="og:url" content="https://apr-on-campus.org/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://apr-on-campus.org/" />
+        <meta name="twitter:title" content="APR on Campus" />
+        <meta
+          name="twitter:description"
+          content="APR on Campus is a reporting platform that collects and documents instances of Anti-Palestinian Racism (APR) in Canadian educational institutions."
+        />
+        <meta name="apple-mobile-web-app-title" content="APR on Campus" />
+        <Partytown forward={["dataLayer.push"]} />
+        <script
+          type="text/partytown"
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-L0CZ4FVN1Y"
+        />
+        <script
+          type="text/partytown"
+          dangerouslySetInnerHTML={{
+            __html: `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L0CZ4FVN1Y');
+      `,
+          }}
+        />
+        <Links />
+        <Meta />
+      </head>
+      <body>
+        <Layout>
+          <Section title={message}>
+            <Paragraph>{details}</Paragraph>
+            {stack ? (
+              <pre className="w-full overflow-x-auto p-4">
+                <code>{stack}</code>
+              </pre>
+            ) : null}
 
-          <TextLink href="/">Why not go back home?</TextLink>
-        </Section>
-      </main>
-      <Footer />
-    </>
+            <TextLink href="/">Why not go back home?</TextLink>
+          </Section>
+        </Layout>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
   );
 }

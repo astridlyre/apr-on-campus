@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import TextLink from "./TextLink";
 
 export default function Footer() {
   return (
@@ -6,7 +7,7 @@ export default function Footer() {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"
-        className="text-slate-200"
+        className="text-bg2"
       >
         <path
           fill="currentColor"
@@ -16,18 +17,12 @@ export default function Footer() {
       </svg>
       <footer className="bg-bg2 p-12">
         <div className="container mx-auto text-center">
-          <small className="text-slate-400">
+          <small className="text-fg3">
             &copy; {new Date().getFullYear()} APR on Campus |{" "}
           </small>
 
           <small>
-            <Link
-              prefetch="intent"
-              className="text-slate-600 hover:text-slate-800"
-              to="/privacy-policy"
-            >
-              Privacy Policy
-            </Link>
+            <TextLink href="/privacy-policy">Privacy Policy</TextLink>
           </small>
         </div>
       </footer>
