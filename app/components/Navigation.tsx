@@ -8,7 +8,7 @@ export default function Navigation() {
 
   return (
     <nav className="z-10 bg-bg2">
-      <div className="nav-height grid w-full grid-cols-2 justify-between md:flex md:grid-cols-none">
+      <div className="nav-height flex w-full justify-between">
         <Link
           prefetch="intent"
           to="/"
