@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { isFuture } from "date-fns";
 import { forwardRef } from "react";
 
 const DateInput = forwardRef(function DateInput(
@@ -7,10 +8,41 @@ const DateInput = forwardRef(function DateInput(
     labelClassName?: string;
     spanClassName?: string;
     inputClassName?: string;
+    noFuture?: boolean;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   },
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {
   const { label, className, spanClassName, inputClassName, ...rest } = props;
+
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    if (!props.noFuture) {
+      return;
+    }
+
+    // ensure date is not in the future
+    try {
+      const date = new Date(evt.target.value);
+
+      if (date.toString() === "Invalid Date") {
+        return;
+      }
+
+      date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+      const el = evt.target as HTMLInputElement;
+
+      if (isFuture(date)) {
+        el.setCustomValidity("Date cannot be in the future");
+        el.reportValidity();
+        return;
+      }
+
+      el.setCustomValidity("");
+    } catch {
+      //
+    }
+  };
+
   return (
     <label className={clsx("block", className)}>
       <span className={clsx("text-slate-800", spanClassName)}>
@@ -20,6 +52,7 @@ const DateInput = forwardRef(function DateInput(
       <input
         ref={ref}
         {...rest}
+        onChange={handleChange}
         type="date"
         className={clsx(
           "mt-1 block w-full rounded-md border-transparent bg-slate-100 focus:border-slate-400 focus:bg-white focus:ring-0",

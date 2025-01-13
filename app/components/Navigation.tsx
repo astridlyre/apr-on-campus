@@ -62,15 +62,9 @@ export default function Navigation() {
             className={clsx(
               isOpen ? "block" : "hidden",
               "pt-nav-height absolute left-0 right-0 top-0 w-full flex-col md:static md:mt-0 md:grid md:w-auto md:bg-bg md:pt-0",
-              user ? "md:grid-cols-4" : "md:grid-cols-3",
+              user ? "md:grid-cols-3" : "md:grid-cols-2",
             )}
           >
-            <NavLink
-              to="/about"
-              className="link flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44 md:py-0"
-            >
-              About
-            </NavLink>
             <NavLink
               to="/learn"
               className="link flex items-center justify-center bg-slate-200 px-8 py-6 text-lg text-fg hover:bg-slate-300 md:min-w-44 md:py-0"

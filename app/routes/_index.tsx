@@ -36,6 +36,28 @@ export default function Home() {
           </LinkButton>
         </div>
       </Section>
+
+      <Section>
+        <Heading level={2}>About</Heading>
+
+        <Paragraph>
+          We have set up this reporting website out of concern for the rising
+          levels of APR and the lack of accessible platforms for individuals to
+          safely share their experiences. This initiative seeks to document
+          incidents, raise awareness, and build a resource for understanding the
+          scope and impact of APR in Canada. By sharing your story, you
+          contribute to a collective effort to expose the issue and advocate for
+          systemic change.
+        </Paragraph>
+
+        <Paragraph>
+          Your voice matters. Whether you have faced APR directly, witnessed an
+          incident, or want to support someone else in sharing their story, this
+          platform is here to amplify your experience and demand accountability.
+          Together, we can work toward a future where everyone’s rights and
+          dignity are respected.
+        </Paragraph>
+      </Section>
     </Layout>
   );
 }

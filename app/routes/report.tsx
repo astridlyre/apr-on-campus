@@ -322,7 +322,12 @@ export default function Report() {
           </Heading>
 
           <Inputs.Pair>
-            <DateInput label="Date of Incident" required name="incidentDate" />
+            <DateInput
+              noFuture
+              label="Date of Incident"
+              required
+              name="incidentDate"
+            />
 
             <Select
               label="Province of Incident"
