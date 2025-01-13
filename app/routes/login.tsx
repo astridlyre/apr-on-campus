@@ -163,7 +163,7 @@ export default function LoginPage() {
 
           <Checkbox id="remember" name="remember" label="Remember Me" />
 
-          <div>
+          <div className="flex items-center gap-4">
             <Button
               className="min-w-44"
               variant="primary"
