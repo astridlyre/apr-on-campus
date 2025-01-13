@@ -19,26 +19,26 @@ export default function Home() {
 
         <Paragraph className="text-lg">
           APR on Campus is a reporting platform that collects and documents
-          instances of <em>Anti-Palestinian Racism (APR)</em> in Canadian
-          educational institutions. Our goal is to provide a safe and
+          instances of <strong>Anti-Palestinian Racism (APR)</strong> in
+          Canadian educational institutions. Our goal is to provide a safe and
           confidential space for individuals to share their experiences, raise
           awareness about the prevalence of APR, and advocate for systemic
           change.
         </Paragraph>
 
-        <div className="mt-16 flex flex-col gap-8 sm:flex-row sm:gap-8">
-          <LinkButton variant="primary" to="/learn">
+        <div className="mt-16 flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-8">
+          <LinkButton className="text-center" variant="primary" to="/learn">
             Learn More About APR
           </LinkButton>
 
-          <LinkButton variant="secondary" to="/report">
-            Report an Instance of Racism
+          <LinkButton className="text-center" variant="secondary" to="/report">
+            Report an Instance of APR
           </LinkButton>
         </div>
       </Section>
 
       <Section>
-        <Heading level={2}>About</Heading>
+        <Heading level={2}>About Our Work</Heading>
 
         <Paragraph>
           We have set up this reporting website out of concern for the rising

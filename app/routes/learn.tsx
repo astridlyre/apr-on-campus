@@ -152,7 +152,7 @@ export default function Learn() {
         </Paragraph>
       </Section>
 
-      <Section title="What Does APR Look Like?">
+      <Section title="What Does APR Look like?">
         <Blockquote quote="Because I support Palestinians or because I am Palestinian, …" />
 
         <UnorderedList className="">
