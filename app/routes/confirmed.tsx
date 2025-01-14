@@ -8,7 +8,7 @@ import Layout from "~/layout";
 export default function Confirmed() {
   return (
     <Layout>
-      <Section>
+      <Section className='mt-4 sm:mt-8 xl:mt-12'>
         <Heading level={1}>We have received your report</Heading>
 
         <Paragraph>

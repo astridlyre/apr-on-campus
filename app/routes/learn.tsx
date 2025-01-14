@@ -20,7 +20,7 @@ export default function Learn() {
 
   return (
     <Layout>
-      <Section className="mt-4 sm:mt-8 md:mt-12">
+      <Section className="mt-4 sm:mt-8 xl:mt-12">
         <Heading level={1}>What is Anti-Palestinian Racism?</Heading>
 
         <Blockquote
@@ -68,89 +68,91 @@ export default function Learn() {
         </div>
       </Section>
 
-      <Section>
-        <div className="flex w-full gap-8 overflow-x-auto">
-          <figure
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-            role="button"
-            tabIndex={0}
-            onKeyDown={(evt) => {
-              if (evt.key === "Enter") {
-                setBigImageSrc("/assets/images/anti-palestinian-racism.png");
-              }
-            }}
-            onClick={() => {
-              setBigImageSrc("/assets/images/anti-palestinian-racism.png");
-            }}
-            className="max-w-prose cursor-pointer"
-          >
-            <img
-              alt=""
-              src="/assets/images/anti-palestinian-racism-medium.webp"
-              srcSet="/assets/images/anti-palestinian-racism-full.webp 1920w"
-              className="max-w-full"
-            />
-          </figure>
-          <figure
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-            role="button"
-            tabIndex={0}
-            onKeyDown={(evt) => {
-              if (evt.key === "Enter") {
-                setBigImageSrc("/assets/images/anti-palestinian-racism.png");
-              }
-            }}
-            onClick={() => {
-              setBigImageSrc(
-                "/assets/images/anti-palestinian-racism-at-school.png",
-              );
-            }}
-            className="max-w-prose cursor-pointer"
-          >
-            <img
-              alt=""
-              src="/assets/images/anti-palestinian-racism-at-school-medium.webp"
-              srcSet="/assets/images/anti-palestinian-racism-at-school-full.webp 1920w"
-              className="max-w-full"
-            />
-          </figure>
-        </div>
-
-        {bigImageSrc ? (
-          <div className="fixed inset-0 z-20 flex items-center justify-center p-8">
-            <div
-              aria-hidden="true"
-              onClick={() => {
-                setBigImageSrc("");
+      <div className="my-12 bg-bg2 py-12">
+        <div className="container mx-auto w-full px-6 py-12 sm:px-12 md:px-16 lg:px-24">
+          <div className="flex w-full gap-8 overflow-x-auto">
+            <figure
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+              role="button"
+              tabIndex={0}
+              onKeyDown={(evt) => {
+                if (evt.key === "Enter") {
+                  setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+                }
               }}
-              className="absolute inset-0 bg-white p-8 opacity-70"
-            />
-            <div className="relative m-auto">
-              <button
-                type="button"
+              onClick={() => {
+                setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+              }}
+              className="max-w-prose cursor-pointer"
+            >
+              <img
+                alt=""
+                src="/assets/images/anti-palestinian-racism-medium.webp"
+                srcSet="/assets/images/anti-palestinian-racism-full.webp 1920w"
+                className="max-w-full"
+              />
+            </figure>
+            <figure
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+              role="button"
+              tabIndex={0}
+              onKeyDown={(evt) => {
+                if (evt.key === "Enter") {
+                  setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+                }
+              }}
+              onClick={() => {
+                setBigImageSrc(
+                  "/assets/images/anti-palestinian-racism-at-school.png",
+                );
+              }}
+              className="max-w-prose cursor-pointer"
+            >
+              <img
+                alt=""
+                src="/assets/images/anti-palestinian-racism-at-school-medium.webp"
+                srcSet="/assets/images/anti-palestinian-racism-at-school-full.webp 1920w"
+                className="max-w-full"
+              />
+            </figure>
+          </div>
+
+          {bigImageSrc ? (
+            <div className="fixed inset-0 z-20 flex items-center justify-center p-8">
+              <div
+                aria-hidden="true"
                 onClick={() => {
                   setBigImageSrc("");
                 }}
-                className="absolute -right-[5vw] top-0 z-10 h-12 w-12 text-3xl font-bold text-fg hover:bg-primary"
-              >
-                &times;
-              </button>
-              <img
-                className="z-10 max-h-[95vh] max-w-[95vw]"
-                src={bigImageSrc}
-                alt="Anti-Palestinian Racism"
+                className="absolute inset-0 bg-white p-8 opacity-70"
               />
+              <div className="relative m-auto">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setBigImageSrc("");
+                  }}
+                  className="absolute -right-[5vw] top-0 z-10 h-12 w-12 text-3xl font-bold text-fg hover:bg-primary"
+                >
+                  &times;
+                </button>
+                <img
+                  className="z-10 max-h-[95vh] max-w-[95vw]"
+                  src={bigImageSrc}
+                  alt="Anti-Palestinian Racism"
+                />
+              </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
 
-        <Paragraph className="mt-4">
-          The above images are from{" "}
-          <TextLink href="https://visualizingpalestine.org/" external>
-            Visualizing Palestine
-          </TextLink>
-        </Paragraph>
-      </Section>
+          <Paragraph className="mt-4">
+            The above images are from{" "}
+            <TextLink href="https://visualizingpalestine.org/" external>
+              Visualizing Palestine
+            </TextLink>
+          </Paragraph>
+        </div>
+      </div>
 
       <Section title="What Does APR Look like?">
         <Blockquote quote="Because I support Palestinians or because I am Palestinian, …" />
