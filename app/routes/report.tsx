@@ -9,7 +9,7 @@ import {
 	type MetaFunction,
 } from "@remix-run/node";
 import { Form, useNavigation, useSubmit } from "@remix-run/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { CSRFError } from "remix-utils/csrf/server";
 import { HoneypotInputs } from "remix-utils/honeypot/react";
@@ -29,6 +29,19 @@ import TextArea from "~/components/TextArea";
 import TextInput from "~/components/TextInput";
 import { csrf } from "~/csrf.server";
 import { honeypot } from "~/honeypot.server";
+import {
+	affiliation,
+	campuses,
+	experiences,
+	identification,
+	impacts,
+	locations,
+	provinces,
+	reasons,
+	subjects,
+	types,
+} from "~/incidents";
+import validateIncident from "~/incidents.server";
 import Layout from "~/layout";
 import { createIncident } from "~/models/incidents.server";
 import confirmedTemplate from "~/services/emails/confirmed.template";
@@ -36,145 +49,18 @@ import sendEmail from "~/services/emails.server";
 import { uploadFile } from "~/services/minio.server";
 import {
 	getFormDataValue,
+	getFormDataValues,
 	getFormFiles,
 	isParsedFile,
 	isTooBig,
 	maxFiles,
 	normalizePhoneNumber,
-	validateEmail,
 } from "~/utils";
 
 export const meta: MetaFunction = () => [
 	{ title: "Report | APR on Campus" },
 	{ name: "description", content: "Report an incident of APR on Campus" },
 ];
-
-const provinces = [
-	{ label: "— Select Province or Territory —", value: "" },
-	{ label: "Alberta", value: "AB" },
-	{ label: "British Columbia", value: "BC" },
-	{ label: "Manitoba", value: "MB" },
-	{ label: "New Brunswick", value: "NB" },
-	{ label: "Newfoundland and Labrador", value: "NL" },
-	{ label: "Northwest Territories", value: "NT" },
-	{ label: "Nova Scotia", value: "NS" },
-	{ label: "Nunavut", value: "NU" },
-	{ label: "Ontario", value: "ON" },
-	{ label: "Prince Edward Island", value: "PE" },
-	{ label: "Quebec", value: "QC" },
-	{ label: "Saskatchewan", value: "SK" },
-	{ label: "Yukon", value: "YT" },
-];
-
-const incidentTypeOptions = [
-	{ label: "Smearing/ defaming", value: "Smearing/ defaming" },
-	{ label: "Dehumanizing", value: "Dehumanizing" },
-	{ label: "Erasing/ Denying", value: "Erasing/ Denying" },
-	{ label: "Excluding", value: "Excluding" },
-	{ label: "Stereotyping", value: "Stereotyping" },
-	{ label: "Silencing", value: "Silencing" },
-	{ label: "Retaliation", value: "Retaliation" },
-	{ label: "Over scrutiny ", value: "Over scrutiny" },
-	{ label: "Physical Violence", value: "Physical Violence" },
-	{ label: "Emotional Violence", value: "Emotional Violence" },
-	{ label: "Vandalism", value: "Vandalism" },
-	{ label: "Other", value: "Other" },
-];
-
-const subjects = [
-	{ label: "Myself", value: "Myself" },
-	{ label: "Someone else", value: "Someone else" },
-];
-
-const incidentLocations = [
-	{ label: "Workplace", value: "Workplace" },
-	{
-		label: "Public/Private School",
-		value: "Public/Private School",
-	},
-	{ label: "Campus", value: "Campus" },
-	{ label: "Transit", value: "Transit" },
-	{ label: "Public setting", value: "Public setting" },
-	{ label: "Community Space", value: "Community Space" },
-	{ label: "Online", value: "Online" },
-	{ label: "Media", value: "Media" },
-	{
-		label: "Social /Recreational setting",
-		value: "Social /Recreational setting",
-	},
-	{ label: "Association/Union", value: "Association/union" },
-	{
-		label: "Judicial / Tribunal system",
-		value: "Judicial / Tribunal system",
-	},
-	{ label: "Healthcare system", value: "Healthcare system" },
-	{ label: "Government service", value: "Government service" },
-	{ label: "Police", value: "Police" },
-	{ label: "Other", value: "Other" },
-];
-
-interface Errors {
-	incidentDate?: string;
-	incidentProvince?: string;
-	incidentLocation?: string;
-	incidentDescription?: string;
-	incidentType?: string;
-	firstName?: string;
-	lastName?: string;
-	email?: string;
-	phoneNumber?: string;
-	city?: string;
-	province?: string;
-}
-
-function validateIncident(incident: Record<string, unknown>): Errors {
-	const errors: Errors = {};
-
-	if (!incident.date) {
-		errors.incidentDate = "Please provide the date of the incident";
-	}
-
-	if (!provinces.find((province) => province.value === incident.province)) {
-		errors.incidentProvince = "Please select the province of the incident";
-	}
-
-	if (!incident.location) {
-		errors.incidentLocation = "Please provide the location of the incident";
-	}
-
-	if (!incident.description) {
-		errors.incidentDescription = "Please describe the incident";
-	}
-
-	if (!incident.type) {
-		errors.incidentType = "Please select the type of incident";
-	}
-
-	if (!incident.userFirstName) {
-		errors.firstName = "Please provide your first name";
-	}
-
-	if (!incident.userLastName) {
-		errors.lastName = "Please provide your last name";
-	}
-
-	if (!incident.userEmail) {
-		errors.email = "Please provide your email address";
-	}
-
-	if (!validateEmail(incident.userEmail)) {
-		errors.email = "Please provide a valid email address";
-	}
-
-	if (
-		incident.userProvince &&
-		!provinces.find((province) => province.value === incident.userProvince)
-	) {
-		errors.province = "Please select a valid province";
-	}
-
-	return errors;
-}
 
 export const action: ActionFunction = async ({ request }) => {
 	await csrf.validate(request);
@@ -223,32 +109,51 @@ export const action: ActionFunction = async ({ request }) => {
 			})
 			.filter(isParsedFile);
 
-		const incident = {
-			date: getFormDataValue(form, "incidentDate"),
-			province: getFormDataValue(form, "incidentProvince"),
-			location: getFormDataValue(form, "incidentLocation"),
-			description: getFormDataValue(form, "incidentDescription"),
-			type: getFormDataValue(form, "incidentType"),
-			userFirstName: getFormDataValue(form, "firstName"),
-			userLastName: getFormDataValue(form, "lastName"),
-			userEmail: getFormDataValue(form, "email"),
+		const rawIncident = {
+			userFirstName: getFormDataValue(form, "userFirstName"),
+			userLastName: getFormDataValue(form, "userLastName"),
+			userEmail: getFormDataValue(form, "userEmail"),
 			userPhoneNumber: normalizePhoneNumber(
-				getFormDataValue(form, "phoneNumber"),
+				getFormDataValue(form, "userPhoneNumber"),
 			),
-			userCity: getFormDataValue(form, "city"),
-			userProvince: getFormDataValue(form, "province"),
-			wasReported: form.has("wasReported"),
-			wantsForwarded: form.has("wantsForwarded"),
-			files: jsonFiles,
+			date: getFormDataValue(form, "date"),
+			province: getFormDataValue(form, "province"),
+			subject: getFormDataValue(form, "subject"),
+			wantsContact: getFormDataValue(form, "wantsContact"),
+			wantsSharedWithOrgs: getFormDataValue(form, "wantsSharedWithOrgs"),
+			identification: getFormDataValues(form, "identification"),
+			userAffiliation: getFormDataValue(form, "userAffiliation"),
+			location: getFormDataValue(form, "location"),
+			locationOther: getFormDataValue(form, "locationOther"),
+			campus: getFormDataValue(form, "campus"),
+			type: getFormDataValues(form, "type"),
+			typeOther: getFormDataValue(form, "typeOther"),
+			description: getFormDataValue(form, "description"),
+			impact: getFormDataValues(form, "impact"),
+			impactDescription: getFormDataValue(form, "impactDescription"),
+			didReport: getFormDataValue(form, "didReport"),
+			didNotReportReason: getFormDataValues(form, "didNotReportReason"),
+			didNotReportReasonOther: getFormDataValue(
+				form,
+				"didNotReportReasonOther",
+			),
+			wasFirstExperience: getFormDataValue(form, "wasFirstExperience"),
+			wasFirstExperienceOther: getFormDataValue(
+				form,
+				"wasFirstExperienceOther",
+			),
+			additionalInformation: getFormDataValue(form, "additionalInformation"),
 		};
 
-		const errors = validateIncident(incident);
+		const { incident, errors } = validateIncident(rawIncident);
 
-		if (D.isNotEmpty(errors)) {
+		if (!incident) {
 			return data({ errors }, 422);
 		}
 
-		const createdIncident = await createIncident(incident);
+		const createdIncident = await createIncident(
+			D.merge(incident, { files: jsonFiles }),
+		);
 
 		const emailUser = {
 			firstName: incident.userFirstName,
@@ -301,6 +206,16 @@ export default function Report() {
 	const [didNotReportReasons, setDidNotReportReasons] = useState<
 		Record<string, boolean>
 	>({});
+
+	useEffect(() => {
+		setFiles([]);
+		setFileError("");
+		setIncidentTypes({});
+		setIncidentLocation("");
+		setWasFirstExperience("");
+		setDidReport("");
+		setDidNotReportReasons({});
+	}, []);
 
 	const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
@@ -372,7 +287,7 @@ export default function Report() {
 					<Inputs.Pair>
 						<TextInput
 							label="First Name"
-							name="firstName"
+							name="userFirstName"
 							type="text"
 							required
 							autoComplete="given-name"
@@ -382,7 +297,7 @@ export default function Report() {
 
 						<TextInput
 							label="Last Name"
-							name="lastName"
+							name="userLastName"
 							type="text"
 							autoComplete="family-name"
 							size={24}
@@ -393,7 +308,7 @@ export default function Report() {
 					<Inputs.Pair>
 						<TextInput
 							label="Email"
-							name="email"
+							name="userEmail"
 							type="email"
 							autoComplete="email"
 							required
@@ -403,7 +318,7 @@ export default function Report() {
 
 						<TextInput
 							label="Phone Number"
-							name="phoneNumber"
+							name="userPhoneNumber"
 							type="text"
 							autoComplete="tel"
 							inputMode="numeric"
@@ -417,17 +332,12 @@ export default function Report() {
 					</Heading>
 
 					<Inputs.Pair>
-						<DateInput
-							noFuture
-							label="Date of Incident"
-							required
-							name="incidentDate"
-						/>
+						<DateInput noFuture label="Date of Incident" required name="date" />
 
 						<Select
 							label="Province of Incident"
 							options={provinces}
-							name="incidentProvince"
+							name="province"
 							required
 						/>
 					</Inputs.Pair>
@@ -439,7 +349,7 @@ export default function Report() {
 							required
 							label="Did this racism happen to you or someone else?"
 							options={subjects}
-							name="incidentSubjet"
+							name="subject"
 						/>
 					</Inputs.Single>
 
@@ -447,26 +357,18 @@ export default function Report() {
 
 					<Inputs.Single>
 						<RadioButtons
-							label="If your experience occurred on a UBC campus, would you like a representative from Divest to contact you for support in taking further action? (link email as well?)"
-							name="contactDivest"
+							label="If your experience occurred on a UBC campus, would you like a representative to contact you for support in taking further action?"
+							name="wantsContact"
 						/>
-						<small className="block mt-2">
-							This report remains anonymous unless you choose to provide contact
-							information.
-						</small>
 					</Inputs.Single>
 
 					<br />
 
 					<Inputs.Single>
 						<RadioButtons
-							label="Do you consent to sharing your report with [Org 1] and [Org 2], which are tracking incidents of APR to gather statistics and advocate for change?"
-							name="shareWithOrgs"
+							label="Do you consent to sharing your report with our partner organizations, which are tracking incidents of APR to gather statistics and advocate for change?"
+							name="wantsSharedWithOrgs"
 						/>
-						<small className="block mt-2">
-							You will have the option to have your report forwarded
-							anonymously.
-						</small>
 					</Inputs.Single>
 
 					<br />
@@ -474,12 +376,8 @@ export default function Report() {
 					<Inputs.Single>
 						<CheckboxGroup
 							label="Do you self-identify as: (check all that apply)"
-							options={[
-								{ label: "Arab", value: "Arab" },
-								{ label: "Palestinian", value: "Palestinian" },
-								{ label: "Other", value: "Other" },
-							]}
-							name="selfIdentification"
+							options={identification}
+							name="identification"
 						/>
 					</Inputs.Single>
 
@@ -489,19 +387,8 @@ export default function Report() {
 						<RadioButtons
 							label="Are you:"
 							required
-							options={[
-								{ label: "UBC Student", value: "UBC Student" },
-								{ label: "UBC Faculty", value: "UBC Faculty" },
-								{ label: "UBC Staff", value: "UBC Staff" },
-								{
-									label:
-										"A student, faculty or staff at another Canadian educational institution",
-									value:
-										"A student, faculty or staff at another Canadian educational institution",
-								},
-								{ label: "None", value: "None" },
-							]}
-							name="selfIdentification"
+							options={affiliation}
+							name="userAffilication"
 						/>
 					</Inputs.Single>
 
@@ -510,10 +397,10 @@ export default function Report() {
 					<div>
 						<Inputs.Single>
 							<RadioButtons
-								name="incidentLocation"
+								name="location"
 								label="Where did this racism occur?"
 								required
-								options={incidentLocations}
+								options={locations}
 								onChange={setIncidentLocation}
 							/>
 						</Inputs.Single>
@@ -524,7 +411,9 @@ export default function Report() {
 									type="text"
 									label="Please specify the location"
 									required
-									name="incidentLocationOther"
+									name="locationOther"
+									minLength={1}
+									maxLength={100}
 								/>
 							</Inputs.Single>
 						) : null}
@@ -534,13 +423,10 @@ export default function Report() {
 
 					<Inputs.Single>
 						<RadioButtons
-							label="Did your incident of APR happen on a UBC Campus (Vancouver or Okanagan):"
-							name="incidentLocationCampus"
-							options={[
-								{ label: "Yes - UBC Vancouver Campus", value: "UBC" },
-								{ label: "Yes - UBC Okanagan Campus", value: "UBCO" },
-								{ label: "No", value: "no" },
-							]}
+							required
+							label="Did this incident of APR happen on a UBC campus? (Vancouver or Okanagan)"
+							name="campus"
+							options={campuses}
 						/>
 					</Inputs.Single>
 
@@ -548,9 +434,9 @@ export default function Report() {
 
 					<Inputs.Single>
 						<CheckboxGroup
-							name="incidentType"
+							name="type"
 							label="What did this racism involve? (check all that apply)"
-							options={incidentTypeOptions}
+							options={types}
 							onChange={setIncidentTypes}
 						/>
 					</Inputs.Single>
@@ -560,7 +446,9 @@ export default function Report() {
 							<TextInput
 								type="text"
 								label="Please describe"
-								name="incidentTypeOther"
+								name="typeOther"
+								minLength={1}
+								maxLength={100}
 							/>
 						</Inputs.Single>
 					) : null}
@@ -570,9 +458,10 @@ export default function Report() {
 					<Inputs.Single>
 						<TextArea
 							rows={6}
-							name="incidentDescription"
-							label="Please describe your experience with racism (What happened, who was involved, what did you do, did you get a resolution etc)?"
+							name="description"
+							label="Please describe your experience with racism (what happened, who was involved, what did you do, did you get a resolution etc)?"
 							required
+							minLength={1}
 							maxLength={5000}
 						/>
 					</Inputs.Single>
@@ -581,40 +470,9 @@ export default function Report() {
 
 					<Inputs.Single>
 						<CheckboxGroup
-							name="incidentImpact"
+							name="impact"
 							label="How has this racist experience impacted you? (check all that apply)"
-							options={[
-								{ label: "Stress", value: "Stress" },
-								{ label: "Fearfulness", value: "Fearfulness" },
-								{ label: "Depression", value: "Depression" },
-								{
-									label: "Withdrawal / Isolation from activities or people",
-									value: "Withdrawal / Isolation from activities or people",
-								},
-								{ label: "Hypervigilence", value: "Hypervigilence" },
-								{ label: "Physical pain", value: "Physical pain" },
-								{
-									label: "Worsening of other health conditions",
-									value: "Worsening of other health conditions",
-								},
-								{ label: "Headaches", value: "Headaches" },
-								{ label: "Loss of appetite", value: "Loss of appetite" },
-								{
-									label: "Loss of relationships",
-									value: "Loss of relationships",
-								},
-								{ label: "Self-censorship", value: "Self-censorship" },
-								{ label: "Anxiety", value: "Anxiety" },
-								{ label: "Insomnia", value: "Insomnia" },
-								{ label: "Low-self esteem", value: "Low-self esteem" },
-								{ label: "Self-doubt", value: "Self-doubt" },
-								{ label: "Feeling intimidated", value: "Feeling intimidated" },
-								{ label: "Loss of employment", value: "Loss of employment" },
-								{
-									label: "Loss of employment or career opportunities",
-									value: "Loss of employment or career opportunities",
-								},
-							]}
+							options={impacts}
 						/>
 					</Inputs.Single>
 
@@ -624,7 +482,7 @@ export default function Report() {
 						<TextArea
 							rows={6}
 							label="Feel free to explain further how racism has impacted you"
-							name="incidentImpactAdditional"
+							name="impactDescription"
 							maxLength={5000}
 						/>
 					</Inputs.Single>
@@ -633,8 +491,8 @@ export default function Report() {
 
 					<Inputs.Single>
 						<RadioButtons
-							label="If your experience was at a UBC Campus (Vancouver or Okanagan), did you report it to the Equity and Inclusion Office or the Investigations Office?"
-							name="didShareOffices"
+							label="If your experience was at a UBC campus (Vancouver or Okanagan), did you report it to the Equity and Inclusion office or the Investigations office?"
+							name="didReport"
 							onChange={setDidReport}
 						/>
 					</Inputs.Single>
@@ -644,62 +502,9 @@ export default function Report() {
 							<Inputs.Single>
 								<CheckboxGroup
 									onChange={setDidNotReportReasons}
-									name="didNotReportReasons"
+									name="didNotReportReason"
 									label="If you did not report, tell us why you didn't report? (check all that apply)"
-									options={[
-										{ label: "Fear of reprisal", value: "Fear of reprisal" },
-										{
-											label:
-												"I did not know if there is a complaint process or who to report to?",
-											value:
-												"I did not know if there is a complaint process or who to report to?",
-										},
-										{
-											label:
-												"I did not think my complaint would be taken seriously",
-											value:
-												"I did not think my complaint would be taken seriously",
-										},
-										{
-											label:
-												"I did not trust the person I would need to speak to",
-											value:
-												"I did not trust the person I would need to speak to",
-										},
-										{
-											label: "I thought reporting would make the problem worse",
-											value: "I thought reporting would make the problem worse",
-										},
-										{
-											label:
-												"I thought reporting would impact future opportunities",
-											value:
-												"I thought reporting would impact future opportunities",
-										},
-										{
-											label:
-												"My friends, family or colleagues told me not to report",
-											value:
-												"My friends, family or colleagues told me not to report",
-										},
-										{
-											label: "I did not think I would be believed",
-											value: "I did not think I would be believed",
-										},
-										{
-											label:
-												"Earlier attempts to report problem did not go anywhere",
-											value:
-												"Earlier attempts to report problem did not go anywhere",
-										},
-										{
-											label:
-												"My human resources or EDI office does not recognize anti-Palestinian racism",
-											value:
-												"My human resources or EDI office does not recognize anti-Palestinian racism",
-										},
-										{ label: "Other", value: "Other" },
-									]}
+									options={reasons}
 								/>
 							</Inputs.Single>
 
@@ -724,20 +529,20 @@ export default function Report() {
 								required
 								name="wasFirstExperience"
 								onChange={setWasFirstExperience}
-								options={[
-									{ label: "Yes", value: "yes" },
-									{ label: "No", value: "no" },
-									{ label: "Other", value: "other" },
-								]}
+								options={experiences}
+								value={wasFirstExperience}
 							/>
 						</Inputs.Single>
 
 						{wasFirstExperience === "other" ? (
 							<Inputs.Single>
 								<TextInput
+									required
 									type="text"
 									label="Please specify"
 									name="wasFirstExperienceOther"
+									minLength={1}
+									maxLength={100}
 								/>
 							</Inputs.Single>
 						) : null}
@@ -750,6 +555,7 @@ export default function Report() {
 							label="Is there anything else you would like to share with us?"
 							rows={3}
 							maxLength={5000}
+							name="additionalInformation"
 						/>
 					</Inputs.Single>
 
@@ -767,9 +573,8 @@ export default function Report() {
 					</Inputs.Single>
 
 					<Paragraph className="my-6 sm:mb-8" variant="small-secondary">
-						We keep your personal information private and secure. All incident
-						reports to APR on Campus’s anti-hate online incident form are kept
-						strictly confidential unless otherwise specified.
+						We keep your personal information private and secure. We will never
+						share your information without your consent.
 					</Paragraph>
 
 					<div className="flex items-center gap-4">

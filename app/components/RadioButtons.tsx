@@ -9,6 +9,7 @@ export default function RadioButtons(props: {
 	required?: boolean;
 	className?: string;
 	onChange?: (value: string) => void;
+	value?: string;
 	options?: { label: string; value: string }[];
 }) {
 	const options = props.options || defaultOptions;
@@ -22,10 +23,16 @@ export default function RadioButtons(props: {
 							onChange={() => {
 								props.onChange?.(option.value);
 							}}
+							checked={
+								props.value !== undefined
+									? props.value === option.value
+									: undefined
+							}
 							required={props.required}
 							id={`radio-${props.name}-${option.value}`}
 							type="radio"
 							name={props.name}
+							value={option.value}
 						/>
 						<label htmlFor={`radio-${props.name}-${option.value}`}>
 							{option.label}
@@ -41,7 +48,7 @@ export default function RadioButtons(props: {
 			{props.label ? (
 				<legend>
 					{props.label}
-					{props.required ? "*" : ""}
+					{props.required ? "*" : " (optional)"}
 				</legend>
 			) : null}
 
@@ -51,10 +58,16 @@ export default function RadioButtons(props: {
 						onChange={() => {
 							props.onChange?.(option.value);
 						}}
+						checked={
+							props.value !== undefined
+								? props.value === option.value
+								: undefined
+						}
 						required={props.required}
 						id={`radio-${props.name}-${option.value}`}
 						type="radio"
 						name={props.name}
+						value={option.value}
 					/>
 					<label htmlFor={`radio-${props.name}-${option.value}`}>
 						{option.label}

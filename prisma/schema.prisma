@@ -44,25 +44,63 @@ model Incident {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  date        String
-  province    String
-  location    String
-  description String
-  type        String
-
   userFirstName   String
   userLastName    String
   userEmail       String
   userPhoneNumber String
-  userCity        String
-  userProvince    String
+  userAffiliation String
 
-  wasReported    Boolean @default(false)
-  wantsForwarded Boolean @default(false)
-  isActive       Boolean @default(true)
+  campus                String
+  date                  String
+  description           String
+  location              String
+  province              String
+  subject               String
+  impactDescription     String
+  wasFirstExperience    String
+  additionalInformation String
+
+  identification      IncidentIdentification[]
+  impact              IncidentImpact[]
+  type                IncidentType[]
+  didNotReportReasons DidNotReportReason[]
+
+  wantsContact        Boolean @default(false)
+  wantsSharedWithOrgs Boolean @default(false)
+  didReport           Boolean @default(false)
+
+  isActive Boolean @default(true)
 
   version Int            @default(1)
   files   IncidentFile[]
+}
+
+model IncidentIdentification {
+  id         String    @id @default(cuid())
+  name       String
+  Incident   Incident? @relation(fields: [incidentId], references: [id])
+  incidentId String?
+}
+
+model IncidentImpact {
+  id         String    @id @default(cuid())
+  name       String
+  Incident   Incident? @relation(fields: [incidentId], references: [id])
+  incidentId String?
+}
+
+model IncidentType {
+  id         String    @id @default(cuid())
+  name       String
+  Incident   Incident? @relation(fields: [incidentId], references: [id])
+  incidentId String?
+}
+
+model DidNotReportReason {
+  id         String    @id @default(cuid())
+  name       String
+  Incident   Incident? @relation(fields: [incidentId], references: [id])
+  incidentId String?
 }
 
 model IncidentFile {

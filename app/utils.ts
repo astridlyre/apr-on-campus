@@ -83,6 +83,11 @@ export function getFormDataValue(formData: FormData, key: string) {
 	return value.trim();
 }
 
+export function getFormDataValues(formData: FormData, key: string): string[] {
+	const values = formData.getAll(key);
+	return values.map((value) => (value as string).trim());
+}
+
 const timeFormatter = new Intl.DateTimeFormat("en-CA", {
 	dateStyle: "medium",
 	timeStyle: "short",

@@ -29,7 +29,7 @@ export default function CheckboxGroup(props: {
 			{props.label ? (
 				<legend className="mb-2">
 					{props.label}
-					{props.required ? "*" : ""}
+					{props.required ? "*" : " (optional)"}
 				</legend>
 			) : null}
 

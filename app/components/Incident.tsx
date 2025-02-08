@@ -9,7 +9,9 @@ export default function IncidentPreview({ incident }: { incident: Incident }) {
 			to={`/dashboard/${incident.id}`}
 			className="incident block bg-bg p-4 hover:bg-bg3"
 		>
-			<h3 className="text-md font-bold text-fg">{capitalize(incident.type)}</h3>
+			<h3 className="text-md font-bold text-fg">
+				{capitalize(incident.userFirstName)}
+			</h3>
 			<p className="text-xs text-fg2">
 				{formatDateWithoutTime(incident.date)} - {incident.province}
 			</p>

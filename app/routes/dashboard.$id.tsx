@@ -1,4 +1,12 @@
-import { Incident, IncidentFile } from "@prisma/client";
+import { D } from "@mobily/ts-belt";
+import {
+	DidNotReportReason,
+	Incident,
+	IncidentFile,
+	IncidentIdentification,
+	IncidentImpact,
+	IncidentType,
+} from "@prisma/client";
 import type { ActionFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, redirect, useLoaderData } from "@remix-run/react";
 import { Children } from "react";
@@ -16,7 +24,6 @@ import { honeypot } from "~/honeypot.server";
 import { deleteIncident, getIncident } from "~/models/incidents.server";
 import { requireUserId } from "~/session.server";
 import {
-	capitalize,
 	formatDateWithoutTime,
 	formatPhoneNumber,
 	getFormDataValue,
@@ -32,6 +39,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 		invariant(id, "Incident ID is required");
 
 		const incident = await getIncident({ id });
+
+		console.log(incident);
 
 		if (!incident) {
 			throw new Error("Incident not found");
@@ -96,7 +105,13 @@ export default function IncidentPage() {
 	const data = useLoaderData<typeof loader>();
 
 	const { incident } = data as {
-		incident: Incident & { files: IncidentFile[] };
+		incident: Incident & {
+			files: IncidentFile[];
+			type: IncidentType[];
+			identification: IncidentIdentification[];
+			impact: IncidentImpact[];
+			didNotReportReasons: DidNotReportReason[];
+		};
 	};
 
 	return (
@@ -149,7 +164,7 @@ export default function IncidentPage() {
 						</ListItem>
 						<ListItem>
 							<span className="font-medium">Type:</span>
-							<strong>{capitalize(incident.type)}</strong>
+							<strong>{incident.type.map(D.get("name")).join(", ")}</strong>
 						</ListItem>
 					</ul>
 				</section>
@@ -180,14 +195,6 @@ export default function IncidentPage() {
 							<span className="font-medium">Phone:</span>
 							<strong>{formatPhoneNumber(incident.userPhoneNumber)}</strong>
 						</ListItem>
-						<ListItem>
-							<span className="font-medium">City:</span>
-							<strong>{incident.userCity || "N/A"}</strong>
-						</ListItem>
-						<ListItem>
-							<span className="font-medium">Province:</span>
-							<strong>{incident.userProvince || "N/A"}</strong>
-						</ListItem>
 					</ul>
 				</section>
 
@@ -195,12 +202,14 @@ export default function IncidentPage() {
 					<h3 className="text-xl font-bold text-fg">Status</h3>
 					<ul className="space-y-2">
 						<li>
-							<span className="font-medium">Reported to police?</span>{" "}
-							<strong>{incident.wasReported ? "Yes" : "No"}</strong>
+							<span className="font-medium">Wants contact from us?</span>{" "}
+							<strong>{incident.wantsContact ? "Yes" : "No"}</strong>
 						</li>
 						<li>
-							<span className="font-medium">Should forward to legal?</span>{" "}
-							<strong>{incident.wantsForwarded ? "Yes" : "No"}</strong>
+							<span className="font-medium">
+								Should forward to partner organizations?
+							</span>{" "}
+							<strong>{incident.wantsSharedWithOrgs ? "Yes" : "No"}</strong>
 						</li>
 					</ul>
 				</section>

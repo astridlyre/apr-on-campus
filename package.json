@@ -21,6 +21,7 @@
 		"/public/build"
 	],
 	"dependencies": {
+		"@apideck/better-ajv-errors": "^0.3.6",
 		"@date-fns/tz": "^1.2.0",
 		"@date-fns/utc": "^2.1.0",
 		"@mobily/ts-belt": "4.0.0-rc.5",
@@ -30,6 +31,8 @@
 		"@remix-run/react": "^2.15.2",
 		"@remix-run/serve": "^2.15.2",
 		"@types/markdown-it-footnote": "^3.0.4",
+		"ajv": "^8.17.1",
+		"ajv-formats": "^3.0.1",
 		"argon2": "^0.41.1",
 		"clsx": "^2.1.1",
 		"crypto-js": "^4.2.0",

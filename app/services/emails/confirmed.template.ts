@@ -41,12 +41,9 @@ Your Incident Details:
 
 ${paragraphifyPlain(incident.description)}
 
-• Type: ${incident.type}
 • Your Name: ${incident.userFirstName} ${incident.userLastName}
 • Your Email: ${incident.userEmail}
 • Your Phone Number: ${incident.userPhoneNumber}
-• Your City: ${incident.userCity}
-• Your Province: ${incident.userProvince}
 
 Sincerely,
 The APR on Campus Team
@@ -200,12 +197,9 @@ function html({ subject, user, incident }: EmailProps) {
               <p><strong>Location:</strong> ${incident.location}</p>
               <p><strong>Description:</strong></p>
               ${paragraphify(incident.description)}
-              <p><strong>Type:</strong> ${incident.type}</p>
               <p><strong>Your Name:</strong> ${incident.userFirstName} ${incident.userLastName}</p>
               <p><strong>Your Email:</strong> ${incident.userEmail}</p>
               <p><strong>Your Phone Number:</strong> ${incident.userPhoneNumber}</p>
-              <p><strong>Your City:</strong> ${incident.userCity}</p>
-              <p><strong>Your Province:</strong> ${incident.userProvince}</p>
             </div>
 
             <p style="margin-bottom: 0;">
