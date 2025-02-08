@@ -3,8 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import argon2 from "argon2";
 import invariant from "tiny-invariant";
 
-import { impacts, reasons, identification, types } from "../app/incidents";
-
 const prisma = new PrismaClient();
 
 async function main() {
