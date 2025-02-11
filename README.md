@@ -1,20 +1,31 @@
-# Welcome to React Router!
+# APR on Campus
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A simple [Remix](https://remix.run/docs/en/main)-based application for tracking
+incidents. The project also uses TypeScript and Tailwind CSS.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+### Env
 
-## Features
+You need a local `.env` file to begin development. It should look like:
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+```bash
+DATABASE_URL="file:./data.db?connection_limit=1"
+SESSION_SECRET=
+SEED_USER_EMAIL=
+SEED_USER_PASSWORD=
+CSRF_SECRET=
+HONEYPOT_SEED=
+MINIO_ROOT_USER=
+MINIO_ROOT_PASSWORD=
+IS_LOCAL=true
+EMAIL_HOST=
+EMAIL_PORT=
+EMAIL_USERNAME=
+EMAIL_PASSWORD=
+```
 
-## Getting Started
+Most of these are not required to run the application locally for development.
+Any of the secrets can be random strings. The seed user and password are used to
+setup the database.
 
 ### Installation
 
@@ -22,6 +33,14 @@ Install the dependencies:
 
 ```bash
 npm install
+```
+
+### Setup
+
+This command will run any migrations and setup the local database.
+
+```
+npm run setup
 ```
 
 ### Development
@@ -34,67 +53,20 @@ npm run dev
 
 Your application will be available at `http://localhost:5173`.
 
-## Building for Production
+### Before Making a PR
 
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-This template includes three Dockerfiles optimized for different package managers:
-
-- `Dockerfile` - for npm
-- `Dockerfile.pnpm` - for pnpm
-- `Dockerfile.bun` - for bun
-
-To build and run using Docker:
-
-```bash
-# For npm
-docker build -t my-app .
-
-# For pnpm
-docker build -f Dockerfile.pnpm -t my-app .
-
-# For bun
-docker build -f Dockerfile.bun -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
+Make sure you run the linting and typecheck stages. Please also use `prettier`
+to format your code, otherwise PRs will be rejected.
 
 ```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+npm run lint
+npm run typecheck
 ```
 
 ## Styling
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+This project is styled with [Tailwind CSS](https://tailwindcss.com/).
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️
