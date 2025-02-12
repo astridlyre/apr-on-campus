@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 				wantsSharedWithOrgs: parseArray(incident.wantsSharedWithOrgs),
 				createdAt: format(new Date(incident.createdAt), "yyyy-MM-dd HH:mm:ss"),
 			}),
-			D.deleteKeys(["updatedAt", "isActive", "version"]),
+			D.deleteKeys(["updatedAt", "isActive", "version", "files"]),
 		),
 	);
 
