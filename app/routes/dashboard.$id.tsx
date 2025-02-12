@@ -217,7 +217,7 @@ export default function IncidentPage() {
 							</span>{" "}
 							<strong>
 								{incident.wantsSharedWithOrgs.length
-									? incident.wantsSharedWithOrgs.join(", ")
+									? incident.wantsSharedWithOrgs.map(D.get("name")).join(", ")
 									: "No"}
 							</strong>
 						</li>
