@@ -43,8 +43,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 		const incident = await getIncident({ id });
 
-		console.log(incident);
-
 		if (!incident) {
 			throw new Error("Incident not found");
 		}

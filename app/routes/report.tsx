@@ -160,11 +160,7 @@ export const action: ActionFunction = async ({ request }) => {
 			additionalInformation: getFormDataValue(form, "additionalInformation"),
 		};
 
-		console.log(rawIncident);
-
 		const { incident, errors } = validateIncident(rawIncident);
-
-		console.log(errors);
 
 		if (!incident) {
 			return data({ errors }, 422);
