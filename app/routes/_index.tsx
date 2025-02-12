@@ -15,13 +15,7 @@ export default function Home() {
 	return (
 		<Layout>
 			<Section className="mt-4 sm:mt-8 xl:mt-12">
-				<Heading level={1}>APR on Campus</Heading>
-
-				<Paragraph className="text-lg">
-					If you believe you have experienced APR, trust your instincts—your
-					feelings are valid and your story matters. Sharing your experience can
-					be a powerful step toward healing and raising awareness.
-				</Paragraph>
+				<Heading level={1}>Let’s End Anti-Palestinian Racism</Heading>
 
 				<Paragraph>
 					<strong>APR on Campus</strong> is a platform initiated by UBC students
