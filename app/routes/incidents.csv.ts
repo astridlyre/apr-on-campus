@@ -18,7 +18,6 @@ function enrich(incidents: Incident[]) {
 			D.merge({
 				createdAt: format(new Date(incident.createdAt), "yyyy-MM-dd HH:mm:ss"),
 				wantsContact: toBooleanString(incident.wantsContact),
-				wantsSharedWithOrgs: toBooleanString(incident.wantsSharedWithOrgs),
 			}),
 			D.deleteKeys(["updatedAt", "isActive", "version"]),
 		),

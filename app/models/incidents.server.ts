@@ -12,6 +12,9 @@ export function getIncident({ id }: Pick<Incident, "id">) {
 			impact: true,
 			type: true,
 			didNotReportReasons: true,
+			wantsSharedWithOrgs: true,
+			identities: true,
+			genderIdentities: true,
 		},
 	});
 }
@@ -25,6 +28,9 @@ export function getIncidents() {
 			impact: true,
 			type: true,
 			didNotReportReasons: true,
+			wantsSharedWithOrgs: true,
+			identities: true,
+			genderIdentities: true,
 		},
 		orderBy: { createdAt: "desc" },
 	});
@@ -48,7 +54,10 @@ export async function createIncident(
 		| "wasFirstExperience"
 		| "additionalInformation"
 		| "wantsContact"
-		| "wantsSharedWithOrgs"
+		| "gender"
+		| "religion"
+		| "disability"
+		| "identityDescription"
 		| "didReport"
 	> & {
 		files: { href: string; contentType: string }[];
@@ -56,12 +65,22 @@ export async function createIncident(
 		impact: string[];
 		type: string[];
 		didNotReportReason: string[];
+		wantsSharedWithOrgs: string[];
+		identities: string[];
+		genderIdentities: string[];
 	},
 ) {
-	const { files, identification, impact, type, didNotReportReason, ...rest } =
-		init;
-
-	console.log(init);
+	const {
+		files,
+		identification,
+		impact,
+		type,
+		didNotReportReason,
+		wantsSharedWithOrgs,
+		identities,
+		genderIdentities,
+		...rest
+	} = init;
 
 	const incident = await prisma.incident.create({ data: rest });
 
@@ -71,6 +90,27 @@ export async function createIncident(
 				incidentId: incident.id,
 				href: file.href,
 				contentType: file.contentType,
+			})),
+		});
+	}
+
+	if (identities.length) {
+		await prisma.userIdentity.createMany({
+			data: identities.map((i) => ({ name: i, incidentId: incident.id })),
+		});
+	}
+
+	if (genderIdentities.length) {
+		await prisma.userGenderIdentity.createMany({
+			data: genderIdentities.map((i) => ({ name: i, incidentId: incident.id })),
+		});
+	}
+
+	if (wantsSharedWithOrgs.length) {
+		await prisma.incidentOrgs.createMany({
+			data: wantsSharedWithOrgs.map((i) => ({
+				name: i,
+				incidentId: incident.id,
 			})),
 		});
 	}

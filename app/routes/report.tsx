@@ -32,12 +32,18 @@ import { honeypot } from "~/honeypot.server";
 import {
 	affiliation,
 	campuses,
+	disabilities,
 	experiences,
+	genderIdentities,
+	genders,
 	identification,
+	identities,
 	impacts,
 	locations,
+	organizations,
 	provinces,
 	reasons,
+	religions,
 	subjects,
 	types,
 } from "~/incidents";
@@ -120,7 +126,16 @@ export const action: ActionFunction = async ({ request }) => {
 			province: getFormDataValue(form, "province"),
 			subject: getFormDataValue(form, "subject"),
 			wantsContact: getFormDataValue(form, "wantsContact"),
-			wantsSharedWithOrgs: getFormDataValue(form, "wantsSharedWithOrgs"),
+			wantsSharedWithOrgs: getFormDataValues(form, "wantsSharedWithOrgs"),
+			identities: getFormDataValues(form, "identities"),
+			identitiesOther: getFormDataValue(form, "identitiesOther"),
+			gender: getFormDataValue(form, "gender"),
+			genderOther: getFormDataValue(form, "genderOther"),
+			genderIdentities: getFormDataValues(form, "genderIdentities"),
+			genderIdentitiesOther: getFormDataValue(form, "genderIdentitiesOther"),
+			religion: getFormDataValue(form, "religion"),
+			religionOther: getFormDataValue(form, "religionOther"),
+			disability: getFormDataValue(form, "disability"),
 			identification: getFormDataValues(form, "identification"),
 			userAffiliation: getFormDataValue(form, "userAffiliation"),
 			location: getFormDataValue(form, "location"),
@@ -145,7 +160,11 @@ export const action: ActionFunction = async ({ request }) => {
 			additionalInformation: getFormDataValue(form, "additionalInformation"),
 		};
 
+		console.log(rawIncident);
+
 		const { incident, errors } = validateIncident(rawIncident);
+
+		console.log(errors);
 
 		if (!incident) {
 			return data({ errors }, 422);
@@ -206,6 +225,14 @@ export default function Report() {
 	const [didNotReportReasons, setDidNotReportReasons] = useState<
 		Record<string, boolean>
 	>({});
+	const [selectedIdentities, setSelectedIdentities] = useState<
+		Record<string, boolean>
+	>({});
+	const [selectedGenderIdentities, setSelectedGenderIdentities] = useState<
+		Record<string, boolean>
+	>({});
+	const [religion, setReligion] = useState("");
+	const [gender, setGender] = useState("");
 
 	useEffect(() => {
 		setFiles([]);
@@ -270,10 +297,17 @@ export default function Report() {
 			<Section className="mt-4 sm:mt-8 xl:mt-12">
 				<Heading level={1}>Report an Incident</Heading>
 				<Paragraph>
-					If you have experienced or witnessed an incident of Anti-Palestinian
-					Racism (APR) in Canada, we encourage you to report it using the form
-					below. Your report will help us document the prevalence of APR and
-					advocate for systemic change.
+					<strong>
+						Have you experienced intimidation, harassment, or discrimination as
+						a Palestinian or supporter of Palestinian rights?
+					</strong>{" "}
+					Share your experience&mdash;
+					<strong>all submissions are confidential.</strong>
+				</Paragraph>
+
+				<Paragraph>
+					Your participation is entirely voluntary. Fields marked with * are
+					required to ensure the collected data can be used effectively.
 				</Paragraph>
 
 				<Form onSubmit={onSubmit} className="max-w-prose">
@@ -315,16 +349,6 @@ export default function Report() {
 							size={24}
 							maxLength={300}
 						/>
-
-						<TextInput
-							label="Phone Number"
-							name="userPhoneNumber"
-							type="text"
-							autoComplete="tel"
-							inputMode="numeric"
-							size={24}
-							maxLength={20}
-						/>
 					</Inputs.Pair>
 
 					<Heading className="mb-6 mt-12" level={4}>
@@ -332,7 +356,12 @@ export default function Report() {
 					</Heading>
 
 					<Inputs.Pair>
-						<DateInput noFuture label="Date of Incident" required name="date" />
+						<DateInput
+							noFuture
+							label="Date (approximate)"
+							required
+							name="date"
+						/>
 
 						<Select
 							label="Province of Incident"
@@ -357,17 +386,9 @@ export default function Report() {
 
 					<Inputs.Single>
 						<RadioButtons
-							label="If your experience occurred on a UBC campus, would you like a representative to contact you for support in taking further action?"
+							label="If your experience occurred on a UBC campus, would you like a representative from UBC Divestment for Palestine to contact you for support in taking further action?"
 							name="wantsContact"
-						/>
-					</Inputs.Single>
-
-					<br />
-
-					<Inputs.Single>
-						<RadioButtons
-							label="Do you consent to sharing your report with our partner organizations, which are tracking incidents of APR to gather statistics and advocate for change?"
-							name="wantsSharedWithOrgs"
+							helperText="This report remains anonymous unless you choose to provide contact information."
 						/>
 					</Inputs.Single>
 
@@ -375,9 +396,152 @@ export default function Report() {
 
 					<Inputs.Single>
 						<CheckboxGroup
-							label="Do you self-identify as: (check all that apply)"
+							label="If your experience took place elsewhere in Canada, do you consent to sharing your report with any of the following groups so they can contact you for support in taking further action? (check all that apply)"
+							name="wantsSharedWithOrgs"
+							options={organizations}
+						/>
+					</Inputs.Single>
+
+					<br />
+
+					<Paragraph>
+						We want to better understand the full scope of intersectionality as
+						it relates to people&apos;s experiences of racism when they are
+						targeted. Please help us understand the ways with which you identify
+						(as much as you are comfortable):
+					</Paragraph>
+
+					<Inputs.Single>
+						<CheckboxGroup
+							label="Do you identify as? (check all that apply)"
 							options={identification}
 							name="identification"
+						/>
+					</Inputs.Single>
+
+					<br />
+
+					<div>
+						<Inputs.Single>
+							<CheckboxGroup
+								name="identities"
+								label="Do you identify with any of the following identities? (check all that apply)"
+								options={identities}
+								onChange={setSelectedIdentities}
+							/>
+						</Inputs.Single>
+
+						{selectedIdentities.Other ? (
+							<Inputs.Single>
+								<TextInput
+									type="text"
+									label="Please specify the identity"
+									required
+									name="identitiesOther"
+									minLength={1}
+									maxLength={100}
+								/>
+							</Inputs.Single>
+						) : null}
+					</div>
+
+					<br />
+
+					<div>
+						<Inputs.Single>
+							<RadioButtons
+								name="religion"
+								label="Do you identify as:"
+								options={religions}
+								onChange={setReligion}
+							/>
+						</Inputs.Single>
+
+						{religion === "Other" ? (
+							<Inputs.Single>
+								<TextInput
+									size={24}
+									type="text"
+									label="Please specify the religion"
+									required
+									name="religionOther"
+									minLength={1}
+									maxLength={100}
+								/>
+							</Inputs.Single>
+						) : null}
+					</div>
+
+					<br />
+
+					<div>
+						<Inputs.Single>
+							<RadioButtons
+								name="gender"
+								label="Do you identify as:"
+								options={genders}
+								onChange={setGender}
+							/>
+						</Inputs.Single>
+
+						{gender === "Other" ? (
+							<Inputs.Single>
+								<TextInput
+									type="text"
+									label="Please specify the gender"
+									required
+									name="genderOther"
+									minLength={1}
+									maxLength={100}
+								/>
+							</Inputs.Single>
+						) : null}
+					</div>
+
+					<br />
+
+					<div>
+						<Inputs.Single>
+							<CheckboxGroup
+								name="genderIdentities"
+								label="Do you identify with any of the following identities? (check all that apply):"
+								options={genderIdentities}
+								onChange={setSelectedGenderIdentities}
+							/>
+						</Inputs.Single>
+
+						{selectedGenderIdentities.Other ? (
+							<Inputs.Single>
+								<TextInput
+									type="text"
+									label="Please specify the identity"
+									required
+									name="genderIdentitiesOther"
+									minLength={1}
+									maxLength={100}
+								/>
+							</Inputs.Single>
+						) : null}
+					</div>
+
+					<br />
+
+					<Inputs.Single>
+						<RadioButtons
+							name="disability"
+							label="Do you identify as a person with a disability:"
+							options={disabilities}
+						/>
+					</Inputs.Single>
+
+					<br />
+
+					<Inputs.Single>
+						<TextArea
+							maxLength={5000}
+							rows={4}
+							name="identityDescription"
+							label="Is there any other part of your identity that you want to include that you think is relevant to your experience of being targeted? (ex. political affiliation, perceived socioeconomic status, newcomer, youth etc.)"
 						/>
 					</Inputs.Single>
 
@@ -480,7 +644,7 @@ export default function Report() {
 
 					<Inputs.Single>
 						<TextArea
-							rows={6}
+							rows={3}
 							label="Feel free to explain further how racism has impacted you"
 							name="impactDescription"
 							maxLength={5000}
@@ -497,7 +661,7 @@ export default function Report() {
 						/>
 					</Inputs.Single>
 
-					{didReport === "no" ? (
+					{didReport === "No" ? (
 						<div>
 							<Inputs.Single>
 								<CheckboxGroup
@@ -534,7 +698,7 @@ export default function Report() {
 							/>
 						</Inputs.Single>
 
-						{wasFirstExperience === "other" ? (
+						{wasFirstExperience === "Other" ? (
 							<Inputs.Single>
 								<TextInput
 									required

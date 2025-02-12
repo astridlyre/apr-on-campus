@@ -34,9 +34,11 @@ export default function Home() {
 					We aim to expose the growing prevalence of APR and its harmful effects
 					on both Palestinians and those advocating for their rights and
 					liberation. It often takes the form of systemic discrimination,
-					harassment, exclusion, and even violence, targeting Palestinians and
-					their allies while silencing expressions of solidarity in educational
-					institutions and public spaces.
+					harassment, exclusion, and even violence,{" "}
+					<strong>
+						targeting Palestinians and their allies while silencing expressions
+						of solidarity in educational institutions and public spaces.
+					</strong>
 				</Paragraph>
 			</Section>
 
@@ -46,19 +48,16 @@ export default function Home() {
 				<Paragraph>
 					APR impacts anyone who faces discrimination, silencing, or
 					marginalization due to their identity, activism, or beliefs related to
-					Palestine. This includes Palestinians and their allies, regardless of
-					background. If you have been targeted, witnessed an incident, or want
-					to support someone in sharing their story, this platform is here for
-					you. <strong>Your voice matters.</strong> By sharing your experience,
-					we can amplify your story, advocate for systemic change, and demand
-					accountability.
-				</Paragraph>
-
-				<Paragraph>
+					Palestine.{" "}
 					<strong>
-						Together, we can work toward a future where everyone’s rights and
-						dignity are respected.
-					</strong>
+						This includes Palestinians and their allies, regardless of
+						background.
+					</strong>{" "}
+					If you have been targeted, witnessed an incident, or want to support
+					someone in sharing their story, this platform is here for you.{" "}
+					<strong>Your voice matters.</strong> By sharing your experience, we
+					can amplify your story, advocate for systemic change, and demand
+					accountability.
 				</Paragraph>
 			</Section>
 
@@ -66,30 +65,35 @@ export default function Home() {
 				<Heading level={2}>How It Works</Heading>
 
 				<Paragraph>
-					Acknowledging APR is the first step in confronting it. By sharing your
-					experience, you help expose its widespread impact, hold institutions
-					accountable, and push for the systemic changes needed to protect
-					Palestinian rights. We document incidents, amplify the issue, and
-					advocate for lasting change. This platform is here for
-					everyone—whether you’ve experienced APR firsthand or have witnessed
-					it.
+					Acknowledging APR is the first step in confronting it.{" "}
+					<strong>
+						By sharing your experience, you help expose its widespread impact,
+						hold institutions accountable, and push for the systemic changes
+						needed to protect Palestinian rights.
+					</strong>{" "}
+					We document incidents, amplify the issue, and advocate for lasting
+					change. This platform is here for everyone—whether you’ve experienced
+					APR firsthand or have witnessed it.
 				</Paragraph>
 
 				<Paragraph>
-					Submissions are collected confidentially to support research by the
-					UBC Middle East Department (MES), UBC Divest, the Arab Canadian
-					Lawyers Association (ACLA), and The Legal Centre for Palestine (LCP).
-					If you wish to take further action, you can request follow-up contact
-					from these organizations.
+					Submissions are collected confidentially to contribute to research for
+					UBC&apos;s Middle East Studies (MES) program, UBC Divestment for
+					Palestine, The Legal Centre for Palestine (LCP), the National Council
+					of Canadian Muslims (NCCM), and the Arab Canadian Lawyers Association
+					(ACLA).{" "}
+					<strong>
+						If you wish to take further action, you will have the option to
+						request a follow-up from any of these groups when you file a report.
+					</strong>
 				</Paragraph>
 
 				<Paragraph>
 					<strong>
-						Have you experienced intimidation, harassment, or discrimination as
-						a Palestinian or supporter of Palestinian rights?
-					</strong>{" "}
-					Share your experience&mdash;
-					<strong>all submissions are confidential.</strong>
+						If you believe you have experienced APR, trust your instincts—your
+						feelings are valid and your story matters. Sharing your experience
+						can be a powerful step toward healing and raising awareness.
+					</strong>
 				</Paragraph>
 
 				<div className="mt-16 flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-8">

@@ -5,7 +5,10 @@ import {
 	IncidentFile,
 	IncidentIdentification,
 	IncidentImpact,
+	IncidentOrgs,
 	IncidentType,
+	UserGenderIdentity,
+	UserIdentity,
 } from "@prisma/client";
 import type { ActionFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, redirect, useLoaderData } from "@remix-run/react";
@@ -111,6 +114,9 @@ export default function IncidentPage() {
 			identification: IncidentIdentification[];
 			impact: IncidentImpact[];
 			didNotReportReasons: DidNotReportReason[];
+			wantsSharedWithOrgs: IncidentOrgs[];
+			identities: UserIdentity[];
+			genderIdentities: UserGenderIdentity[];
 		};
 	};
 
@@ -209,7 +215,11 @@ export default function IncidentPage() {
 							<span className="font-medium">
 								Should forward to partner organizations?
 							</span>{" "}
-							<strong>{incident.wantsSharedWithOrgs ? "Yes" : "No"}</strong>
+							<strong>
+								{incident.wantsSharedWithOrgs.length
+									? incident.wantsSharedWithOrgs.join(", ")
+									: "No"}
+							</strong>
 						</li>
 					</ul>
 				</section>

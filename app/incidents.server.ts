@@ -8,7 +8,7 @@ import * as incidents from "./incidents";
 const toValues = (items: { label: string; value: string }[]) =>
 	A.map(items, D.get("value")).filter(Boolean);
 
-const booleanValues = ["yes", "no"];
+const booleanValues = ["Yes", "No"];
 
 const userFirstNameSchema = {
 	type: "string",
@@ -55,8 +55,44 @@ const wantsContactSchema = {
 };
 
 const wantsSharedWithOrgsSchema = {
+	type: "array",
+	items: { type: "string", enum: toValues(incidents.organizations) },
+};
+
+const identitiesSchema = {
+	type: "array",
+	items: { type: "string", enum: toValues(incidents.identities) },
+};
+
+const religionsSchema = {
 	type: "string",
-	enum: booleanValues,
+	enum: toValues(incidents.religions),
+};
+
+const gendersSchema = {
+	type: "string",
+	enum: toValues(incidents.genders),
+};
+
+const genderIdentitiesSchema = {
+	type: "array",
+	items: { type: "string", enum: toValues(incidents.genderIdentities) },
+};
+
+const disabilitiesSchema = {
+	type: "string",
+	enum: toValues(incidents.disabilities),
+};
+
+const identityDescriptionSchema = {
+	type: "string",
+	maxLength: 5000,
+};
+
+const otherSchema = {
+	type: "string",
+	minLength: 1,
+	maxLength: 100,
 };
 
 const identificationSchema = {
@@ -185,6 +221,12 @@ export function createValidators() {
 		subject: hasErrors(subjectSchema),
 		wantsContact: hasErrors(wantsContactSchema),
 		wantsSharedWithOrgs: hasErrors(wantsSharedWithOrgsSchema),
+		identities: hasErrors(identitiesSchema),
+		religion: hasErrors(religionsSchema),
+		gender: hasErrors(gendersSchema),
+		genderIdentities: hasErrors(genderIdentitiesSchema),
+		disability: hasErrors(disabilitiesSchema),
+		identityDescription: hasErrors(identityDescriptionSchema),
 		identification: hasErrors(identificationSchema),
 		userAffiliation: hasErrors(userAffiliationSchema),
 		location: hasErrors(locationSchema),
@@ -201,6 +243,7 @@ export function createValidators() {
 		wasFirstExperience: hasErrors(wasFirstExperienceSchema),
 		wasFirstExperienceOther: hasErrors(wasFirstExperienceOtherSchema),
 		additionalInformation: hasErrors(additionalInformationSchema),
+		other: hasErrors(otherSchema),
 	};
 }
 
@@ -219,6 +262,16 @@ interface Errors {
 	subject?: ErrorObject;
 	wantsContact?: ErrorObject;
 	wantsSharedWithOrgs?: ErrorObject;
+	identities?: ErrorObject;
+	identitiesOther?: ErrorObject;
+	religion?: ErrorObject;
+	religionOther?: ErrorObject;
+	gender?: ErrorObject;
+	genderOther?: ErrorObject;
+	genderIdentities?: ErrorObject;
+	genderIdentitiesOther?: ErrorObject;
+	disability?: ErrorObject;
+	identityDescription?: ErrorObject;
 	identification?: ErrorObject;
 	userAffiliation?: ErrorObject;
 	location?: ErrorObject;
@@ -246,7 +299,13 @@ interface Incident {
 	province: string;
 	subject: string;
 	wantsContact: boolean;
-	wantsSharedWithOrgs: boolean;
+	wantsSharedWithOrgs: string[];
+	identities: string[];
+	religion: string;
+	gender: string;
+	genderIdentities: string[];
+	disability: string;
+	identityDescription: string;
 	identification: string[];
 	userAffiliation: string;
 	location: string;
@@ -279,6 +338,16 @@ export default function validateIncident(
 		subject,
 		wantsContact,
 		wantsSharedWithOrgs,
+		identities,
+		identitiesOther,
+		religion,
+		religionOther,
+		gender,
+		genderOther,
+		genderIdentities,
+		genderIdentitiesOther,
+		identityDescription,
+		disability,
 		identification,
 		userAffiliation,
 		location,
@@ -323,6 +392,47 @@ export default function validateIncident(
 	if (wantsSharedWithOrgs) {
 		errors.wantsSharedWithOrgs =
 			validators.wantsSharedWithOrgs(wantsSharedWithOrgs);
+	}
+
+	if (identities) {
+		errors.identities = validators.identities(identities);
+	}
+
+	if (identitiesOther) {
+		errors.identitiesOther = validators.other(identitiesOther);
+	}
+
+	if (religion) {
+		errors.religion = validators.religion(religion);
+	}
+
+	if (religionOther) {
+		errors.religionOther = validators.other(religionOther);
+	}
+
+	if (gender) {
+		errors.gender = validators.gender(gender);
+	}
+
+	if (genderOther) {
+		errors.genderOther = validators.other(genderOther);
+	}
+
+	if (genderIdentities) {
+		errors.genderIdentities = validators.genderIdentities(genderIdentities);
+	}
+
+	if (genderIdentitiesOther) {
+		errors.genderIdentitiesOther = validators.other(genderIdentitiesOther);
+	}
+
+	if (disability) {
+		errors.disability = validators.disability(disability);
+	}
+
+	if (identityDescription) {
+		errors.identityDescription =
+			validators.identityDescription(identityDescription);
 	}
 
 	if (identification) {
@@ -405,8 +515,21 @@ export default function validateIncident(
 			date: (date as string) || "",
 			province: (province as string) || "",
 			subject: (subject as string) || "",
-			wantsContact: wantsContact === "yes",
-			wantsSharedWithOrgs: wantsSharedWithOrgs === "yes",
+			wantsContact: wantsContact === "Yes",
+			wantsSharedWithOrgs: wantsSharedWithOrgs as string[],
+			identities: handleOther(
+				identities as string[],
+				identitiesOther as string,
+			),
+			religion:
+				handleOtherSingle(religion as string, religionOther as string) || "",
+			gender: handleOtherSingle(gender as string, genderOther as string) || "",
+			genderIdentities: handleOther(
+				genderIdentities as string[],
+				genderIdentitiesOther as string,
+			),
+			disability: (disability as string) || "",
+			identityDescription: (identityDescription as string) || "",
 			identification: identification as string[],
 			userAffiliation: (userAffiliation as string) || "",
 			location:
@@ -416,7 +539,7 @@ export default function validateIncident(
 			description: (description as string) || "",
 			impact: impact as string[],
 			impactDescription: (impactDescription as string) || "",
-			didReport: didReport === "yes",
+			didReport: didReport === "Yes",
 			didNotReportReason: handleOther(
 				didNotReportReason as string[],
 				didNotReportReasonOther as string,

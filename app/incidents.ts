@@ -65,7 +65,7 @@ export const locations = [
 export const identification = [
 	{ label: "Arab", value: "Arab" },
 	{ label: "Palestinian", value: "Palestinian" },
-	{ label: "Other", value: "Other" },
+	{ label: "Not applicable", value: "N/A" },
 ];
 
 export const affiliation = [
@@ -166,7 +166,68 @@ export const reasons = [
 ];
 
 export const experiences = [
+	{ label: "Yes", value: "Yes" },
+	{ label: "No", value: "No" },
+	{ label: "Other", value: "Other" },
+];
+
+export const organizations = [
+	{ label: "The Legal Center for Palestine (LCP)", value: "LCP" },
+	{ label: "Arab Canadian Lawyers Association (ACLA)", value: "ACLA" },
+	{ label: "National Council of Canadian Muslims (NCCM)", value: "NCCM" },
+];
+
+export const identities = [
+	{ label: "Middle Eastern", value: "Middle Eastern" },
+	{
+		label: "Indigenous (First Nations, Inuk / Inuit, Métis)",
+		value: "Indigenous (First Nations, Inuk / Inuit, Métis)",
+	},
+	{ label: "Black", value: "Black" },
+	{ label: "East Asian", value: "East Asian" },
+	{ label: "South Asian", value: "South Asian" },
+	{ label: "Southeast Asian", value: "Southeast Asian" },
+	{ label: "Latin American", value: "Latin American" },
+	{ label: "White", value: "White" },
+	{ label: "Prefer not to say", value: "Prefer not to say" },
+	{ label: "Other, please specify", value: "Other" },
+];
+
+export const religions = [
+	{ label: "Muslim", value: "Muslim" },
+	{ label: "Jewish", value: "Jewish" },
+	{ label: "Christian", value: "Christian" },
+	{ label: "Sikh", value: "Sikh" },
+	{ label: "Prefer not to say", value: "Prefer not to say" },
+	{ label: "Other, please specify", value: "Other" },
+];
+
+export const genders = [
+	{ label: "Woman", value: "Woman" },
+	{ label: "Man", value: "Man" },
+	{ label: "Non-binary", value: "Non-binary" },
+	{ label: "Prefer not to say", value: "Prefer not to say" },
+	{ label: "Other, please specify", value: "Other" },
+];
+
+export const genderIdentities = [
+	{ label: "2-Spirit", value: "2-Spirit" },
+	{ label: "Lesbian", value: "Lesbian" },
+	{ label: "Gay", value: "Gay" },
+	{ label: "Bisexual", value: "Bisexual" },
+	{ label: "Transgender", value: "Transgender" },
+	{ label: "Queer", value: "Queer" },
+	{ label: "Intersex", value: "Intersex" },
+	{ label: "Asexual", value: "Asexual" },
+	{ label: "Prefer not to say", value: "Prefer not to say" },
+	{
+		label: "Other identity within the 2SLGBTQIA+ community, please specify:",
+		value: "Other",
+	},
+];
+
+export const disabilities = [
 	{ label: "Yes", value: "yes" },
 	{ label: "No", value: "no" },
-	{ label: "Other", value: "other" },
+	{ label: "Prefer not to say", value: "Prefer not to say" },
 ];

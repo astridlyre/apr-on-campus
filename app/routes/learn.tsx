@@ -34,100 +34,7 @@ export default function Learn() {
 					marginalization and erasure of Palestinian voices, undermining
 					equality and justice.
 				</Paragraph>
-
-				<Paragraph>
-					If you’ve experienced APR—whether on UBC’s campus, in your workplace,
-					or elsewhere in Canada&mdash;<strong>trust your instincts.</strong> If
-					you feel you’ve been targeted, excluded, or silenced, your experience
-					matters.
-				</Paragraph>
 			</Section>
-
-			<div className="my-12 bg-bg2 py-12">
-				<div className="container mx-auto w-full px-6 py-12 sm:px-12 md:px-16 lg:px-24">
-					<div className="flex w-full gap-8 overflow-x-auto">
-						<figure
-							// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-							role="button"
-							tabIndex={0}
-							onKeyDown={(evt) => {
-								if (evt.key === "Enter") {
-									setBigImageSrc("/assets/images/anti-palestinian-racism.png");
-								}
-							}}
-							onClick={() => {
-								setBigImageSrc("/assets/images/anti-palestinian-racism.png");
-							}}
-							className="max-w-prose cursor-pointer"
-						>
-							<img
-								alt=""
-								src="/assets/images/anti-palestinian-racism-medium.webp"
-								srcSet="/assets/images/anti-palestinian-racism-full.webp 1920w"
-								className="max-w-full"
-							/>
-						</figure>
-						<figure
-							// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-							role="button"
-							tabIndex={0}
-							onKeyDown={(evt) => {
-								if (evt.key === "Enter") {
-									setBigImageSrc("/assets/images/anti-palestinian-racism.png");
-								}
-							}}
-							onClick={() => {
-								setBigImageSrc(
-									"/assets/images/anti-palestinian-racism-at-school.png",
-								);
-							}}
-							className="max-w-prose cursor-pointer"
-						>
-							<img
-								alt=""
-								src="/assets/images/anti-palestinian-racism-at-school-medium.webp"
-								srcSet="/assets/images/anti-palestinian-racism-at-school-full.webp 1920w"
-								className="max-w-full"
-							/>
-						</figure>
-					</div>
-
-					{bigImageSrc ? (
-						<div className="fixed inset-0 z-20 flex items-center justify-center p-8">
-							<div
-								aria-hidden="true"
-								onClick={() => {
-									setBigImageSrc("");
-								}}
-								className="absolute inset-0 bg-white p-8 opacity-70"
-							/>
-							<div className="relative m-auto">
-								<button
-									type="button"
-									onClick={() => {
-										setBigImageSrc("");
-									}}
-									className="absolute -right-[5vw] top-0 z-10 h-12 w-12 text-3xl font-bold text-fg hover:bg-primary"
-								>
-									&times;
-								</button>
-								<img
-									className="z-10 max-h-[95vh] max-w-[95vw]"
-									src={bigImageSrc}
-									alt="Anti-Palestinian Racism"
-								/>
-							</div>
-						</div>
-					) : null}
-
-					<Paragraph className="mt-4">
-						The above images are from{" "}
-						<TextLink href="https://visualizingpalestine.org/" external>
-							Visualizing Palestine
-						</TextLink>
-					</Paragraph>
-				</div>
-			</div>
 
 			<Section>
 				<Heading level={2}>Why APR Is Harmful</Heading>
@@ -153,6 +60,84 @@ export default function Learn() {
 			</Section>
 
 			<Section>
+				<figure
+					// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+					role="button"
+					tabIndex={0}
+					onKeyDown={(evt) => {
+						if (evt.key === "Enter") {
+							setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+						}
+					}}
+					onClick={() => {
+						setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+					}}
+					className="cursor-pointer"
+				>
+					<img
+						alt=""
+						src="/assets/images/anti-palestinian-racism-medium.webp"
+						srcSet="/assets/images/anti-palestinian-racism-full.webp 1920w"
+						className="w-full max-w-full"
+					/>
+					<figcaption className="text-sm mt-2 text-fg2">
+						The above image is from{" "}
+						<TextLink href="https://visualizingpalestine.org/" external>
+							Visualizing Palestine
+						</TextLink>
+					</figcaption>
+				</figure>
+			</Section>
+
+			<Section>
+				<Blockquote
+					source={
+						<span>
+							Majid, D. (2022, April 25).{" "}
+							<em>
+								Anti-Palestinian Racism: Naming, Framing and Manifestations.
+								Community Consultations and Reflections.
+							</em>{" "}
+							Arab Canadian Lawyers Association.
+						</span>
+					}
+					quote="Anti-Palestinian racism is a form of anti-Arab racism that silences, excludes, erases, stereotypes, defames or dehumanizes Palestinians or their narratives. Anti-Palestinian racism takes various forms including: denying the Nakba and justifying violence against Palestinians; failing to acknowledge Palestinians as an Indigenous people with a collective identity, belonging and rights in relation to occupied and historic Palestine; erasing the human rights and equal dignity and worth of Palestinians; excluding or pressuring others to exclude Palestinian perspectives, Palestinians and their allies; defaming Palestinians and their allies with slander such as being inherently antisemitic, a terrorist threat/sympathizer or opposed to democratic values."
+				/>
+			</Section>
+
+			<Section>
+				<figure
+					// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+					role="button"
+					tabIndex={0}
+					onKeyDown={(evt) => {
+						if (evt.key === "Enter") {
+							setBigImageSrc("/assets/images/anti-palestinian-racism.png");
+						}
+					}}
+					onClick={() => {
+						setBigImageSrc(
+							"/assets/images/anti-palestinian-racism-at-school.png",
+						);
+					}}
+					className="cursor-pointer"
+				>
+					<img
+						alt=""
+						src="/assets/images/anti-palestinian-racism-at-school-medium.webp"
+						srcSet="/assets/images/anti-palestinian-racism-at-school-full.webp 1920w"
+						className="w-full max-w-full"
+					/>
+					<figcaption className="text-sm mt-2 text-fg2">
+						The above image is from{" "}
+						<TextLink href="https://visualizingpalestine.org/" external>
+							Visualizing Palestine
+						</TextLink>
+					</figcaption>
+				</figure>
+			</Section>
+
+			<Section>
 				<Heading level={2}>Experiencing APR & Support</Heading>
 
 				<Paragraph>
@@ -168,14 +153,41 @@ export default function Learn() {
 
 				<UnorderedList>
 					<li>
-						<TextLink href="https://www.canarablaw.org/support" external>
-							https://www.canarablaw.org/support
+						<TextLink
+							href="https://willowtreecounselling.ca/wp-content/uploads/resources/reduced-cost-counselling.pdf"
+							external
+						>
+							Reduced-Cost Counselling Options
+						</TextLink>{" "}
+						in Vancouver
+					</li>
+					<li>
+						Muslim Counselling:{" "}
+						<TextLink external href="https://www.ruhcare.com">
+							ruhcare.com
+						</TextLink>{" "}
+						and{" "}
+						<TextLink external href="https://www.ruhcare.com/palestine">
+							ruhcare.com/palestine
+						</TextLink>{" "}
+						(free)
+					</li>
+					<li>
+						Hope for Wellness Help Line is available 24/7 to all Indigenous
+						people across Canada. Call toll-free{" "}
+						<TextLink href="tel:18552423310">1-855-242-3310</TextLink> or start
+						a confidential chat with a counsellor at{" "}
+						<TextLink href="https://www.hopeforwellness.ca" external>
+							hopeforwellness.ca
 						</TextLink>
 					</li>
 					<li>
-						<TextLink href="https://www.cjpmefoundation.org/resources" external>
-							https://www.cjpmefoundation.org/resources
-						</TextLink>
+						National Suicide Crisis Helpline:{" "}
+						<TextLink href="tel:988">9-8-8</TextLink> (call or text)
+					</li>
+					<li>
+						BC Mental Health and Crisis Response (no area code needed):{" "}
+						<TextLink href="tel:3106789">310-6789</TextLink>
 					</li>
 				</UnorderedList>
 
@@ -192,6 +204,37 @@ export default function Learn() {
 						Report an Incident of APR
 					</LinkButton>
 				</div>
+			</Section>
+
+			<Section>
+				<figure
+					// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+					role="button"
+					tabIndex={0}
+					onKeyDown={(evt) => {
+						if (evt.key === "Enter") {
+							setBigImageSrc("/assets/images/APR-image-3.jpeg");
+						}
+					}}
+					onClick={() => {
+						setBigImageSrc("/assets/images/APR-image-3.jpeg");
+					}}
+					className="cursor-pointer"
+				>
+					<img
+						alt=""
+						src="/assets/images/apr-image-3-medium.webp"
+						srcSet="/assets/images/apr-image-3-full.webp 1920w"
+						className="w-full max-w-full"
+					/>
+
+					<figcaption className="text-sm mt-2 text-fg2">
+						The above image is from{" "}
+						<TextLink href="https://visualizingpalestine.org/" external>
+							Visualizing Palestine
+						</TextLink>
+					</figcaption>
+				</figure>
 			</Section>
 
 			<Section>
@@ -223,20 +266,101 @@ export default function Learn() {
 					ministerial authority to suppress political expression.
 				</Paragraph>
 
-				<Blockquote
-					source={
-						<span>
-							Majid, D. (2022, April 25).{" "}
-							<em>
-								Anti-Palestinian Racism: Naming, Framing and Manifestations.
-								Community Consultations and Reflections.
-							</em>{" "}
-							Arab Canadian Lawyers Association.
-						</span>
-					}
-					quote="Anti-Palestinian racism is a form of anti-Arab racism that silences, excludes, erases, stereotypes, defames or dehumanizes Palestinians or their narratives. Anti-Palestinian racism takes various forms including: denying the Nakba and justifying violence against Palestinians; failing to acknowledge Palestinians as an Indigenous people with a collective identity, belonging and rights in relation to occupied and historic Palestine; erasing the human rights and equal dignity and worth of Palestinians; excluding or pressuring others to exclude Palestinian perspectives, Palestinians and their allies; defaming Palestinians and their allies with slander such as being inherently antisemitic, a terrorist threat/sympathizer or opposed to democratic values."
-				/>
+				<Paragraph>
+					If you’ve experienced APR—whether on UBC’s campus, in your workplace,
+					or elsewhere in Canada&mdash;<strong>trust your instincts.</strong> If
+					you feel you’ve been targeted, excluded, or silenced, your experience
+					matters.
+				</Paragraph>
+
+				<Paragraph>Additional Resources:</Paragraph>
+				<Paragraph>
+					<UnorderedList>
+						<li>
+							<TextLink href="https://mes.arts.ubc.ca" external>
+								https://mes.arts.ubc.ca
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://www.lcpal.ca" external>
+								https://www.lcpal.ca
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://www.nccm.ca" external>
+								https://www.nccm.ca
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://www.canarablaw.org" external>
+								https://www.canarablaw.org
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://www.cmla-acam.ca" external>
+								https://www.cmla-acam.ca
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://www.canarablaw.org/support" external>
+								https://www.canarablaw.org/support
+							</TextLink>
+						</li>
+						<li>
+							<TextLink
+								href="https://www.cjpmefoundation.org/resources"
+								external
+							>
+								https://www.cjpmefoundation.org/resources
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://equity.ubc.ca" external>
+								https://equity.ubc.ca
+							</TextLink>
+						</li>
+						<li>
+							<TextLink href="https://io.ubc.ca" external>
+								https://io.ubc.ca
+							</TextLink>
+						</li>
+					</UnorderedList>
+				</Paragraph>
 			</Section>
+
+			{bigImageSrc ? (
+				<div className="fixed inset-0 z-20 flex items-center justify-center p-8">
+					<div
+						aria-hidden="true"
+						onClick={() => {
+							setBigImageSrc("");
+						}}
+						className="absolute inset-0 bg-white p-8 opacity-70"
+					/>
+					<div
+						aria-hidden="true"
+						onClick={() => {
+							setBigImageSrc("");
+						}}
+						className="relative m-auto"
+					>
+						<button
+							type="button"
+							onClick={() => {
+								setBigImageSrc("");
+							}}
+							className="absolute -right-[5vw] top-0 z-10 h-12 w-12 text-3xl font-bold text-fg hover:bg-primary"
+						>
+							&times;
+						</button>
+						<img
+							className="z-10 max-h-[95vh] max-w-[95vw]"
+							src={bigImageSrc}
+							alt="Anti-Palestinian Racism"
+						/>
+					</div>
+				</div>
+			) : null}
 		</Layout>
 	);
 }

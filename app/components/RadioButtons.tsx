@@ -1,6 +1,6 @@
 const defaultOptions = [
-	{ value: "yes", label: "Yes" },
-	{ value: "no", label: "No" },
+	{ value: "Yes", label: "Yes" },
+	{ value: "No", label: "No" },
 ];
 
 export default function RadioButtons(props: {
@@ -10,6 +10,7 @@ export default function RadioButtons(props: {
 	className?: string;
 	onChange?: (value: string) => void;
 	value?: string;
+	helperText?: string;
 	options?: { label: string; value: string }[];
 }) {
 	const options = props.options || defaultOptions;
@@ -39,6 +40,10 @@ export default function RadioButtons(props: {
 						</label>
 					</div>
 				))}
+
+				{props.helperText ? (
+					<small className="text-fg2">{props.helperText}</small>
+				) : null}
 			</div>
 		);
 	}
@@ -74,6 +79,10 @@ export default function RadioButtons(props: {
 					</label>
 				</div>
 			))}
+
+			{props.helperText ? (
+				<small className="text-fg2">{props.helperText}</small>
+			) : null}
 		</fieldset>
 	);
 }
