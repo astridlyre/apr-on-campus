@@ -6,7 +6,7 @@ import {
   type MetaFunction,
 } from "@remix-run/node";
 import { Form, useNavigation, useSubmit } from "@remix-run/react";
-import { useDebounce, useLocalStorage } from "@uidotdev/usehooks";
+import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { CSRFError } from "remix-utils/csrf/server";
