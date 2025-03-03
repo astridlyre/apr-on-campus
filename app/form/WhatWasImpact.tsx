@@ -13,7 +13,7 @@ import type { PageProps } from "./state";
 export default function WhatWasImpact({ state, setState }: PageProps) {
   return (
     <>
-      <Heading className="mb-6 mt-12" level={4}>
+      <Heading className="mt-0" level={4}>
         What was the impact?
       </Heading>
 
