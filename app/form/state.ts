@@ -4,7 +4,6 @@ export interface State {
   userFirstName: string;
   userLastName: string;
   userEmail: string;
-  userPhoneNumber: string;
   date: string;
   province: string;
   subject: string;
@@ -47,7 +46,6 @@ export function createInitialState(): State {
     userFirstName: "",
     userLastName: "",
     userEmail: "",
-    userPhoneNumber: "",
     date: "",
     province: "",
     subject: "",

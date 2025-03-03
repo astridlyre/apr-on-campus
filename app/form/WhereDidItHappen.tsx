@@ -1,12 +1,10 @@
 import { D } from "@mobily/ts-belt";
 
-import DateInput from "~/components/DateInput";
 import Heading from "~/components/Heading";
 import Inputs from "~/components/Inputs";
 import RadioButtons from "~/components/RadioButtons";
-import Select from "~/components/Select";
 import TextInput from "~/components/TextInput";
-import { locations, provinces, subjects } from "~/incidents";
+import { locations, subjects } from "~/incidents";
 
 import type { PageProps } from "./state";
 

@@ -73,11 +73,15 @@ export const action: ActionFunction = async ({ request }) => {
       genderIdentities: getFormDataValues(form, "genderIdentities"),
       genderIdentitiesOther: getFormDataValue(form, "genderIdentitiesOther"),
       disability: getFormDataValue(form, "disability"),
-      identityDescription: getFormDataValues(form, "identityDescription"),
+      identityDescription: getFormDataValue(form, "identityDescription"),
       additionalInformation: getFormDataValue(form, "additionalInformation"),
     };
 
+    console.log(rawIncident);
+
     const { incident, errors } = validateIncident(rawIncident);
+
+    console.log(errors);
 
     if (!incident) {
       return data({ errors }, 422);
@@ -144,8 +148,14 @@ export default function Report() {
         formData.delete(key);
 
         if (G.isObject(value)) {
-          D.keys(value).forEach((value) => {
-            formData.append(key, value);
+          D.toPairs(value).forEach(([option, has]) => {
+            if (has) {
+              formData.append(key, option);
+            }
+          });
+        } else if (G.isArray(value)) {
+          value.forEach((option) => {
+            formData.set(key, String(option));
           });
         } else {
           formData.set(key, value);
