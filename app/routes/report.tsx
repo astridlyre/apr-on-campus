@@ -6,6 +6,7 @@ import {
   type MetaFunction,
 } from "@remix-run/node";
 import { Form, useNavigation, useSubmit } from "@remix-run/react";
+import { useDebounce, useLocalStorage } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { CSRFError } from "remix-utils/csrf/server";
@@ -17,7 +18,7 @@ import Heading from "~/components/Heading";
 import Section from "~/components/Section";
 import { csrf } from "~/csrf.server";
 import Pages from "~/form/Pages";
-import { createInitialState, FIRST_PAGE, LAST_PAGE, State } from "~/form/state";
+import { FIRST_PAGE, initialState, LAST_PAGE, State } from "~/form/state";
 import { honeypot } from "~/honeypot.server";
 import validateIncident from "~/incidents.server";
 import Layout from "~/layout";
@@ -125,7 +126,46 @@ export default function Report() {
   const submit = useSubmit();
   const navigation = useNavigation();
   const [page, setPage] = useState(FIRST_PAGE);
-  const [state, setState] = useState<State>(createInitialState);
+  const [state, setState] = useState<State>(initialState);
+
+  useDebounce(() => {
+    if (!globalThis.localStorage) {
+      return;
+    }
+
+    if (state !== initialState) {
+      globalThis.localStorage.setItem(
+        "APR_INCIDENT_REPORT_STATE",
+        JSON.stringify(state),
+      );
+    }
+  }, 1000);
+
+  useEffect(() => {
+    if (state !== initialState) {
+      return;
+    }
+
+    if (!globalThis.localStorage) {
+      return;
+    }
+
+    const savedState = globalThis.localStorage.getItem(
+      "APR_INCIDENT_REPORT_STATE",
+    );
+    if (!savedState) {
+      return;
+    }
+
+    try {
+      const parsedState = JSON.parse(savedState);
+      if (parsedState) {
+        setState(parsedState);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [state]);
 
   const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
