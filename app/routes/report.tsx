@@ -1,4 +1,4 @@
-import { D, N } from "@mobily/ts-belt";
+import { A, D, G, N, pipe } from "@mobily/ts-belt";
 import {
   data,
   redirect,
@@ -24,7 +24,7 @@ import Layout from "~/layout";
 import { createIncident } from "~/models/incidents.server";
 import confirmedTemplate from "~/services/emails/confirmed.template";
 import sendEmail from "~/services/emails.server";
-import { getFormDataValue, getFormDataValues, maxFiles } from "~/utils";
+import { getFormDataValue, getFormDataValues } from "~/utils";
 
 export const meta: MetaFunction = () => [
   { title: "Report | APR on Campus" },
@@ -132,20 +132,28 @@ export default function Report() {
 
     if (page !== LAST_PAGE) {
       setPage(N.add(1));
+      window.scrollTo(0, 0);
       return;
     }
 
-    const formData = new FormData(evt.currentTarget);
+    const formData = pipe(
+      state,
+      D.deleteKey("isSubmitting"),
+      D.toPairs,
+      A.reduce(new FormData(evt.currentTarget), (formData, [key, value]) => {
+        formData.delete(key);
 
-    // Remove the file field from the form data
-    formData.delete("file");
+        if (G.isObject(value)) {
+          D.keys(value).forEach((value) => {
+            formData.append(key, value);
+          });
+        } else {
+          formData.set(key, value);
+        }
 
-    const slicedFiles = state.files.slice(0, maxFiles);
-
-    // Add the files to the form data
-    slicedFiles.forEach((file, i) => {
-      formData.set(`file-${i}`, file);
-    });
+        return formData;
+      }),
+    );
 
     submit(formData, {
       method: "post",

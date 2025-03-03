@@ -1,5 +1,4 @@
 import { D } from "@mobily/ts-belt";
-import React from "react";
 
 import CheckboxGroup from "~/components/CheckboxGroup";
 import Heading from "~/components/Heading";
@@ -12,13 +11,6 @@ import { impacts, yesNoOther, yesNoUnsure } from "~/incidents";
 import type { PageProps } from "./state";
 
 export default function WhatWasImpact({ state, setState }: PageProps) {
-  const setImpact = React.useCallback(
-    (impact: Record<string, boolean>) => {
-      setState(D.merge({ impact }));
-    },
-    [setState],
-  );
-
   return (
     <>
       <Heading className="mb-6 mt-12" level={4}>
@@ -30,7 +22,10 @@ export default function WhatWasImpact({ state, setState }: PageProps) {
           name="impact"
           label="How has this racist experience impacted you? (check all that apply)"
           options={impacts}
-          onChange={setImpact}
+          value={state.impact}
+          onChange={(impact) => {
+            setState(D.merge({ impact }));
+          }}
         />
       </Inputs.Single>
 
@@ -86,6 +81,8 @@ export default function WhatWasImpact({ state, setState }: PageProps) {
           </Inputs.Single>
         ) : null}
       </div>
+
+      <br />
 
       <Inputs.Single>
         <RadioButtons

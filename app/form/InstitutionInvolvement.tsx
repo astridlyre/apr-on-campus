@@ -1,5 +1,4 @@
 import { D } from "@mobily/ts-belt";
-import React from "react";
 
 import CheckboxGroup from "~/components/CheckboxGroup";
 import Heading from "~/components/Heading";
@@ -13,13 +12,6 @@ export default function InstitutionalInvolvement({
   state,
   setState,
 }: PageProps) {
-  const setWantsSharedWithOrgs = React.useCallback(
-    (wantsSharedWithOrgs: Record<string, boolean>) => {
-      setState(D.merge({ wantsSharedWithOrgs }));
-    },
-    [setState],
-  );
-
   return (
     <>
       <Heading className="mt-0" level={4}>
@@ -66,6 +58,7 @@ export default function InstitutionalInvolvement({
 
       <Inputs.Single>
         <RadioButtons
+          required
           label="I want my story to be shared with other APR data collection and advocacy groups in Canada."
           name="wantsShared"
           value={state.wantsShared}
@@ -84,7 +77,10 @@ export default function InstitutionalInvolvement({
               label="I consent to share my incident report with the following groups (select all that apply)"
               name="wantsSharedWithOrgs"
               options={organizations}
-              onChange={setWantsSharedWithOrgs}
+              value={state.wantsSharedWithOrgs}
+              onChange={(wantsSharedWithOrgs) => {
+                setState(D.merge({ wantsSharedWithOrgs }));
+              }}
             />
           </Inputs.Single>
           <br />

@@ -1,5 +1,4 @@
 import { D } from "@mobily/ts-belt";
-import React from "react";
 
 import CheckboxGroup from "~/components/CheckboxGroup";
 import Heading from "~/components/Heading";
@@ -18,16 +17,9 @@ import {
 import type { PageProps } from "./state";
 
 export default function Intersectionality({ state, setState }: PageProps) {
-  const setIdentities = React.useCallback(
-    (identities: Record<string, boolean>) => {
-      setState(D.merge({ identities }));
-    },
-    [setState],
-  );
-
   return (
     <>
-      <Heading className="mb-6 mt-12" level={4}>
+      <Heading className="mt-0" level={4}>
         Intersectionality
       </Heading>
 
@@ -35,8 +27,10 @@ export default function Intersectionality({ state, setState }: PageProps) {
         We want to better understand the full scope of intersectionality as it
         relates to people&apos;s experiences of racism when they are targeted.
         Please help us understand the ways with which you identify (as much as
-        you are comfortable):
+        you are comfortable).
       </Paragraph>
+
+      <br />
 
       <div>
         <Inputs.Single>
@@ -44,7 +38,10 @@ export default function Intersectionality({ state, setState }: PageProps) {
             name="identities"
             label="Do you identify with any of the following identities? (check all that apply)"
             options={identities}
-            onChange={setIdentities}
+            value={state.identities}
+            onChange={(identities) => {
+              setState(D.merge({ identities }));
+            }}
           />
         </Inputs.Single>
 
@@ -102,8 +99,9 @@ export default function Intersectionality({ state, setState }: PageProps) {
             name="genderIdentities"
             label="Do you identify with any of the following identities? (check all that apply):"
             options={genderIdentities}
-            onChange={(evt) => {
-              setState(D.merge({ genderIdentities: evt }));
+            value={state.genderIdentities}
+            onChange={(genderIdentities) => {
+              setState(D.merge({ genderIdentities }));
             }}
           />
         </Inputs.Single>

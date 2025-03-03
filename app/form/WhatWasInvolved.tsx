@@ -1,5 +1,4 @@
 import { D } from "@mobily/ts-belt";
-import React from "react";
 
 import CheckboxGroup from "~/components/CheckboxGroup";
 import Heading from "~/components/Heading";
@@ -11,17 +10,10 @@ import { types } from "~/incidents";
 import type { PageProps } from "./state";
 
 export default function WhatWasInvolved({ state, setState }: PageProps) {
-  const setType = React.useCallback(
-    (type: Record<string, boolean>) => {
-      setState(D.merge({ type }));
-    },
-    [setState],
-  );
-
   return (
     <>
-      <Heading className="mb-6 mt-12" level={4}>
-        More Information
+      <Heading className="mt-0" level={4}>
+        What was Involved?
       </Heading>
 
       <Inputs.Single>
@@ -29,7 +21,10 @@ export default function WhatWasInvolved({ state, setState }: PageProps) {
           name="type"
           label="What did this racism involve? (check all that apply)"
           options={types}
-          onChange={setType}
+          onChange={(type) => {
+            setState(D.merge({ type }));
+          }}
+          value={state.type}
         />
       </Inputs.Single>
 

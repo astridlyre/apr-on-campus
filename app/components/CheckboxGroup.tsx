@@ -1,9 +1,9 @@
 import { D } from "@mobily/ts-belt";
-import { useEffect, useState } from "react";
 
 import Checkbox from "./Checkbox";
 
 export default function CheckboxGroup(props: {
+  value: Record<string, boolean>;
   label: string;
   name: string;
   required?: boolean;
@@ -11,19 +11,6 @@ export default function CheckboxGroup(props: {
   onChange?: (checked: Record<string, boolean>) => void;
   options: { label: string; value: string; defaultChecked?: boolean }[];
 }) {
-  const [checked, setChecked] = useState(
-    Object.fromEntries(
-      props.options.map((option) => [
-        option.value,
-        Boolean(option.defaultChecked),
-      ]),
-    ),
-  );
-
-  useEffect(() => {
-    props.onChange?.(checked);
-  }, [props, checked]);
-
   return (
     <fieldset className={props.className}>
       {props.label ? (
@@ -36,10 +23,13 @@ export default function CheckboxGroup(props: {
       {props.options.map((option) => (
         <Checkbox
           onChange={() => {
-            const currentValue = checked[option.value];
-            setChecked(D.merge({ [option.value]: !currentValue }));
+            props.onChange?.(
+              D.merge(props.value, {
+                [option.value]: !props.value[option.value],
+              }),
+            );
           }}
-          checked={checked[option.value]}
+          checked={props.value[option.value]}
           required={props.required}
           label={option.label}
           key={option.value}

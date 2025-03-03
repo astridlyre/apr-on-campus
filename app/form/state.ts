@@ -34,7 +34,6 @@ export interface State {
   didReport: YesNo;
   wasSystemic: YesNo | "Unsure";
   additionalInformation: string;
-  files: readonly File[];
   isSubmitting: boolean;
 }
 
@@ -73,10 +72,11 @@ export function createInitialState(): State {
     description: "",
     impact: {},
     impactDescription: "",
+    wasFirstExperience: "",
+    wasFirstExperienceOther: "",
     didReport: "",
     wasSystemic: "",
     additionalInformation: "",
-    files: [],
     isSubmitting: false,
   };
 }
