@@ -1,25 +1,25 @@
 import type { Incident } from "@prisma/client";
 
 export interface EmailProps {
-	user: {
-		firstName: string;
-		email: string;
-	};
-	subject: string;
-	incident: Incident;
+  user: {
+    firstName: string;
+    email: string;
+  };
+  subject: string;
+  incident: Incident;
 }
 
 function text({ subject, user, incident }: EmailProps) {
-	function paragraphifyPlain(text: string) {
-		if (!text) return "";
-		return text
-			.split("\n")
-			.filter(Boolean)
-			.map((para) => para.trim())
-			.join("\n\n");
-	}
+  function paragraphifyPlain(text: string) {
+    if (!text) return "";
+    return text
+      .split("\n")
+      .filter(Boolean)
+      .map((para) => para.trim())
+      .join("\n\n");
+  }
 
-	return `Subject: ${subject}
+  return `Subject: ${subject}
 
 Hi ${user.firstName},
 
@@ -43,7 +43,6 @@ ${paragraphifyPlain(incident.description)}
 
 • Your Name: ${incident.userFirstName} ${incident.userLastName}
 • Your Email: ${incident.userEmail}
-• Your Phone Number: ${incident.userPhoneNumber}
 
 Sincerely,
 The APR on Campus Team
@@ -53,16 +52,16 @@ The APR on Campus Team
 }
 
 function html({ subject, user, incident }: EmailProps) {
-	function paragraphify(text: string) {
-		if (!text) return "";
-		return text
-			.split("\n")
-			.filter(Boolean)
-			.map((para: string) => `<p>${para.trim()}</p>`)
-			.join("");
-	}
+  function paragraphify(text: string) {
+    if (!text) return "";
+    return text
+      .split("\n")
+      .filter(Boolean)
+      .map((para: string) => `<p>${para.trim()}</p>`)
+      .join("");
+  }
 
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
   <head>
     <meta charset="utf-8">
@@ -199,7 +198,6 @@ function html({ subject, user, incident }: EmailProps) {
               ${paragraphify(incident.description)}
               <p><strong>Your Name:</strong> ${incident.userFirstName} ${incident.userLastName}</p>
               <p><strong>Your Email:</strong> ${incident.userEmail}</p>
-              <p><strong>Your Phone Number:</strong> ${incident.userPhoneNumber}</p>
             </div>
 
             <p style="margin-bottom: 0;">

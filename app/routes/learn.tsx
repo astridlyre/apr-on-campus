@@ -6,7 +6,6 @@ import LinkButton from "~/components/LinkButton";
 import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
 import TextLink from "~/components/TextLink";
-import UnorderedList from "~/components/UnorderedList";
 import Layout from "~/layout";
 
 export const meta: MetaFunction = () => [

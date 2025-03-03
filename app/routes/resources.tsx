@@ -1,8 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 
 import Heading from "~/components/Heading";
-import Image from "~/components/Image";
-import LinkButton from "~/components/LinkButton";
 import Paragraph from "~/components/Paragraph";
 import Section from "~/components/Section";
 import TextLink from "~/components/TextLink";
