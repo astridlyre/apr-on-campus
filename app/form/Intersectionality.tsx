@@ -71,8 +71,9 @@ export default function Intersectionality({ state, setState }: PageProps) {
             name="gender"
             label="Do you identify as:"
             options={genders}
-            onChange={(evt) => {
-              setState(D.merge({ gender: evt }));
+            value={state.gender}
+            onChange={(gender) => {
+              setState(D.merge({ gender }));
             }}
           />
         </Inputs.Single>
@@ -86,6 +87,10 @@ export default function Intersectionality({ state, setState }: PageProps) {
               name="genderOther"
               minLength={1}
               maxLength={100}
+              value={state.genderOther}
+              onChange={(evt) => {
+                setState(D.merge({ genderOther: evt.target.value }));
+              }}
             />
           </Inputs.Single>
         ) : null}
@@ -127,6 +132,10 @@ export default function Intersectionality({ state, setState }: PageProps) {
           name="disability"
           label="Do you identify as a person with a disability:"
           options={disabilities}
+          value={state.disability}
+          onChange={(disability) => {
+            setState(D.merge({ disability }));
+          }}
         />
       </Inputs.Single>
 

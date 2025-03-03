@@ -56,8 +56,9 @@ export default function WhatWasImpact({ state, setState }: PageProps) {
             name="wasFirstExperience"
             label="Was this your first experience with anti-Palestinian racism?"
             options={yesNoOther}
-            onChange={(evt) => {
-              setState(D.merge({ wasFirstExperience: evt }));
+            value={state.wasFirstExperience}
+            onChange={(wasFirstExperience) => {
+              setState(D.merge({ wasFirstExperience }));
             }}
           />
         </Inputs.Single>
@@ -89,8 +90,8 @@ export default function WhatWasImpact({ state, setState }: PageProps) {
           label="Do you believe your experience was a result of systemic racism (e.g., policies, practices, or institutions that disproportionately disadvantage certain racial groups)?"
           required
           name="wasSystemic"
-          onChange={(evt) => {
-            setState(D.merge({ wasSystemic: evt }));
+          onChange={(wasSystemic) => {
+            setState(D.merge({ wasSystemic }));
           }}
           options={yesNoUnsure}
           value={state.wasSystemic}

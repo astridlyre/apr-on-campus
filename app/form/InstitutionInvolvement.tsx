@@ -25,12 +25,12 @@ export default function InstitutionalInvolvement({
           name="campus"
           options={campuses}
           value={state.campus}
-          onChange={(evt) => {
+          onChange={(campus) => {
             setState(
               D.merge({
-                campus: evt,
+                campus,
                 wantsContact:
-                  evt === "N/A" || evt === "" ? "" : state.wantsContact,
+                  campus === "N/A" || campus === "" ? "" : state.wantsContact,
               }),
             );
           }}
@@ -47,8 +47,8 @@ export default function InstitutionalInvolvement({
               label="I would like a campus representative to follow up with me regarding my report and any available further action."
               name="wantsContact"
               value={state.wantsContact}
-              onChange={(evt) => {
-                setState(D.merge({ wantsContact: evt }));
+              onChange={(wantsContact) => {
+                setState(D.merge({ wantsContact }));
               }}
             />
           </Inputs.Single>
@@ -62,8 +62,8 @@ export default function InstitutionalInvolvement({
           label="I want my story to be shared with other APR data collection and advocacy groups in Canada."
           name="wantsShared"
           value={state.wantsShared}
-          onChange={(evt) => {
-            setState(D.merge({ wantsShared: evt, wantsSharedWithOrgs: {} }));
+          onChange={(wantsShared) => {
+            setState(D.merge({ wantsShared, wantsSharedWithOrgs: {} }));
           }}
         />
       </Inputs.Single>
@@ -95,8 +95,8 @@ export default function InstitutionalInvolvement({
               label="I would like to allow partnering advocacy groups to share this story anonymously on social media"
               name="allowsSocialShare"
               value={state.allowsSocialShare}
-              onChange={(evt) => {
-                setState(D.merge({ allowsSocialShare: evt }));
+              onChange={(allowsSocialShare) => {
+                setState(D.merge({ allowsSocialShare }));
               }}
             />
           </Inputs.Single>
@@ -111,8 +111,8 @@ export default function InstitutionalInvolvement({
           options={affiliation}
           name="userAffilication"
           value={state.userAffiliation}
-          onChange={(evt) => {
-            setState(D.merge({ userAffiliation: evt }));
+          onChange={(userAffiliation) => {
+            setState(D.merge({ userAffiliation }));
           }}
         />
       </Inputs.Single>
@@ -125,8 +125,8 @@ export default function InstitutionalInvolvement({
           required
           name="didReport"
           value={state.didReport}
-          onChange={(evt) => {
-            setState(D.merge({ didReport: evt }));
+          onChange={(didReport) => {
+            setState(D.merge({ didReport }));
           }}
         />
       </Inputs.Single>

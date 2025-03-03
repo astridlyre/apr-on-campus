@@ -22,8 +22,8 @@ export default function WhereDidItHappen({ state, setState }: PageProps) {
           options={subjects}
           name="subject"
           value={state.subject}
-          onChange={(evt) => {
-            setState(D.merge({ subject: evt }));
+          onChange={(subject) => {
+            setState(D.merge({ subject }));
           }}
         />
       </Inputs.Single>
@@ -38,8 +38,8 @@ export default function WhereDidItHappen({ state, setState }: PageProps) {
             required
             options={locations}
             value={state.location}
-            onChange={(evt) => {
-              setState(D.merge({ location: evt }));
+            onChange={(location) => {
+              setState(D.merge({ location }));
             }}
           />
         </Inputs.Single>

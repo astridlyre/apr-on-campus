@@ -38,7 +38,7 @@ export default function WhatWasInvolved({ state, setState }: PageProps) {
             maxLength={100}
             value={state.typeOther}
             onChange={(evt) => {
-              setState(D.merge({ typeOther: evt }));
+              setState(D.merge({ typeOther: evt.target.value }));
             }}
           />
         </Inputs.Single>
