@@ -6,7 +6,7 @@ function H1(props: React.HTMLProps<HTMLHeadingElement>) {
     <header className="max-w-heading">
       <h1
         className={clsx(
-          "mb-4 text-5xl font-bold leading-none text-fg sm:mb-6 md:text-6xl lg:text-7xl",
+          "mb-4 text-4xl font-bold leading-none text-fg sm:mb-6 md:text-5xl",
           className,
         )}
         {...rest}
@@ -23,7 +23,7 @@ function H2(props: React.HTMLProps<HTMLHeadingElement>) {
     <header className="max-w-heading">
       <h2
         className={clsx(
-          "mb-4 text-3xl font-bold leading-none text-fg sm:mb-6 md:text-4xl lg:text-5xl",
+          "mb-4 text-3xl font-bold leading-none text-fg sm:mb-6 md:text-4xl",
           className,
         )}
         {...rest}
@@ -40,7 +40,7 @@ function H3(props: React.HTMLProps<HTMLHeadingElement>) {
     <header className="max-w-heading">
       <h3
         className={clsx(
-          "mb-4 text-2xl font-bold leading-none text-fg sm:mb-6 md:text-3xl lg:text-4xl",
+          "mb-4 text-2xl font-bold leading-none text-fg sm:mb-6 md:text-3xl",
           className,
         )}
         {...rest}
@@ -57,7 +57,7 @@ function H4(props: React.HTMLProps<HTMLHeadingElement>) {
     <header className="max-w-heading">
       <h4
         className={clsx(
-          "mb-4 text-xl font-bold leading-none text-fg sm:mb-6 md:text-2xl lg:text-3xl",
+          "mb-4 text-xl font-bold leading-none text-fg sm:mb-6 md:text-2xl",
           className,
         )}
         {...rest}

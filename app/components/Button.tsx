@@ -24,7 +24,7 @@ const Button = forwardRef(function Button(
 
   const color =
     variant === "primary"
-      ? "bg-primary text-white hover:bg-primaryDark disabled:hover:bg-disabled"
+      ? "bg-primary text-white hover:bg-primaryDark disabled:hover:bg-primary"
       : variant === "secondary"
         ? "bg-secondary text-white hover:bg-secondaryDark disabled:hover:bg-disabled"
         : "bg-neutral text-white hover:bg-neutralDark disabled:hover:bg-disabled";

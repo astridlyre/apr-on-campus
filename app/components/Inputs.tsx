@@ -10,7 +10,7 @@ export function Pair({
   return (
     <div
       className={clsx(
-        "mb-4 flex flex-col gap-4 sm:flex-row sm:gap-6 md:mb-6",
+        "mb-4 flex flex-col items-end gap-4 sm:flex-row sm:gap-6 md:mb-6",
         className,
       )}
     >

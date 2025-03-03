@@ -11,23 +11,31 @@ export default function Navigation() {
       <div
         className={clsx(
           "nav-height grid w-full grid-cols-2 justify-between md:grid",
-          user ? "md:grid-cols-4" : "md:grid-cols-3",
+          user ? "md:grid-cols-5" : "md:grid-cols-4",
         )}
       >
         <NavLink
           prefetch="intent"
           to="/"
-          className="link flex items-center justify-center bg-secondary px-2 text-lg text-white hover:bg-secondaryDark md:py-0"
+          className="link flex items-center justify-center bg-neutralDark px-2 text-lg text-white hover:bg-neutral md:py-0"
         >
           APR on Campus
         </NavLink>
 
         <NavLink
           to="/learn"
+          className="link hidden items-center justify-center bg-secondary py-6 text-lg text-white hover:bg-secondaryDark md:flex md:py-0"
+        >
+          What APR Looks Like
+        </NavLink>
+
+        <NavLink
+          to="/resources"
           className="link hidden items-center justify-center bg-bg2 py-6 text-lg text-fg hover:bg-bg3 md:flex md:py-0"
         >
-          What is APR?
+          Resources
         </NavLink>
+
         <NavLink
           to="/report"
           className="link hidden items-center justify-center bg-primary py-6 text-lg text-white hover:bg-primaryDark md:flex md:py-0"
@@ -48,7 +56,7 @@ export default function Navigation() {
           {isOpen ? (
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-bg2 opacity-70 md:hidden"
+              className="absolute inset-0 bg-bg2 opacity-50 md:hidden"
               onClick={() => setIsOpen(false)}
             ></div>
           ) : null}
@@ -93,9 +101,15 @@ export default function Navigation() {
           >
             <NavLink
               to="/learn"
+              className="link flex items-center justify-center bg-secondary px-8 py-6 text-lg text-white hover:bg-secondaryDark md:py-0"
+            >
+              What APR Looks Like
+            </NavLink>
+            <NavLink
+              to="/resources"
               className="link flex items-center justify-center bg-bg2 px-8 py-6 text-lg text-fg hover:bg-bg3 md:py-0"
             >
-              What is APR?
+              Resources
             </NavLink>
             <NavLink
               to="/report"

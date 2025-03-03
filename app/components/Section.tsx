@@ -8,7 +8,7 @@ export default function Section(
   return (
     <section
       className={clsx(
-        "w-full px-6 py-12 sm:px-12 md:px-16 lg:px-24",
+        "w-full px-6 py-8 sm:px-12 md:px-16 md:py-12 lg:px-24",
         props.className,
       )}
     >

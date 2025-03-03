@@ -1,3 +1,5 @@
+import Paragraph from "./Paragraph";
+import Section from "./Section";
 import TextLink from "./TextLink";
 
 export default function Footer() {
@@ -14,16 +16,29 @@ export default function Footer() {
           d="M0,256L288,288L576,224L864,320L1152,224L1440,128L1440,320L1152,320L864,320L576,320L288,320L0,320Z"
         ></path>
       </svg>
-      <footer className="bg-bg2 p-12">
-        <div className="container mx-auto text-center">
-          <small className="text-fg3">
-            &copy; {new Date().getFullYear()} APR on Campus |{" "}
-          </small>
+      <footer className="bg-bg2">
+        <Section>
+          <Paragraph variant="secondary">
+            <em>
+              We respectfully acknowledge that we are on the traditional,
+              unceded and ancestral territories of many Indigenous Nations
+              across Turtle Island. We recognize the ongoing legacy of genocidal
+              colonial violence and systemic oppression faced by Indigenous
+              communities. We commit to resisting colonial structures and
+              standing in solidarity with Indigenous peoples in their struggles
+              for self-determination, justice, and land reclamation.
+            </em>
+          </Paragraph>
+          <div className="flex justify-between">
+            <small className="text-fg3">
+              &copy; {new Date().getFullYear()} APR on Campus
+            </small>
 
-          <small>
-            <TextLink href="/privacy-policy">Privacy Policy</TextLink>
-          </small>
-        </div>
+            <small>
+              <TextLink href="/privacy-policy">Privacy Policy</TextLink>
+            </small>
+          </div>
+        </Section>
       </footer>
     </div>
   );

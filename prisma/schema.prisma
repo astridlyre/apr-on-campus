@@ -47,34 +47,31 @@ model Incident {
   userFirstName   String
   userLastName    String
   userEmail       String
-  userPhoneNumber String
   userAffiliation String
 
-  campus                String
-  date                  String
-  description           String
-  location              String
-  province              String
-  subject               String
-  impactDescription     String
-  wasFirstExperience    String
-  additionalInformation String
+  date                String
+  province            String
+  subject             String
+  location            String
+  campus              String
+  wantsContact        Boolean        @default(false)
+  wantsSharedWithOrgs IncidentOrgs[]
+  allowsSocialShare   Boolean        @default(false)
+  didReport           Boolean        @default(false)
+
+  type               IncidentType[]
+  description        String
+  impact             IncidentImpact[]
+  impactDescription  String
+  wasFirstExperience String
+  wasSystemic        String
+
+  identities            UserIdentity[]
   gender                String
-  religion              String
+  genderIdentities      UserGenderIdentity[]
   disability            String
   identityDescription   String
-
-  identification      IncidentIdentification[]
-  impact              IncidentImpact[]
-  type                IncidentType[]
-  didNotReportReasons DidNotReportReason[]
-  identities          UserIdentity[]
-  genderIdentities    UserGenderIdentity[]
-  wantsSharedWithOrgs IncidentOrgs[]
-  files               IncidentFile[]
-
-  wantsContact Boolean @default(false)
-  didReport    Boolean @default(false)
+  additionalInformation String
 
   isActive Boolean @default(true)
 
@@ -82,13 +79,6 @@ model Incident {
 }
 
 model IncidentOrgs {
-  id         String    @id @default(cuid())
-  name       String
-  Incident   Incident? @relation(fields: [incidentId], references: [id])
-  incidentId String?
-}
-
-model IncidentIdentification {
   id         String    @id @default(cuid())
   name       String
   Incident   Incident? @relation(fields: [incidentId], references: [id])
@@ -109,13 +99,6 @@ model IncidentType {
   incidentId String?
 }
 
-model DidNotReportReason {
-  id         String    @id @default(cuid())
-  name       String
-  Incident   Incident? @relation(fields: [incidentId], references: [id])
-  incidentId String?
-}
-
 model UserIdentity {
   id         String    @id @default(cuid())
   name       String
@@ -128,15 +111,4 @@ model UserGenderIdentity {
   name       String
   Incident   Incident? @relation(fields: [incidentId], references: [id])
   incidentId String?
-}
-
-model IncidentFile {
-  id          String   @id @default(cuid())
-  href        String
-  contentType String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  version     Int      @default(1)
-  incident    Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  incidentId  String
 }
