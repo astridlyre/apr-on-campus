@@ -1,30 +1,60 @@
 import ContactInformation from "./ContactInformation";
 import InstitutionInvolvement from "./InstitutionInvolvement";
 import Intersectionality from "./Intersectionality";
-import type { PageProps } from "./state";
+import { type PageProps, PAGES } from "./state";
+import Summary from "./Summary";
 import WhatWasImpact from "./WhatWasImpact";
 import WhatWasInvolved from "./WhatWasInvolved";
 import WhereDidItHappen from "./WhereDidItHappen";
 
 export default function Pages({
-  state,
-  setState,
-  page,
+	state,
+	setState,
+	page,
+	setPage,
 }: PageProps & {
-  page: number;
+	page: number;
 }) {
-  switch (page) {
-    case 6:
-      return <Intersectionality state={state} setState={setState} />;
-    case 5:
-      return <WhatWasImpact state={state} setState={setState} />;
-    case 4:
-      return <WhatWasInvolved state={state} setState={setState} />;
-    case 3:
-      return <InstitutionInvolvement state={state} setState={setState} />;
-    case 2:
-      return <WhereDidItHappen state={state} setState={setState} />;
-    default:
-      return <ContactInformation state={state} setState={setState} />;
-  }
+	switch (page) {
+		case PAGES.SUMMARY:
+			return <Summary state={state} setState={setState} setPage={setPage} />;
+		case PAGES.INTERSECTIONALITY:
+			return (
+				<Intersectionality
+					state={state}
+					setState={setState}
+					setPage={setPage}
+				/>
+			);
+		case PAGES.WHAT_WAS_IMPACT:
+			return (
+				<WhatWasImpact state={state} setState={setState} setPage={setPage} />
+			);
+		case PAGES.WHAT_WAS_INVOLVED:
+			return (
+				<WhatWasInvolved state={state} setState={setState} setPage={setPage} />
+			);
+		case PAGES.INSTITUTION_INVOLVEMENT:
+			return (
+				<InstitutionInvolvement
+					state={state}
+					setState={setState}
+					setPage={setPage}
+				/>
+			);
+		case PAGES.WHERE_DID_IT_HAPPEN:
+			return (
+				<WhereDidItHappen state={state} setState={setState} setPage={setPage} />
+			);
+		case PAGES.CONTACT_INFORMATION:
+			return (
+				<ContactInformation
+					state={state}
+					setState={setState}
+					setPage={setPage}
+				/>
+			);
+		default:
+			return null;
+	}
 }
