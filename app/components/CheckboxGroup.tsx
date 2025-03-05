@@ -32,10 +32,11 @@ export default function CheckboxGroup(props: {
 					}
 					ref={checkboxRef}
 					onChange={() => {
-						props.onChange?.(
-							D.merge(props.value, {
-								[option.value]: !props.value[option.value],
-							}),
+						if (props.value[option.value]) {
+							return props.onChange?.(D.deleteKey(props.value, option.value));
+						}
+						return props.onChange?.(
+							D.merge(props.value, { [option.value]: true }),
 						);
 					}}
 					checked={props.value[option.value]}

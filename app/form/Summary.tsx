@@ -63,7 +63,14 @@ export default function Summary({ state, setPage }: PageProps) {
 					</li>
 					<li>
 						<strong>Where it occured:</strong>{" "}
-						{state.location === "Other" ? state.locationOther : state.location}
+						{pipe(
+							state.location,
+							D.deleteKey("Other"),
+							D.keys,
+							A.append(state.locationOther),
+							A.filter(S.isNotEmpty),
+							A.join(", "),
+						)}
 					</li>
 				</ul>
 

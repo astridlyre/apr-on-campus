@@ -120,6 +120,10 @@ export default function Intersectionality({ state, setState }: PageProps) {
 							name="genderIdentitiesOther"
 							minLength={1}
 							maxLength={100}
+							value={state.genderIdentitiesOther}
+							onChange={(evt) => {
+								setState(D.merge({ genderIdentitiesOther: evt.target.value }));
+							}}
 						/>
 					</Inputs.Single>
 				) : null}
