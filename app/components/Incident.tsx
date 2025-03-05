@@ -1,9 +1,12 @@
-import type { Incident } from "@prisma/client";
+import { D } from "@mobily/ts-belt";
+import type { Incident, IncidentLocation } from "@prisma/client";
 import { NavLink } from "@remix-run/react";
 
 import { capitalize, formatDateWithoutTime } from "~/utils";
 
-export default function IncidentPreview({ incident }: { incident: Incident }) {
+export default function IncidentPreview({
+	incident,
+}: { incident: Incident & { location: IncidentLocation[] } }) {
 	return (
 		<NavLink
 			to={`/dashboard/${incident.id}`}
@@ -15,7 +18,9 @@ export default function IncidentPreview({ incident }: { incident: Incident }) {
 			<p className="text-xs text-fg2">
 				{formatDateWithoutTime(incident.date)} - {incident.province}
 			</p>
-			<p className="truncate text-sm text-fg">{incident.location}</p>
+			<p className="truncate text-sm text-fg">
+				{incident.location.map(D.get("name")).join(", ")}
+			</p>
 		</NavLink>
 	);
 }
