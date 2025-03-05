@@ -20,7 +20,7 @@ export interface State {
 	genderIdentitiesOther: string;
 	disability: string;
 	userAffiliation: string;
-	location: string;
+	location: Record<string, boolean>;
 	locationOther: string;
 	campus: string;
 	type: Record<string, boolean>;
@@ -62,7 +62,7 @@ export const initialState = {
 	identityDescription: "",
 	disability: "",
 	userAffiliation: "",
-	location: "",
+	location: {},
 	locationOther: "",
 	campus: "",
 	type: {},

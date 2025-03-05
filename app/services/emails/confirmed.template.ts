@@ -1,25 +1,25 @@
 import type { Incident } from "@prisma/client";
 
 export interface EmailProps {
-  user: {
-    firstName: string;
-    email: string;
-  };
-  subject: string;
-  incident: Incident;
+	user: {
+		firstName: string;
+		email: string;
+	};
+	subject: string;
+	incident: Incident & { location: string[] };
 }
 
 function text({ subject, user, incident }: EmailProps) {
-  function paragraphifyPlain(text: string) {
-    if (!text) return "";
-    return text
-      .split("\n")
-      .filter(Boolean)
-      .map((para) => para.trim())
-      .join("\n\n");
-  }
+	function paragraphifyPlain(text: string) {
+		if (!text) return "";
+		return text
+			.split("\n")
+			.filter(Boolean)
+			.map((para) => para.trim())
+			.join("\n\n");
+	}
 
-  return `Subject: ${subject}
+	return `Subject: ${subject}
 
 Hi ${user.firstName},
 
@@ -36,7 +36,7 @@ We value your privacy and will treat your information with the utmost care. Than
 Your Incident Details:
 • Date: ${incident.date}
 • Province: ${incident.province}
-• Location: ${incident.location}
+• Location: ${incident.location.join(", ")}
 • Description:
 
 ${paragraphifyPlain(incident.description)}
@@ -52,16 +52,16 @@ The APR on Campus Team
 }
 
 function html({ subject, user, incident }: EmailProps) {
-  function paragraphify(text: string) {
-    if (!text) return "";
-    return text
-      .split("\n")
-      .filter(Boolean)
-      .map((para: string) => `<p>${para.trim()}</p>`)
-      .join("");
-  }
+	function paragraphify(text: string) {
+		if (!text) return "";
+		return text
+			.split("\n")
+			.filter(Boolean)
+			.map((para: string) => `<p>${para.trim()}</p>`)
+			.join("");
+	}
 
-  return `<!DOCTYPE html>
+	return `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
   <head>
     <meta charset="utf-8">
@@ -193,7 +193,7 @@ function html({ subject, user, incident }: EmailProps) {
               <h2>Your Incident Details</h2>
               <p><strong>Date:</strong> ${incident.date}</p>
               <p><strong>Province:</strong> ${incident.province}</p>
-              <p><strong>Location:</strong> ${incident.location}</p>
+              <p><strong>Location:</strong> ${incident.location.join(", ")}</p>
               <p><strong>Description:</strong></p>
               ${paragraphify(incident.description)}
               <p><strong>Your Name:</strong> ${incident.userFirstName} ${incident.userLastName}</p>

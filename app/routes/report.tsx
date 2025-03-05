@@ -44,7 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
 			date: getFormDataValue(form, "date"),
 			province: getFormDataValue(form, "province"),
 			subject: getFormDataValue(form, "subject"),
-			location: getFormDataValue(form, "location"),
+			location: getFormDataValues(form, "location"),
 			locationOther: getFormDataValue(form, "locationOther"),
 			campus: getFormDataValue(form, "campus"),
 			wantsContact: getFormDataValue(form, "wantsContact"),
