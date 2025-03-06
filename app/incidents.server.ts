@@ -229,7 +229,6 @@ interface Errors {
 	impact?: ErrorObject;
 	impactDescription?: ErrorObject;
 	wasFirstExperience?: ErrorObject;
-	wasFirstExperienceOther?: ErrorObject;
 	wasSystemic?: ErrorObject;
 	identities?: ErrorObject;
 	identitiesOther?: ErrorObject;
@@ -300,7 +299,6 @@ export default function validateIncident(
 		impact,
 		impactDescription,
 		wasFirstExperience,
-		wasFirstExperienceOther,
 		wasSystemic,
 		identities,
 		identitiesOther,
@@ -377,10 +375,6 @@ export default function validateIncident(
 			validators.wasFirstExperience(wasFirstExperience);
 	}
 
-	if (wasFirstExperience === "other") {
-		errors.wasFirstExperienceOther = validators.other(wasFirstExperienceOther);
-	}
-
 	if (wasSystemic) {
 		errors.wasSystemic = validators.wasSystemic(wasSystemic);
 	}
@@ -451,11 +445,7 @@ export default function validateIncident(
 			description: (description as string) || "",
 			impact: impact as string[],
 			impactDescription: (impactDescription as string) || "",
-			wasFirstExperience:
-				handleOtherSingle(
-					wasFirstExperience as string,
-					wasFirstExperienceOther as string,
-				) || "",
+			wasFirstExperience: (wasFirstExperience as string) || "",
 			wasSystemic: (wasSystemic as string) || "",
 			identities: handleOther(
 				identities as string[],

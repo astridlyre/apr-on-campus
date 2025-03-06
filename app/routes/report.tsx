@@ -58,10 +58,6 @@ export const action: ActionFunction = async ({ request }) => {
 			impact: getFormDataValues(form, "impact"),
 			impactDescription: getFormDataValue(form, "impactDescription"),
 			wasFirstExperience: getFormDataValue(form, "wasFirstExperience"),
-			wasFirstExperienceOther: getFormDataValue(
-				form,
-				"wasFirstExperienceOther",
-			),
 			wasSystemic: getFormDataValue(form, "wasSystemic"),
 			identities: getFormDataValues(form, "identities"),
 			identitiesOther: getFormDataValue(form, "identitiesOther"),

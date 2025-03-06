@@ -183,9 +183,7 @@ export default function Summary({ state, setPage }: PageProps) {
 					{state.wasFirstExperience ? (
 						<li>
 							<strong>Was this your first experience with APR?</strong>{" "}
-							{state.wasFirstExperience === "Other"
-								? state.wasFirstExperienceOther
-								: state.wasFirstExperience}
+							{state.wasFirstExperience}
 						</li>
 					) : null}
 

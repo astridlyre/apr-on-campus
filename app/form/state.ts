@@ -29,7 +29,6 @@ export interface State {
 	impact: Record<string, boolean>;
 	impactDescription: string;
 	wasFirstExperience: YesNo | "Other";
-	wasFirstExperienceOther: string;
 	didReport: YesNo;
 	wasSystemic: YesNo | "Unsure";
 	additionalInformation: string;
@@ -71,7 +70,6 @@ export const initialState = {
 	impact: {},
 	impactDescription: "",
 	wasFirstExperience: "",
-	wasFirstExperienceOther: "",
 	didReport: "",
 	wasSystemic: "",
 	additionalInformation: "",
