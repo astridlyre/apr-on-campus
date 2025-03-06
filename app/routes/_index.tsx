@@ -93,9 +93,9 @@ export default function Home() {
 					This platform is here for everyone—whether you’ve experienced APR
 					firsthand or have witnessed it. We have partnered with the UBC Middle
 					East Studies (MES) program, as well as various university solidarity
-					groups and legal and advocacy organizations across the country.
-					Submissions are collected confidentially and contribute to ongoing
-					advocacy and research.
+					groups and legal organizations across the country. Submissions are
+					collected confidentially and contribute to ongoing advocacy and
+					research.
 				</Paragraph>
 
 				<div className="mt-16 flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-8">
