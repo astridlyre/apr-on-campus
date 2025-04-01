@@ -29,7 +29,7 @@
 		"@qwik.dev/partytown": "^0.11.0",
 		"@remix-run/node": "^2.15.2",
 		"@remix-run/react": "^2.15.2",
-		"@remix-run/serve": "^2.15.2",
+		"@remix-run/serve": "^2.16.4",
 		"@types/markdown-it-footnote": "^3.0.4",
 		"@uidotdev/usehooks": "^2.4.1",
 		"ajv": "^8.17.1",
