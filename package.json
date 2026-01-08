@@ -28,7 +28,7 @@
 		"@prisma/client": "^6.2.1",
 		"@qwik.dev/partytown": "^0.11.0",
 		"@remix-run/node": "^2.15.2",
-		"@remix-run/react": "^2.15.2",
+		"@remix-run/react": "^2.17.3",
 		"@remix-run/serve": "^2.15.2",
 		"@types/markdown-it-footnote": "^3.0.4",
 		"@uidotdev/usehooks": "^2.4.1",
